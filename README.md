@@ -133,11 +133,45 @@ Todo desde `/admin`, sin tocar código:
 bin/rails test
 ```
 
-98 tests cubren los modelos, el ruteo por idioma, que los borradores no se
+102 tests cubren los modelos, el ruteo por idioma, que los borradores no se
 filtren, el formulario de contacto (incluido el honeypot), las páginas de error y que el
 panel sólo sea accesible para administradores.
 
 ---
+
+## Contenido de muestra
+
+El sitio arranca poblado con notas, cursos y biografías **inventados**, para que
+no sea una página en blanco mientras ella escribe lo suyo. Están firmados como
+si fueran de ella, así que hay una forma de sacarlos de un comando:
+
+```bash
+bin/rails sample_content:list      # qué queda de muestra
+bin/rails sample_content:remove    # borrarlo (respeta lo que ella ya reescribió)
+```
+
+En producción:
+
+```bash
+fly ssh console --app maflor-escuela --user rails \
+  --command "/rails/bin/rails sample_content:remove"
+```
+
+`db:seed` sólo carga contenido de muestra fuera de producción; para forzarlo,
+`SEED_SAMPLE_CONTENT=1`.
+
+### Buscadores
+
+Mientras el texto sea inventado, el sitio está cerrado a los buscadores: el
+`robots.txt` prohíbe todo y cada página lleva `noindex`. Cuando el contenido sea
+realmente de ella:
+
+```bash
+fly secrets set --app maflor-escuela ALLOW_INDEXING=true
+```
+
+`robots.txt` lo sirve la aplicación (no `public/`) justamente para que siga ese
+interruptor.
 
 ## Cambiar el nombre
 

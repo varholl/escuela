@@ -8,6 +8,9 @@
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="application-name" content="<%= t("site.name") %>">
     <meta name="theme-color" content="#fbf9fc">
+    <% unless Rails.configuration.x.allow_indexing %>
+      <meta name="robots" content="noindex, nofollow">
+    <% end %>
 
     <meta property="og:site_name" content="<%= t("site.name") %>">
     <meta property="og:type" content="website">

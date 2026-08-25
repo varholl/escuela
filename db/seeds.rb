@@ -16,26 +16,32 @@ puts "\n  Seeding #{Rails.env} (sample content: #{seed_samples ? "yes" : "no"})"
 # ---------------------------------------------------------------------------
 # Administrator
 # ---------------------------------------------------------------------------
-admin_email = ENV.fetch("ADMIN_EMAIL", "admin@maflor.local")
-admin = User.find_or_initialize_by(email_address: admin_email)
-
-if admin.new_record?
-  generated_password = ENV["ADMIN_PASSWORD"].presence || SecureRandom.base58(20)
-  admin.assign_attributes(
-    name: ENV.fetch("ADMIN_NAME", "Administración"),
-    role: :admin,
-    password: generated_password,
-    password_confirmation: generated_password
-  )
-  admin.save!
-
-  puts "\n  Administrator created"
-  puts "    email:    #{admin.email_address}"
-  puts "    password: #{generated_password}"
-  puts "    Sign in at /session/new and change it from the panel.\n\n"
+# Re-running the seed must never invent a second administrator. Without an
+# explicit ADMIN_EMAIL, an existing admin is left exactly as it is.
+if ENV["ADMIN_EMAIL"].blank? && User.admin.exists?
+  puts "  Administrator already present: #{User.admin.pick(:email_address)}"
 else
-  admin.update!(role: :admin)
-  puts "  Administrator already present: #{admin.email_address}"
+  admin_email = ENV.fetch("ADMIN_EMAIL", "admin@maflor.local")
+  admin = User.find_or_initialize_by(email_address: admin_email)
+
+  if admin.new_record?
+    generated_password = ENV["ADMIN_PASSWORD"].presence || SecureRandom.base58(20)
+    admin.assign_attributes(
+      name: ENV.fetch("ADMIN_NAME", "Administración"),
+      role: :admin,
+      password: generated_password,
+      password_confirmation: generated_password
+    )
+    admin.save!
+
+    puts "\n  Administrator created"
+    puts "    email:    #{admin.email_address}"
+    puts "    password: #{generated_password}"
+    puts "    Sign in at /session/new and change it from the panel.\n\n"
+  else
+    admin.update!(role: :admin)
+    puts "  Administrator already present: #{admin.email_address}"
+  end
 end
 
 # ---------------------------------------------------------------------------
@@ -90,15 +96,15 @@ PAGE_CONTENT = {
 # The records always exist so the admin panel lists every page; the invented
 # copy inside them is sample content.
 Page::KEYS.product(I18n.available_locales.map(&:to_s)).each do |key, locale|
-  page = Page.find_or_initialize_by(key: key, locale: locale)
-  next if page.persisted?
+  page = Page.find_or_create_by!(key: key, locale: locale)
+  attributes = PAGE_CONTENT[[ key, locale ]]
 
-  if seed_samples && (attributes = PAGE_CONTENT[[ key, locale ]])
-    page.title = attributes[:title]
-    page.subtitle = attributes[:subtitle]
-    page.body = attributes[:body]
-  end
+  # Only ever fill a page that is still blank; anything already written stays.
+  next unless seed_samples && attributes && page.body.to_plain_text.blank?
 
+  page.title = attributes[:title]
+  page.subtitle = attributes[:subtitle]
+  page.body = attributes[:body]
   page.save!
 end
 puts "  Standing pages: #{Page.count}#{" (empty, ready to write)" unless seed_samples}"

@@ -26,6 +26,10 @@ module Maflor
     config.i18n.fallbacks = [ :es ]
     config.i18n.load_path += Dir[Rails.root.join("config/locales/**/*.{rb,yml}")]
 
+    # Search engines are kept out until the copy is really hers. Flip with
+    # ALLOW_INDEXING=true; see robots.txt and the layout's robots meta tag.
+    config.x.allow_indexing = ENV.fetch("ALLOW_INDEXING", "false") == "true"
+
     # Whether the contact form also emails a copy. The message is always
     # stored either way, so this only controls the notification.
     config.x.deliver_inquiry_notifications = true
