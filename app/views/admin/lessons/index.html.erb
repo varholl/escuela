@@ -24,7 +24,7 @@
           <div class="min-w-0 flex-1">
             <%= link_to lesson.title, edit_admin_course_lesson_path(@course, lesson), class: "link-quiet font-medium" %>
             <p class="mt-1 text-sm text-ink-mute">
-              <%= [ lesson.duration, lesson.video_provider.presence, (t("courses.free_preview") if lesson.free_preview?) ].compact_blank.join(" · ") %>
+              <%= [ lesson.duration, lesson.video_provider.presence ].compact_blank.join(" · ") %>
             </p>
           </div>
 

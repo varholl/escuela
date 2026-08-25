@@ -26,6 +26,10 @@ module Maflor
     config.i18n.fallbacks = [ :es ]
     config.i18n.load_path += Dir[Rails.root.join("config/locales/**/*.{rb,yml}")]
 
+    # Course material is private, so a signed storage URL that leaks should stop
+    # working quickly rather than being a permanent key.
+    config.active_storage.urls_expire_in = 5.minutes
+
     # Search engines are kept out until the copy is really hers. Flip with
     # ALLOW_INDEXING=true; see robots.txt and the layout's robots meta tag.
     config.x.allow_indexing = ENV.fetch("ALLOW_INDEXING", "false") == "true"

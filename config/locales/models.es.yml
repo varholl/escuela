@@ -57,7 +57,6 @@ es:
         video_provider: "Dónde vive el video"
         video_reference: "Identificador del video"
         video: "Archivo de video"
-        free_preview: "Clase abierta"
         published_at: "Publicación"
       inquiry:
         name: "Nombre"

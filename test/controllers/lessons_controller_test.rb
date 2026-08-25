@@ -34,12 +34,21 @@ class LessonsControllerTest < ActionDispatch::IntegrationTest
     assert_select "h1", text: @first.title
   end
 
-  test "an open session is watchable by anyone" do
-    @first.update!(free_preview: true)
-
+  test "a shared link does not open for someone without an account" do
     get course_lesson_path(course_id: @course, id: @first)
 
-    assert_response :success
+    assert_redirected_to course_path(id: @course)
+    assert_nil cookies[:session_id].presence
+  end
+
+  test "every lesson of a free course still needs enrollment" do
+    @course.update!(price_cents: 0)
+    sign_in_as @student
+
+    @course.lessons.each do |lesson|
+      get course_lesson_path(course_id: @course, id: lesson)
+      assert_redirected_to course_path(id: @course), "#{lesson.title} leaked to a visitor who is not enrolled"
+    end
   end
 
   test "an unpublished lesson stays shut even for an enrolled student" do

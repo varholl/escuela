@@ -48,7 +48,11 @@ Rails.application.routes.draw do
 
     resources :courses, path: "cursos", only: %i[ index show ] do
       resource :enrollment, only: :create
-      resources :lessons, path: "clases", only: :show
+      resources :lessons, path: "clases", only: :show do
+        # The video is fetched through the app so the gate applies to the bytes
+        # too, not only to the page around them.
+        get :video, on: :member, to: "lesson_videos#show"
+      end
     end
 
     resource :inquiry, path: "contacto", only: %i[ new create ], as: :contact

@@ -183,7 +183,7 @@ COURSES = [
       <p>Empezá por acá. Son tres encuentros breves, sin costo, para que veas si esta forma de trabajar te hace sentido antes de invertir tiempo o dinero en algo más largo.</p>
     HTML
     lessons: [
-      { title: "Por qué respirar", summary: "De dónde sale que la respiración cambie algo.", free_preview: true, duration_seconds: 420 },
+      { title: "Por qué respirar", summary: "De dónde sale que la respiración cambie algo.", duration_seconds: 420 },
       { title: "La respiración cuadrada", summary: "La práctica, paso a paso.", duration_seconds: 540 },
       { title: "Llevarlo al día", summary: "Cómo sostenerlo cuando no hay tiempo.", duration_seconds: 480 }
     ]

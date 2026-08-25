@@ -119,26 +119,38 @@ A los cursos **sin costo** las alumnas se suman solas: se registran eligiendo su
 propia contraseña y quedan inscriptas en el mismo paso. Todo el camino funciona
 **sin enviar un solo correo**, que es lo que permite que ande hoy.
 
-Quién ve qué:
+Los cursos son **privados**. Sin estar inscripta no se ve ninguna clase, ni
+aunque alguien comparta el enlace directo:
 
-| | Clase publicada | Clase marcada «abierta» | Clase sin publicar |
-|---|---|---|---|
-| Visitante | no | **sí** | no |
-| Alumna inscripta | **sí** | **sí** | no |
-| Ella (admin) | sí | sí | sí |
+| | Clase publicada | Clase sin publicar |
+|---|---|---|
+| Visitante sin cuenta | no | no |
+| Con cuenta, sin inscribir | no | no |
+| Alumna inscripta | **sí** | no |
+| Ella (admin) | sí | sí |
+
+La lista de clases del curso sí es pública: sirve de índice, muestra los títulos
+y la duración, pero ninguno de esos títulos abre nada sin inscripción.
 
 Un curso **con precio** no se puede tomar solo: muestra el formulario de
 contacto, hasta que haya pasarela de pago. Ella igual puede dar acceso a mano
 desde el panel, a cualquier curso.
 
-El video vive donde ella quiera: pegar la URL de YouTube o de Vimeo alcanza (se
-acepta también el identificador pelado), o subir el archivo con Active Storage.
-YouTube se embebe en modo `nocookie`.
+### Dónde poner el video
 
-> Los embeds públicos de YouTube no son realmente privados: quien tenga el
-> enlace del video puede verlo fuera del sitio. Para cursos pagos conviene Vimeo
-> con restricción por dominio, o Mux con URLs firmadas. Ver
-> [`docs/PHASE_2.md`](docs/PHASE_2.md).
+Cerrar la página **no alcanza** por sí solo: si el video vive en un servicio
+público, su URL sigue siendo pública aunque el sitio esté cerrado con llave.
+
+| Hosting | ¿Queda realmente privado? |
+|---|---|
+| **Subido al sitio** (Active Storage) | **Sí.** Los bytes salen por `LessonVideosController`, que aplica la misma verificación que la página. Ocupa lugar en el volumen de Fly. |
+| **Vimeo** | **Sí, si lo configurás**: privacidad «sólo en sitios que elija» y agregás el dominio. Es la opción recomendada para lo pago. |
+| **Mux** | **Sí**, con URLs firmadas. Lo más sólido, y lo que conviene si esto crece. |
+| **YouTube «no listado»** | **No.** Cualquiera con el enlace lo mira en YouTube. Sirve para material gratuito o de difusión, no para un curso cerrado. |
+
+Los embeds de YouTube van en modo `nocookie`, así que ver una clase no entrega a
+las alumnas al perfil publicitario de Google — pero eso es privacidad de datos,
+no control de acceso.
 
 ## Trabajo diario de ella
 

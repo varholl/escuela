@@ -21,13 +21,13 @@ class Lesson < ApplicationRecord
 
   scope :ordered, -> { order(:position, :id) }
 
-  # An open session is the sample of the course; everything else needs a place
-  # in it. Admins always get through so she can proof her own material.
+  # Courses are private. Nothing here is readable without a place in the course,
+  # signed in or not. Admins get through so she can proof her own material.
   def viewable_by?(user)
     return true if user&.admin?
     return false unless published?
 
-    free_preview? || course.enrolled?(user)
+    course.enrolled?(user)
   end
 
   def duration

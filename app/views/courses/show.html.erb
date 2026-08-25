@@ -114,11 +114,7 @@
               <% end %>
             </div>
             <div class="shrink-0 text-right text-sm text-ink-mute">
-              <% if lesson.free_preview? %>
-                <span class="font-semibold text-gold"><%= t("courses.free_preview") %></span>
-              <% elsif lesson.duration.present? %>
-                <%= lesson.duration %>
-              <% end %>
+              <%= lesson.duration %>
             </div>
           </li>
         <% end %>

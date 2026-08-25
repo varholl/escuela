@@ -13,6 +13,7 @@
             allowfullscreen></iframe>
   </div>
 <% elsif uploaded %>
-  <%= video_tag lesson.video, controls: true, preload: "metadata",
+  <%= video_tag video_course_lesson_path(course_id: lesson.course, id: lesson),
+        controls: true, preload: "metadata",
         class: "aspect-video w-full rounded-xl bg-ink object-contain" %>
 <% end %>

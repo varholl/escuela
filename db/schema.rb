@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_08_25_124007) do
+ActiveRecord::Schema[8.1].define(version: 2026_08_26_000001) do
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.text "body"
     t.datetime "created_at", null: false
@@ -113,7 +113,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_25_124007) do
     t.integer "course_id", null: false
     t.datetime "created_at", null: false
     t.integer "duration_seconds"
-    t.boolean "free_preview", default: false, null: false
     t.integer "position", default: 0, null: false
     t.datetime "published_at"
     t.string "slug", null: false

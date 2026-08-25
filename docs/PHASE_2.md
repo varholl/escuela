@@ -111,13 +111,19 @@ empezar con uno y agregar el otro sin tocar el resto de la aplicación.
 
 ### 3. Video
 
-Hoy `Lesson` puede guardar el archivo con Active Storage, que sirve para probar
-pero **no para vender**: un archivo servido desde el volumen se descarga y se
-comparte sin control, y llenaría el disco de Fly.
+Un video subido al sitio ya sale por `LessonVideosController`, que verifica la
+inscripción antes de mandar un solo byte, así que **eso ya es privado**. Lo que
+no lo es: un video alojado en YouTube, aunque esté «no listado». Su URL es
+pública y no hay nada que el sitio pueda hacer al respecto.
 
-Recomendación al llegar acá: **Mux** o **Vimeo**, con URLs firmadas de corta
-duración generadas en el servidor sólo si `Enrollment#grants_access?`. El
-esquema ya lo soporta: `video_provider: "mux"`, `video_reference: <playback_id>`.
+Para material que se cobra, al llegar acá: **Vimeo** con restricción por dominio,
+o **Mux** con URLs firmadas de corta duración generadas sólo si
+`Enrollment#grants_access?`. El esquema ya lo soporta:
+`video_provider: "mux"`, `video_reference: <playback_id>`.
+
+El límite práctico de subir al sitio es el espacio: el volumen de Fly son 3 GB
+compartidos con la base. Alcanza para unas pocas horas de video comprimido; si
+la escuela crece, ahí conviene mover a Mux.
 
 ### 4. Área de alumnas — **hecho**
 

@@ -53,7 +53,7 @@ module Admin
       def lesson_params
         params.expect(lesson: [
           :title, :slug, :summary, :position, :duration_seconds,
-          :video_provider, :video_reference, :free_preview, :published_at,
+          :video_provider, :video_reference, :published_at,
           :notes, :video
         ])
       end

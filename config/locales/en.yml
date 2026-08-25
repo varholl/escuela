@@ -127,7 +127,6 @@ en:
     lessons_count:
       one: "1 session"
       other: "%{count} sessions"
-    free_preview: "Open session"
 
   inquiries:
     new:

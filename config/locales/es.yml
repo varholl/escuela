@@ -127,7 +127,6 @@ es:
     lessons_count:
       one: "1 clase"
       other: "%{count} clases"
-    free_preview: "Clase abierta"
 
   inquiries:
     new:

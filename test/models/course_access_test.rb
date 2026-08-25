@@ -78,13 +78,6 @@ class LessonAccessTest < ActiveSupport::TestCase
     assert @lesson.viewable_by?(@student)
   end
 
-  test "an open session is visible to anyone" do
-    @lesson.update!(free_preview: true)
-
-    assert @lesson.viewable_by?(nil)
-    assert @lesson.viewable_by?(@student)
-  end
-
   test "an unpublished lesson stays closed even to an enrolled student" do
     @course.enrollments.create!(user: @student, status: :active)
     @lesson.update!(published_at: nil)
@@ -92,10 +85,13 @@ class LessonAccessTest < ActiveSupport::TestCase
     assert_not @lesson.viewable_by?(@student)
   end
 
-  test "an unpublished open session is still closed to the public" do
-    @lesson.update!(free_preview: true, published_at: nil)
+  test "courses are private: nothing is readable without a place in the course" do
+    # The exact leak this replaced: a shared link used to open for anyone.
+    assert_not @lesson.viewable_by?(nil), "a shared link must not open for a stranger"
+    assert_not @lesson.viewable_by?(@student), "an account alone is not enough"
 
-    assert_not @lesson.viewable_by?(nil)
+    @course.join!(@student)
+    assert @lesson.viewable_by?(@student), "an enrolled student must get in"
   end
 
   test "an administrator can proof anything" do
