@@ -25,7 +25,10 @@
         <%= render "admin/shared/nav" %>
 
         <div class="mt-6 hidden border-t border-line pt-5 text-sm md:block">
-          <p class="text-ink-mute"><%= Current.user&.display_name %></p>
+          <p>
+            <%= link_to Current.user&.display_name, edit_admin_account_path,
+                  class: "link-quiet text-ink-soft hover:text-iris" %>
+          </p>
           <p class="mt-3">
             <%= link_to t("admin.nav.view_site"), root_path, class: "link-quiet text-ink-soft hover:text-iris" %>
           </p>
@@ -47,6 +50,7 @@
         <%= yield %>
 
         <div class="mt-10 flex items-center justify-between border-t border-line pt-5 text-sm md:hidden">
+          <%= link_to t("admin.account.title"), edit_admin_account_path, class: "text-ink-soft" %>
           <%= link_to t("admin.nav.view_site"), root_path, class: "text-ink-soft" %>
           <%= button_to t("nav.sign_out"), session_path, method: :delete, class: "cursor-pointer text-ink-soft" %>
         </div>

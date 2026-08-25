@@ -18,6 +18,8 @@ Rails.application.routes.draw do
   namespace :admin do
     root "dashboard#show"
 
+    resource :account, only: %i[ edit update ]
+
     resources :articles
     resources :courses do
       resources :lessons, except: :show

@@ -1,4 +1,8 @@
 class User < ApplicationRecord
+  # Only ever used to confirm a change of email or password on the account
+  # screen; never persisted.
+  attr_accessor :current_password
+
   has_secure_password
   has_many :sessions, dependent: :destroy
   has_many :enrollments, dependent: :destroy

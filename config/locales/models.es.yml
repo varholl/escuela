@@ -76,7 +76,8 @@ es:
         name: "Nombre"
         email_address: "Correo"
         password: "Contraseña"
-        password_confirmation: "Repetir contraseña"
+        password_confirmation: "Repetir contraseña nueva"
+        current_password: "Contraseña actual"
         role: "Rol"
   helpers:
     submit:

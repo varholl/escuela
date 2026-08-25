@@ -1,0 +1,47 @@
+<% content_for :title, page_title(t("admin.account.title")) %>
+
+<%= render "admin/shared/header", title: t("admin.account.title"), eyebrow: t("admin.title") %>
+
+<%= form_with model: @user, url: admin_account_path, method: :patch, class: "max-w-lg space-y-6" do |form| %>
+  <%= render "shared/form_errors", record: @user %>
+
+  <div class="rounded-xl border border-line bg-white p-6 space-y-6">
+    <div>
+      <%= form.label :name, class: "field-label" %>
+      <%= form.text_field :name, class: "field-input" %>
+    </div>
+
+    <div>
+      <%= form.label :email_address, class: "field-label" %>
+      <%= form.email_field :email_address, required: true, autocomplete: "username", class: "field-input" %>
+    </div>
+  </div>
+
+  <div class="rounded-xl border border-line bg-white p-6 space-y-6">
+    <div>
+      <h2 class="font-display text-xl font-light"><%= t("admin.account.password_heading") %></h2>
+      <p class="field-hint"><%= t("admin.account.password_hint") %></p>
+    </div>
+
+    <div>
+      <%= form.label :password, t("admin.account.new_password"), class: "field-label" %>
+      <%= form.password_field :password, autocomplete: "new-password", class: "field-input" %>
+    </div>
+
+    <div>
+      <%= form.label :password_confirmation, class: "field-label" %>
+      <%= form.password_field :password_confirmation, autocomplete: "new-password", class: "field-input" %>
+    </div>
+  </div>
+
+  <div class="rounded-xl border border-line bg-white p-6">
+    <%= form.label :current_password, class: "field-label" %>
+    <%= form.password_field :current_password, required: true, autocomplete: "current-password", class: "field-input" %>
+    <p class="field-hint"><%= t("admin.account.current_password_hint") %></p>
+  </div>
+
+  <div class="flex flex-wrap items-center gap-4">
+    <%= form.submit t("admin.shared.save"), class: "btn btn-primary cursor-pointer" %>
+    <%= link_to t("admin.shared.cancel"), admin_root_path, class: "link-quiet text-sm text-ink-mute" %>
+  </div>
+<% end %>
