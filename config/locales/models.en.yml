@@ -1,0 +1,85 @@
+en:
+  activerecord:
+    models:
+      article:
+        one: "Note"
+        other: "Notes"
+      course:
+        one: "Course"
+        other: "Courses"
+      lesson:
+        one: "Session"
+        other: "Sessions"
+      enrollment:
+        one: "Enrolment"
+        other: "Enrolments"
+      inquiry:
+        one: "Message"
+        other: "Messages"
+      page:
+        one: "Page"
+        other: "Pages"
+      user:
+        one: "Person"
+        other: "People"
+    attributes:
+      article:
+        title: "Title"
+        slug: "Link"
+        excerpt: "Standfirst"
+        body: "Text"
+        cover_image: "Cover image"
+        locale: "Language"
+        published_at: "Publish at"
+      course:
+        title: "Title"
+        slug: "Link"
+        subtitle: "Subtitle"
+        summary: "Summary"
+        description: "Description"
+        cover_image: "Cover image"
+        locale: "Language"
+        status: "Status"
+        modality: "Format"
+        price_cents: "Price"
+        currency: "Currency"
+        duration_label: "Length"
+        starts_on: "Starts on"
+        position: "Order"
+        published_at: "Publish at"
+      lesson:
+        title: "Title"
+        slug: "Link"
+        summary: "Summary"
+        notes: "Materials"
+        position: "Order"
+        duration_seconds: "Duration in seconds"
+        video_provider: "Where the video lives"
+        video_reference: "Video identifier"
+        video: "Video file"
+        free_preview: "Open session"
+        published_at: "Publish at"
+      inquiry:
+        name: "Name"
+        email: "Email"
+        phone: "Phone"
+        message: "Message"
+        course: "Course"
+        course_id: "Course"
+        created_at: "Received"
+      page:
+        title: "Title"
+        subtitle: "Subtitle"
+        body: "Text"
+        cover_image: "Portrait"
+      user:
+        name: "Name"
+        email_address: "Email"
+        password: "Password"
+        password_confirmation: "Repeat password"
+        role: "Role"
+  helpers:
+    submit:
+      create: "Create %{model}"
+      update: "Save %{model}"
+      submit: "Save %{model}"

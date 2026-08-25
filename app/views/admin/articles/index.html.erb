@@ -1,0 +1,49 @@
+<% content_for :title, page_title(t("admin.articles.title")) %>
+
+<%= render "admin/shared/header", title: t("admin.articles.title"), actions: capture {
+      link_to t("admin.articles.new"), new_admin_article_path, class: "btn btn-primary py-2.5 px-5 text-sm"
+    } %>
+
+<% if @articles.any? %>
+  <div class="overflow-hidden rounded-xl border border-line bg-white">
+    <ul class="divide-y divide-line">
+      <% @articles.each do |article| %>
+        <li class="flex flex-wrap items-center gap-x-4 gap-y-3 px-5 py-4">
+          <div class="min-w-0 flex-1">
+            <%= link_to article.title, edit_admin_article_path(article), class: "link-quiet font-medium" %>
+            <p class="mt-1 text-sm text-ink-mute">
+              <%= article.locale.upcase %>
+              <% if article.published_at.present? %> · <%= l(article.published_at, format: :short) %><% end %>
+            </p>
+          </div>
+
+          <%= render "admin/shared/state_badge", record: article %>
+
+          <div class="flex items-center gap-3 text-sm">
+            <%= link_to t("admin.shared.preview"), article_path(id: article, locale: article.locale),
+                  class: "link-quiet text-ink-soft" %>
+
+            <% if article.published? %>
+              <%= button_to t("admin.shared.unpublish"), admin_article_path(article), method: :patch,
+                    params: { article: { published_at: "" } },
+                    class: "link-quiet cursor-pointer text-ink-soft" %>
+            <% else %>
+              <%= button_to t("admin.shared.publish"), admin_article_path(article), method: :patch,
+                    params: { article: { published_at: Time.current.iso8601 } },
+                    class: "link-quiet cursor-pointer font-semibold text-iris" %>
+            <% end %>
+
+            <%= button_to t("admin.shared.delete"), admin_article_path(article), method: :delete,
+                  form: { data: { turbo_confirm: t("admin.shared.confirm") } },
+                  class: "link-quiet cursor-pointer text-rose" %>
+          </div>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+<% else %>
+  <div class="rounded-xl border border-dashed border-line bg-white p-12 text-center">
+    <p class="text-ink-mute"><%= t("admin.articles.empty") %></p>
+    <p class="mt-5"><%= link_to t("admin.articles.new"), new_admin_article_path, class: "btn btn-primary" %></p>
+  </div>
+<% end %>

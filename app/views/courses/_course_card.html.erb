@@ -1,0 +1,40 @@
+<article class="group border-t border-line pt-6">
+  <% if course.cover_image.attached? %>
+    <%= link_to course_path(id: course), class: "mb-5 block overflow-hidden rounded-lg", tabindex: -1, aria: { hidden: true } do %>
+      <%= image_tag course.cover_image.variant(resize_to_fill: [ 800, 500 ]), alt: "",
+            class: "aspect-[8/5] w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]" %>
+    <% end %>
+  <% end %>
+
+  <div class="flex flex-wrap items-center gap-x-3 gap-y-1">
+    <span class="eyebrow"><%= course_modality(course) %></span>
+    <% if course.starts_on.present? %>
+      <span class="text-xs text-ink-mute"><%= t("courses.starts_on", date: localized_date(course.starts_on, format: :short_month)) %></span>
+    <% end %>
+  </div>
+
+  <h3 class="mt-3 font-display text-2xl font-light">
+    <%= link_to course.title, course_path(id: course), class: "link-quiet" %>
+  </h3>
+
+  <% if course.subtitle.present? %>
+    <p class="mt-2 font-display text-lg font-light italic text-ink-mute"><%= course.subtitle %></p>
+  <% end %>
+
+  <% if course.summary.present? %>
+    <p class="mt-3 text-[0.9375rem] leading-relaxed text-ink-soft"><%= truncate(course.summary, length: 150) %></p>
+  <% end %>
+
+  <dl class="mt-5 flex flex-wrap items-baseline gap-x-6 gap-y-2 text-sm">
+    <% if course.duration_label.present? %>
+      <div class="flex items-baseline gap-2">
+        <dt class="text-ink-mute"><%= t("courses.duration") %></dt>
+        <dd class="text-ink"><%= course.duration_label %></dd>
+      </div>
+    <% end %>
+    <div class="flex items-baseline gap-2">
+      <dt class="text-ink-mute"><%= t("courses.price") %></dt>
+      <dd class="font-semibold text-ink"><%= formatted_price(course) %></dd>
+    </div>
+  </dl>
+</article>

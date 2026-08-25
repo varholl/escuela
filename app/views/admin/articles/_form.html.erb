@@ -1,0 +1,55 @@
+<%= form_with model: [ :admin, article ], class: "space-y-6" do |form| %>
+  <%= render "shared/form_errors", record: article %>
+
+  <div class="rounded-xl border border-line bg-white p-6 space-y-6">
+    <div>
+      <%= form.label :title, class: "field-label" %>
+      <%= form.text_field :title, required: true, autofocus: article.new_record?, class: "field-input" %>
+    </div>
+
+    <div class="grid gap-6 sm:grid-cols-2">
+      <div>
+        <%= form.label :slug, class: "field-label" %>
+        <%= form.text_field :slug, class: "field-input" %>
+        <p class="field-hint"><%= t("admin.shared.slug_hint") %></p>
+      </div>
+
+      <div>
+        <%= form.label :locale, t("admin.shared.locale"), class: "field-label" %>
+        <%= form.select :locale,
+              I18n.available_locales.map { |locale| [ t("locales.#{locale}"), locale ] },
+              {}, class: "field-input" %>
+      </div>
+    </div>
+
+    <div>
+      <%= form.label :excerpt, class: "field-label" %>
+      <%= form.text_area :excerpt, rows: 2, class: "field-input resize-y" %>
+    </div>
+
+    <div>
+      <%= form.label :cover_image, class: "field-label" %>
+      <% if article.cover_image.attached? %>
+        <%= image_tag article.cover_image.variant(resize_to_limit: [ 480, 300 ]), alt: "",
+              class: "mb-3 w-48 rounded-lg object-cover" %>
+      <% end %>
+      <%= form.file_field :cover_image, accept: "image/*", class: "field-input" %>
+    </div>
+
+    <div>
+      <%= form.label :published_at, class: "field-label" %>
+      <%= form.datetime_field :published_at, class: "field-input" %>
+      <p class="field-hint"><%= t("admin.shared.published_at_hint") %></p>
+    </div>
+  </div>
+
+  <div class="rounded-xl border border-line bg-white p-6">
+    <%= form.label :body, class: "field-label" %>
+    <%= form.rich_textarea :body %>
+  </div>
+
+  <div class="flex flex-wrap items-center gap-4">
+    <%= form.submit class: "btn btn-primary cursor-pointer" %>
+    <%= link_to t("admin.shared.cancel"), admin_articles_path, class: "link-quiet text-sm text-ink-mute" %>
+  </div>
+<% end %>

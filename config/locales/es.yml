@@ -1,0 +1,277 @@
+es:
+  date:
+    formats:
+      long_month: "%-d de %B de %Y"
+      short_month: "%-d %b %Y"
+
+  site:
+    name: "Maflor"
+    tagline: "Un espacio de desarrollo del ser"
+    meta_description: "Escuela de bienestar: cursos y encuentros de mindfulness, meditación y espiritualidad, en la coherencia cuerpo-mente-espíritu."
+    coherence: "cuerpo · mente · espíritu"
+
+  nav:
+    home: "Inicio"
+    about: "Sobre mí"
+    philosophy: "Filosofía"
+    courses: "Cursos"
+    articles: "Notas"
+    contact: "Contacto"
+    admin: "Panel"
+    sign_in: "Ingresar"
+    sign_out: "Cerrar sesión"
+    menu: "Menú"
+    close: "Cerrar"
+    skip_to_content: "Ir al contenido"
+
+  footer:
+    rights: "Todos los derechos reservados."
+    written_by: "Escrito y sostenido por"
+    sections: "Secciones"
+    language: "Idioma"
+
+  locales:
+    es: "Español"
+    en: "English"
+
+  home:
+    hero:
+      eyebrow: "Escuela de bienestar"
+      title: "Un espacio de desarrollo del ser"
+      body: "Cursos, encuentros y prácticas para volver a habitarse. Una mirada clínica y contemplativa a la vez, en la coherencia cuerpo-mente-espíritu."
+      primary_cta: "Ver los cursos"
+      secondary_cta: "Leer las notas"
+    pillars:
+      eyebrow: "La coherencia"
+      title: "Tres puertas a un mismo trabajo"
+      body: "Ninguna de las tres alcanza sola. El bienestar aparece cuando lo que el cuerpo siente, la mente piensa y el espíritu busca dejan de contradecirse."
+      body_title: "Habitar el cuerpo"
+      body_text: "Respiración, movimiento y descanso como punto de partida. El cuerpo registra mucho antes de que la mente pueda nombrarlo."
+      mind_title: "Aquietar la mente"
+      mind_text: "Prácticas de atención plena con base clínica, para observar el pensamiento sin quedar atrapado en él."
+      spirit_title: "Escuchar el espíritu"
+      spirit_text: "El sentido, los valores, aquello que sostiene. Un trabajo íntimo que no pide creer nada: solo mirar con honestidad."
+    approach:
+      eyebrow: "El encuadre"
+      title: "Rigor clínico, mirada contemplativa"
+      body: "Soy médica psiquiatra. Todo lo que enseño pasa antes por el filtro de la evidencia y de la práctica personal. No hay atajos ni promesas: hay herramientas, tiempo y acompañamiento."
+      cta: "Conocer mi recorrido"
+    courses:
+      eyebrow: "Formación"
+      title: "Cursos y encuentros"
+      body: "Programas breves y procesos largos, en vivo y grabados."
+      cta: "Ver todos los cursos"
+      empty: "Los primeros cursos se están gestando. Dejame tu correo y te aviso cuando abran las inscripciones."
+    articles:
+      eyebrow: "Notas"
+      title: "Lo que voy escribiendo"
+      body: "Apuntes sobre salud mental, práctica contemplativa y vida cotidiana."
+      cta: "Ver todas las notas"
+      empty: "Pronto vas a encontrar acá las primeras notas."
+    contact:
+      title: "¿Empezamos a conversar?"
+      body: "Contame qué estás buscando y en qué momento estás. Leo cada mensaje personalmente."
+      cta: "Escribime"
+
+  pages:
+    about:
+      default_title: "Sobre mí"
+      default_subtitle: "Médica psiquiatra. Acompaño procesos de desarrollo del ser."
+    philosophy:
+      default_title: "La coherencia cuerpo-mente-espíritu"
+      default_subtitle: "Por qué enseño lo que enseño, y desde dónde."
+    empty: "Esta página todavía no tiene contenido."
+
+  articles:
+    index:
+      eyebrow: "Notas"
+      title: "Escritos"
+      body: "Apuntes sobre salud mental, práctica contemplativa y vida cotidiana."
+      empty: "Todavía no hay notas publicadas en este idioma."
+    show:
+      back: "Volver a las notas"
+      related: "Seguir leyendo"
+      draft_notice: "Estás viendo un borrador. Nadie más puede acceder a esta nota todavía."
+    reading_time:
+      one: "1 minuto de lectura"
+      other: "%{count} minutos de lectura"
+
+  courses:
+    index:
+      eyebrow: "Formación"
+      title: "Cursos y encuentros"
+      body: "Programas para recorrer solo o acompañado, con la práctica en el centro."
+      empty: "Todavía no hay cursos publicados en este idioma."
+    show:
+      back: "Volver a los cursos"
+      about: "Sobre este curso"
+      contents: "Contenidos"
+      details: "Detalles"
+      cta: "Quiero saber más"
+      draft_notice: "Estás viendo un curso sin publicar."
+      lessons_pending: "El programa detallado se publica al abrir la inscripción."
+    modality:
+      online_live: "En vivo online"
+      on_demand: "A tu ritmo"
+      in_person: "Presencial"
+      hybrid: "Mixto"
+    status:
+      draft: "Borrador"
+      published: "Publicado"
+      archived: "Archivado"
+    free: "Sin costo"
+    starts_on: "Comienza el %{date}"
+    duration: "Duración"
+    price: "Inversión"
+    lessons_count:
+      one: "1 clase"
+      other: "%{count} clases"
+    free_preview: "Clase abierta"
+
+  inquiries:
+    new:
+      eyebrow: "Contacto"
+      title: "Escribime"
+      body: "Contame en qué momento estás y qué te gustaría trabajar. Respondo personalmente, puede tomarme unos días."
+      submit: "Enviar mensaje"
+      general_interest: "Consulta general"
+      course_label: "Me interesa"
+    create:
+      success: "Gracias por escribir. Te respondo apenas pueda."
+    throttled: "Recibimos varios mensajes tuyos hace poco. Probá de nuevo en un rato."
+    honeypot_label: "Dejá este campo vacío"
+
+  sessions:
+    new:
+      title: "Ingresar"
+      body: "Acceso al panel de administración."
+      submit: "Ingresar"
+      forgot_password: "Olvidé mi contraseña"
+    invalid_credentials: "El correo o la contraseña no coinciden."
+    throttled: "Demasiados intentos. Probá de nuevo en unos minutos."
+    signed_out: "Cerraste la sesión."
+
+  passwords:
+    new:
+      title: "Restablecer contraseña"
+      body: "Te enviamos un enlace para elegir una nueva."
+      submit: "Enviar enlace"
+    edit:
+      title: "Elegí una nueva contraseña"
+      submit: "Guardar contraseña"
+    reset_sent: "Si existe una cuenta con ese correo, te enviamos las instrucciones."
+    invalid_token: "El enlace no es válido o ya venció. Pedí uno nuevo."
+    updated: "Tu contraseña quedó actualizada. Ya podés ingresar."
+    mismatch: "Las contraseñas no coinciden."
+
+  admin:
+    access_denied: "No tenés permiso para entrar al panel."
+    title: "Panel"
+    nav:
+      dashboard: "Inicio"
+      articles: "Notas"
+      courses: "Cursos"
+      pages: "Páginas"
+      inquiries: "Mensajes"
+      view_site: "Ver el sitio"
+    dashboard:
+      title: "Panel"
+      greeting: "Hola, %{name}"
+      articles: "Notas"
+      published_articles: "Notas publicadas"
+      courses: "Cursos"
+      published_courses: "Cursos publicados"
+      unhandled_inquiries: "Mensajes sin responder"
+      recent_articles: "Últimas notas"
+      recent_courses: "Cursos"
+      recent_inquiries: "Mensajes sin responder"
+      all_handled: "No hay mensajes pendientes."
+    shared:
+      new: "Nueva"
+      edit: "Editar"
+      delete: "Eliminar"
+      save: "Guardar"
+      cancel: "Cancelar"
+      back: "Volver"
+      confirm: "¿Seguro? Esta acción no se puede deshacer."
+      empty: "Todavía no hay nada acá."
+      publish: "Publicar"
+      unpublish: "Pasar a borrador"
+      preview: "Ver"
+      draft: "Borrador"
+      published: "Publicada"
+      scheduled: "Programada"
+      published_at_hint: "Vacío = borrador. Una fecha futura la deja programada."
+      slug_hint: "Se genera solo a partir del título. Cambiarlo rompe los enlaces ya compartidos."
+      locale: "Idioma"
+      optional: "opcional"
+    articles:
+      title: "Notas"
+      new: "Nueva nota"
+      created: "Nota creada."
+      updated: "Nota guardada."
+      destroyed: "Nota eliminada."
+      empty: "Todavía no escribiste ninguna nota."
+    courses:
+      title: "Cursos"
+      new: "Nuevo curso"
+      created: "Curso creado."
+      updated: "Curso guardado."
+      destroyed: "Curso eliminado."
+      empty: "Todavía no cargaste ningún curso."
+      lessons: "Clases"
+      enrollments: "Inscripciones"
+      price_hint: "En centavos, sin puntos ni comas. 25000 pesos se carga como 2500000."
+    lessons:
+      title: "Clases de %{course}"
+      new: "Nueva clase"
+      created: "Clase creada."
+      updated: "Clase guardada."
+      destroyed: "Clase eliminada."
+      empty: "Este curso todavía no tiene clases."
+      video_hint: "Fase 2: elegí dónde vive el video y pegá su identificador."
+      phase_two_notice: "Las clases todavía no se muestran en el sitio público. Se activan cuando abramos la venta."
+    enrollments:
+      title: "Inscripciones a %{course}"
+      new: "Dar acceso"
+      created: "Acceso otorgado."
+      destroyed: "Acceso retirado."
+      empty: "Nadie tiene acceso a este curso todavía."
+      email_label: "Correo del alumno"
+      email_hint: "Si no tiene cuenta, se crea una."
+      name_label: "Nombre"
+      granted_at: "Desde"
+      manual_notice: "Fase 1: los accesos se otorgan a mano. Cuando conectemos la pasarela de pago, el webhook va a crear estos mismos registros."
+    pages:
+      title: "Páginas"
+      updated: "Página guardada."
+      keys:
+        about: "Sobre mí"
+        philosophy: "Filosofía"
+    inquiries:
+      title: "Mensajes"
+      destroyed: "Mensaje eliminado."
+      marked_handled: "Marcado como respondido."
+      marked_unhandled: "Marcado como pendiente."
+      empty: "Todavía no llegó ningún mensaje."
+      handled: "Respondido"
+      unhandled: "Pendiente"
+      mark_handled: "Marcar respondido"
+      mark_unhandled: "Marcar pendiente"
+      reply: "Responder por correo"
+      about_course: "Consulta por %{course}"
+      general: "Consulta general"
+
+  inquiry_mailer:
+    notify:
+      subject: "Nuevo mensaje de %{name}"
+      heading: "Llegó un mensaje nuevo"
+      course: "Consulta por"
+      reply_hint: "Podés responder directamente a este correo."
+
+  errors:
+    not_found:
+      title: "No encontramos esta página"
+      body: "Puede que el enlace haya cambiado o que el contenido ya no esté publicado."
+      cta: "Volver al inicio"
+    form: "Revisá lo siguiente:"

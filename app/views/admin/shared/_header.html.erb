@@ -1,0 +1,11 @@
+<div class="mb-7 flex flex-wrap items-end justify-between gap-4">
+  <div>
+    <% if local_assigns[:eyebrow].present? %>
+      <p class="eyebrow"><%= eyebrow %></p>
+    <% end %>
+    <h1 class="<%= "mt-2" if local_assigns[:eyebrow].present? %> font-display text-3xl font-light"><%= title %></h1>
+  </div>
+  <% if local_assigns[:actions].present? %>
+    <div class="flex flex-wrap items-center gap-3"><%= actions %></div>
+  <% end %>
+</div>

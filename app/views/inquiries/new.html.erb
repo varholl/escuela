@@ -1,0 +1,61 @@
+<% content_for :title, page_title(t("inquiries.new.title")) %>
+<% content_for :description, meta_description(t("inquiries.new.body")) %>
+
+<div class="mx-auto max-w-6xl px-6 pt-16 pb-8 md:pt-24">
+  <div class="grid grid-cols-1 gap-14 lg:grid-cols-[0.9fr_1.1fr] lg:gap-20">
+    <div>
+      <p class="eyebrow"><%= t("inquiries.new.eyebrow") %></p>
+      <h1 class="mt-5 text-[clamp(2.4rem,5.5vw,4rem)]"><%= t("inquiries.new.title") %></h1>
+      <p class="mt-6 max-w-md text-lg leading-relaxed text-ink-soft"><%= t("inquiries.new.body") %></p>
+      <p class="eyebrow mt-10"><%= t("site.coherence") %></p>
+    </div>
+
+    <div>
+      <%= form_with model: @inquiry, url: contact_path, class: "space-y-6" do |form| %>
+        <%= render "shared/form_errors", record: @inquiry %>
+
+        <div>
+          <%= form.label :name, class: "field-label" %>
+          <%= form.text_field :name, required: true, autocomplete: "name", class: "field-input" %>
+        </div>
+
+        <div class="grid gap-6 sm:grid-cols-2">
+          <div>
+            <%= form.label :email, class: "field-label" %>
+            <%= form.email_field :email, required: true, autocomplete: "email", class: "field-input" %>
+          </div>
+
+          <div>
+            <%= form.label :phone, class: "field-label" do %>
+              <%= Inquiry.human_attribute_name(:phone) %>
+              <span class="font-normal text-ink-mute">(<%= t("admin.shared.optional") %>)</span>
+            <% end %>
+            <%= form.telephone_field :phone, autocomplete: "tel", class: "field-input" %>
+          </div>
+        </div>
+
+        <% courses = Course.in_locale(I18n.locale).published.ordered %>
+        <% if courses.any? %>
+          <div>
+            <%= form.label :course_id, t("inquiries.new.course_label"), class: "field-label" %>
+            <%= form.collection_select :course_id, courses, :id, :title,
+                  { include_blank: t("inquiries.new.general_interest") }, class: "field-input" %>
+          </div>
+        <% end %>
+
+        <div>
+          <%= form.label :message, class: "field-label" %>
+          <%= form.text_area :message, rows: 7, required: true, class: "field-input resize-y" %>
+        </div>
+
+        <%# Honeypot: hidden from people, irresistible to bots. %>
+        <div class="absolute left-[-9999px]" aria-hidden="true">
+          <label for="inquiry_website"><%= t("inquiries.honeypot_label") %></label>
+          <input type="text" name="inquiry[website]" id="inquiry_website" tabindex="-1" autocomplete="off">
+        </div>
+
+        <%= form.submit t("inquiries.new.submit"), class: "btn btn-primary cursor-pointer" %>
+      <% end %>
+    </div>
+  </div>
+</div>

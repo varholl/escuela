@@ -1,0 +1,17 @@
+<% content_for :title, page_title(t("articles.index.title")) %>
+<% content_for :description, meta_description(t("articles.index.body")) %>
+
+<%= render "shared/page_header",
+      eyebrow: t("articles.index.eyebrow"),
+      title: t("articles.index.title"),
+      body: t("articles.index.body") %>
+
+<div class="mx-auto max-w-6xl px-6 pb-8">
+  <% if @articles.any? %>
+    <div class="grid gap-12 md:grid-cols-2 lg:grid-cols-3">
+      <%= render partial: "articles/article_card", collection: @articles, as: :article %>
+    </div>
+  <% else %>
+    <p class="text-lg text-ink-mute"><%= t("articles.index.empty") %></p>
+  <% end %>
+</div>

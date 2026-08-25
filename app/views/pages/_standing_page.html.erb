@@ -1,0 +1,48 @@
+<%
+  default_title    = t("pages.#{key}.default_title")
+  default_subtitle = t("pages.#{key}.default_subtitle")
+  title            = page&.title.presence || default_title
+  subtitle         = page&.subtitle.presence || default_subtitle
+  portrait         = page&.cover_image
+%>
+<% content_for :title, page_title(title) %>
+<% content_for :description, meta_description(subtitle) %>
+
+<article>
+  <header class="mx-auto max-w-6xl px-6 pt-16 pb-14 md:pt-24">
+    <div class="grid grid-cols-1 items-center gap-14 <%= "lg:grid-cols-[1.15fr_0.85fr]" if portrait&.attached? %>">
+      <div>
+        <p class="eyebrow"><%= t("nav.#{key}") %></p>
+        <h1 class="mt-5 text-[clamp(2.4rem,5.5vw,4rem)]"><%= title %></h1>
+        <% if subtitle.present? %>
+          <p class="mt-6 max-w-xl font-display text-xl font-light italic leading-snug text-ink-mute">
+            <%= subtitle %>
+          </p>
+        <% end %>
+      </div>
+
+      <% if portrait&.attached? %>
+        <div class="mx-auto w-full max-w-sm lg:max-w-none">
+          <%= render "shared/aperture", image: portrait, id: key, alt: title %>
+        </div>
+      <% end %>
+    </div>
+
+    <hr class="rule-gradient mt-14">
+  </header>
+
+  <div class="mx-auto max-w-2xl px-6 pb-8">
+    <% if page&.body&.present? %>
+      <div class="prose-note"><%= page.body %></div>
+    <% else %>
+      <p class="text-lg text-ink-mute"><%= t("pages.empty") %></p>
+    <% end %>
+  </div>
+
+  <div class="mx-auto max-w-2xl px-6 pt-10">
+    <hr class="rule-gradient">
+    <p class="mt-10">
+      <%= link_to t("home.contact.cta"), new_contact_path, class: "btn btn-primary" %>
+    </p>
+  </div>
+</article>

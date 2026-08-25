@@ -1,0 +1,11 @@
+<%
+  on_ink = local_assigns.fetch(:on_ink, false)
+  mark = on_ink ? "logo-mark-light.png" : "logo-mark.png"
+  size = local_assigns.fetch(:size, "h-9 w-9")
+%>
+<span class="inline-flex items-center gap-3">
+  <%= image_tag mark, alt: "", aria: { hidden: true }, class: "#{size} shrink-0 object-contain" %>
+  <span class="font-display text-xl font-normal tracking-[0.14em] <%= on_ink ? "text-white" : "text-ink" %>">
+    <%= t("site.name") %>
+  </span>
+</span>

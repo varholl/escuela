@@ -1,0 +1,13 @@
+<%# One third of the brand ring, rotated into its position. Decorative: the
+    meaning is carried by the heading it sits above. %>
+<svg viewBox="0 0 64 64" class="<%= local_assigns.fetch(:classes, "h-16 w-16") %>" aria-hidden="true" focusable="false">
+  <circle cx="32" cy="32" r="<%= ApplicationHelper::ARC_RADIUS %>"
+          fill="none" stroke="var(--color-line)" stroke-width="1.5" opacity="0.9" />
+  <circle cx="32" cy="32" r="<%= ApplicationHelper::ARC_RADIUS %>"
+          fill="none"
+          stroke="<%= arc_color(index) %>"
+          stroke-width="3.5"
+          stroke-linecap="round"
+          stroke-dasharray="<%= arc_dasharray %>"
+          transform="rotate(<%= arc_rotation(index) %> 32 32)" />
+</svg>

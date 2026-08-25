@@ -1,0 +1,126 @@
+<% content_for :title, page_title(t("site.tagline")) %>
+<%# The page ends on the dark invitation, so the footer continues it. %>
+<% content_for :flush_footer, true %>
+
+<%# ---- Hero ------------------------------------------------------------- %>
+<section class="relative">
+  <div class="mx-auto grid max-w-6xl grid-cols-1 items-center gap-14 px-6 pt-16 pb-20 lg:grid-cols-[1.05fr_0.95fr] lg:gap-20 lg:pt-24 lg:pb-28">
+    <div>
+      <p class="eyebrow"><%= t("home.hero.eyebrow") %></p>
+
+      <h1 class="mt-6 text-[clamp(2.6rem,6.5vw,4.75rem)]">
+        <%= t("home.hero.title") %>
+      </h1>
+
+      <p class="mt-7 max-w-lg text-lg leading-relaxed text-ink-soft">
+        <%= t("home.hero.body") %>
+      </p>
+
+      <div class="mt-10 flex flex-wrap items-center gap-4">
+        <%= link_to t("home.hero.primary_cta"), courses_path, class: "btn btn-primary" %>
+        <%= link_to t("home.hero.secondary_cta"), articles_path, class: "btn btn-ghost" %>
+      </div>
+    </div>
+
+    <div class="mx-auto w-full max-w-md lg:max-w-none">
+      <%= render "shared/aperture", image: @portrait, alt: "" %>
+    </div>
+  </div>
+
+  <div class="mx-auto max-w-6xl px-6">
+    <hr class="rule-gradient">
+    <p class="eyebrow py-6 text-center"><%= t("site.coherence") %></p>
+  </div>
+</section>
+
+<%# ---- The three pillars ------------------------------------------------ %>
+<section class="mx-auto max-w-6xl px-6 py-20 md:py-28">
+  <%= render "shared/section_heading",
+        eyebrow: t("home.pillars.eyebrow"),
+        title: t("home.pillars.title"),
+        body: t("home.pillars.body") %>
+
+  <div class="mt-16 grid gap-12 md:grid-cols-3 md:gap-10">
+    <% %w[ body mind spirit ].each_with_index do |pillar, index| %>
+      <div>
+        <%= render "shared/arc", index: index %>
+        <h3 class="mt-6 font-display text-2xl font-light"><%= t("home.pillars.#{pillar}_title") %></h3>
+        <p class="mt-4 leading-relaxed text-ink-soft"><%= t("home.pillars.#{pillar}_text") %></p>
+      </div>
+    <% end %>
+  </div>
+</section>
+
+<%# ---- The frame -------------------------------------------------------- %>
+<section class="bg-haze">
+  <div class="mx-auto grid max-w-6xl grid-cols-1 gap-10 px-6 py-20 md:grid-cols-[0.9fr_1.1fr] md:items-center md:py-28">
+    <%= render "shared/section_heading",
+          eyebrow: t("home.approach.eyebrow"),
+          title: t("home.approach.title") %>
+
+    <div>
+      <p class="text-lg leading-relaxed text-ink-soft"><%= t("home.approach.body") %></p>
+      <p class="mt-7">
+        <%= link_to t("home.approach.cta"), about_path, class: "link-quiet font-semibold text-iris" %>
+      </p>
+    </div>
+  </div>
+</section>
+
+<%# ---- Courses ---------------------------------------------------------- %>
+<section class="mx-auto max-w-6xl px-6 py-20 md:py-28">
+  <div class="flex flex-wrap items-end justify-between gap-6">
+    <%= render "shared/section_heading",
+          eyebrow: t("home.courses.eyebrow"),
+          title: t("home.courses.title"),
+          body: t("home.courses.body") %>
+
+    <% if @courses.any? %>
+      <%= link_to t("home.courses.cta"), courses_path, class: "link-quiet font-semibold text-iris" %>
+    <% end %>
+  </div>
+
+  <% if @courses.any? %>
+    <div class="mt-14 grid gap-10 md:grid-cols-3">
+      <%= render partial: "courses/course_card", collection: @courses, as: :course %>
+    </div>
+  <% else %>
+    <p class="mt-10 max-w-xl text-lg text-ink-mute"><%= t("home.courses.empty") %></p>
+    <p class="mt-6"><%= link_to t("home.contact.cta"), new_contact_path, class: "btn btn-ghost" %></p>
+  <% end %>
+</section>
+
+<%# ---- Journal ---------------------------------------------------------- %>
+<section class="mx-auto max-w-6xl px-6 pb-20 md:pb-28">
+  <hr class="rule-gradient mb-20 md:mb-28">
+
+  <div class="flex flex-wrap items-end justify-between gap-6">
+    <%= render "shared/section_heading",
+          eyebrow: t("home.articles.eyebrow"),
+          title: t("home.articles.title"),
+          body: t("home.articles.body") %>
+
+    <% if @articles.any? %>
+      <%= link_to t("home.articles.cta"), articles_path, class: "link-quiet font-semibold text-iris" %>
+    <% end %>
+  </div>
+
+  <% if @articles.any? %>
+    <div class="mt-14 grid gap-10 md:grid-cols-3">
+      <%= render partial: "articles/article_card", collection: @articles, as: :article %>
+    </div>
+  <% else %>
+    <p class="mt-10 max-w-xl text-lg text-ink-mute"><%= t("home.articles.empty") %></p>
+  <% end %>
+</section>
+
+<%# ---- Invitation ------------------------------------------------------- %>
+<section class="bg-ink">
+  <div class="mx-auto max-w-6xl px-6 py-24 text-center md:py-32">
+    <h2 class="mx-auto max-w-2xl text-[clamp(2rem,4.5vw,3.25rem)] text-white"><%= t("home.contact.title") %></h2>
+    <p class="mx-auto mt-6 max-w-xl text-lg leading-relaxed text-white/70"><%= t("home.contact.body") %></p>
+    <p class="mt-10">
+      <%= link_to t("home.contact.cta"), new_contact_path, class: "btn btn-on-ink" %>
+    </p>
+  </div>
+</section>

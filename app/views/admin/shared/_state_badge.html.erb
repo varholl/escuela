@@ -1,0 +1,16 @@
+<%
+  state = if record.respond_to?(:status) then record.status
+          elsif record.published?  then "published"
+          elsif record.scheduled?  then "scheduled"
+          else "drafted"
+          end
+
+  label, classes =
+    case state.to_s
+    when "published" then [ t("admin.shared.published"), "bg-iris/10 text-iris" ]
+    when "scheduled" then [ t("admin.shared.scheduled"), "bg-gold/20 text-ink" ]
+    when "archived"  then [ t("courses.status.archived"), "bg-ink/10 text-ink-mute" ]
+    else                  [ t("admin.shared.draft"), "bg-line text-ink-mute" ]
+    end
+%>
+<span class="inline-flex shrink-0 rounded-full px-2.5 py-1 text-xs font-semibold <%= classes %>"><%= label %></span>

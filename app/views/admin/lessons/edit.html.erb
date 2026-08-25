@@ -1,0 +1,5 @@
+<% content_for :title, page_title(@lesson.title) %>
+<%= render "admin/shared/header", title: @lesson.title, eyebrow: @course.title, actions: capture {
+      link_to t("admin.shared.back"), admin_course_lessons_path(@course), class: "link-quiet text-sm text-ink-mute"
+    } %>
+<%= render "form", course: @course, lesson: @lesson %>

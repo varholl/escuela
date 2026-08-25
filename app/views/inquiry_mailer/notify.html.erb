@@ -1,0 +1,19 @@
+<h1><%= t("inquiry_mailer.notify.heading") %></h1>
+
+<p><strong><%= @inquiry.name %></strong> &lt;<%= @inquiry.email %>&gt;</p>
+
+<% if @inquiry.phone.present? %>
+  <p><%= Inquiry.human_attribute_name(:phone) %>: <%= @inquiry.phone %></p>
+<% end %>
+
+<% if @inquiry.course.present? %>
+  <p><%= t("inquiry_mailer.notify.course") %>: <%= @inquiry.course.title %></p>
+<% end %>
+
+<hr>
+
+<p style="white-space: pre-line;"><%= @inquiry.message %></p>
+
+<hr>
+
+<p><em><%= t("inquiry_mailer.notify.reply_hint") %></em></p>

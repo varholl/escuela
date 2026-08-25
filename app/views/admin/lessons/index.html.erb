@@ -1,0 +1,45 @@
+<% content_for :title, page_title(t("admin.lessons.title", course: @course.title)) %>
+
+<%= render "admin/shared/header",
+      title: t("admin.lessons.title", course: @course.title),
+      eyebrow: t("admin.courses.lessons"),
+      actions: capture {
+        safe_join([
+          link_to(t("admin.lessons.new"), new_admin_course_lesson_path(@course), class: "btn btn-primary py-2.5 px-5 text-sm"),
+          link_to(t("admin.shared.back"), edit_admin_course_path(@course), class: "link-quiet text-sm text-ink-mute")
+        ], " ")
+      } %>
+
+<p class="mb-6 rounded-xl border-l-2 border-gold bg-gold/10 px-5 py-3.5 text-[0.9375rem]">
+  <%= t("admin.lessons.phase_two_notice") %>
+</p>
+
+<% if @lessons.any? %>
+  <div class="overflow-hidden rounded-xl border border-line bg-white">
+    <ul class="divide-y divide-line">
+      <% @lessons.each do |lesson| %>
+        <li class="flex flex-wrap items-center gap-x-4 gap-y-3 px-5 py-4">
+          <span class="w-6 shrink-0 font-display text-lg text-ink-mute"><%= lesson.position %></span>
+
+          <div class="min-w-0 flex-1">
+            <%= link_to lesson.title, edit_admin_course_lesson_path(@course, lesson), class: "link-quiet font-medium" %>
+            <p class="mt-1 text-sm text-ink-mute">
+              <%= [ lesson.duration, lesson.video_provider.presence, (t("courses.free_preview") if lesson.free_preview?) ].compact_blank.join(" · ") %>
+            </p>
+          </div>
+
+          <%= render "admin/shared/state_badge", record: lesson %>
+
+          <%= button_to t("admin.shared.delete"), admin_course_lesson_path(@course, lesson), method: :delete,
+                form: { data: { turbo_confirm: t("admin.shared.confirm") } },
+                class: "link-quiet cursor-pointer text-sm text-rose" %>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+<% else %>
+  <div class="rounded-xl border border-dashed border-line bg-white p-12 text-center">
+    <p class="text-ink-mute"><%= t("admin.lessons.empty") %></p>
+    <p class="mt-5"><%= link_to t("admin.lessons.new"), new_admin_course_lesson_path(@course), class: "btn btn-primary" %></p>
+  </div>
+<% end %>

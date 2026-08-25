@@ -1,0 +1,3 @@
+<% content_for :title, page_title(t("admin.articles.new")) %>
+<%= render "admin/shared/header", title: t("admin.articles.new"), eyebrow: t("admin.articles.title") %>
+<%= render "form", article: @article %>

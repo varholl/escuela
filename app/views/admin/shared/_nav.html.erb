@@ -1,0 +1,29 @@
+<%
+  items = [
+    [ t("admin.nav.dashboard"), admin_root_path,      admin_root_path ],
+    [ t("admin.nav.articles"),  admin_articles_path,  admin_articles_path ],
+    [ t("admin.nav.courses"),   admin_courses_path,   admin_courses_path ],
+    [ t("admin.nav.pages"),     admin_pages_path,     admin_pages_path ],
+    [ t("admin.nav.inquiries"), admin_inquiries_path, admin_inquiries_path ]
+  ]
+  pending = Inquiry.unhandled.count
+%>
+<nav class="flex gap-1 overflow-x-auto md:flex-col md:overflow-visible" aria-label="<%= t("admin.title") %>">
+  <% items.each do |label, path, root| %>
+    <% active = request.path == root || (root != admin_root_path && request.path.start_with?(root)) %>
+    <%= link_to path,
+          class: class_names(
+            "flex shrink-0 items-center justify-between gap-3 rounded-lg px-3.5 py-2.5 text-[0.9375rem] transition-colors",
+            "bg-iris text-white" => active,
+            "text-ink-soft hover:bg-haze" => !active
+          ),
+          aria: { current: ("page" if active) } do %>
+      <span><%= label %></span>
+      <% if path == admin_inquiries_path && pending.positive? %>
+        <span class="rounded-full px-2 py-0.5 text-xs font-semibold <%= active ? "bg-white/20 text-white" : "bg-gold/20 text-ink" %>">
+          <%= pending %>
+        </span>
+      <% end %>
+    <% end %>
+  <% end %>
+</nav>

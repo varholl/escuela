@@ -1,0 +1,100 @@
+<%= form_with model: [ :admin, course ], class: "space-y-6" do |form| %>
+  <%= render "shared/form_errors", record: course %>
+
+  <div class="rounded-xl border border-line bg-white p-6 space-y-6">
+    <div>
+      <%= form.label :title, class: "field-label" %>
+      <%= form.text_field :title, required: true, autofocus: course.new_record?, class: "field-input" %>
+    </div>
+
+    <div>
+      <%= form.label :subtitle, class: "field-label" %>
+      <%= form.text_field :subtitle, class: "field-input" %>
+    </div>
+
+    <div>
+      <%= form.label :summary, class: "field-label" %>
+      <%= form.text_area :summary, rows: 3, class: "field-input resize-y" %>
+    </div>
+
+    <div class="grid gap-6 sm:grid-cols-2">
+      <div>
+        <%= form.label :slug, class: "field-label" %>
+        <%= form.text_field :slug, class: "field-input" %>
+        <p class="field-hint"><%= t("admin.shared.slug_hint") %></p>
+      </div>
+
+      <div>
+        <%= form.label :locale, t("admin.shared.locale"), class: "field-label" %>
+        <%= form.select :locale,
+              I18n.available_locales.map { |locale| [ t("locales.#{locale}"), locale ] },
+              {}, class: "field-input" %>
+      </div>
+    </div>
+
+    <div class="grid gap-6 sm:grid-cols-2">
+      <div>
+        <%= form.label :status, class: "field-label" %>
+        <%= form.select :status,
+              Course.statuses.keys.map { |status| [ t("courses.status.#{status}"), status ] },
+              {}, class: "field-input" %>
+      </div>
+
+      <div>
+        <%= form.label :modality, class: "field-label" %>
+        <%= form.select :modality,
+              Course.modalities.keys.map { |modality| [ t("courses.modality.#{modality}"), modality ] },
+              {}, class: "field-input" %>
+      </div>
+    </div>
+
+    <div class="grid gap-6 sm:grid-cols-3">
+      <div>
+        <%= form.label :price_cents, class: "field-label" %>
+        <%= form.number_field :price_cents, min: 0, step: 1, class: "field-input" %>
+        <p class="field-hint"><%= t("admin.courses.price_hint") %></p>
+      </div>
+
+      <div>
+        <%= form.label :currency, class: "field-label" %>
+        <%= form.select :currency, CoursesHelper::CURRENCY_UNITS.keys, {}, class: "field-input" %>
+      </div>
+
+      <div>
+        <%= form.label :position, class: "field-label" %>
+        <%= form.number_field :position, min: 0, step: 1, class: "field-input" %>
+      </div>
+    </div>
+
+    <div class="grid gap-6 sm:grid-cols-2">
+      <div>
+        <%= form.label :duration_label, class: "field-label" %>
+        <%= form.text_field :duration_label, class: "field-input" %>
+      </div>
+
+      <div>
+        <%= form.label :starts_on, class: "field-label" %>
+        <%= form.date_field :starts_on, class: "field-input" %>
+      </div>
+    </div>
+
+    <div>
+      <%= form.label :cover_image, class: "field-label" %>
+      <% if course.cover_image.attached? %>
+        <%= image_tag course.cover_image.variant(resize_to_limit: [ 480, 300 ]), alt: "",
+              class: "mb-3 w-48 rounded-lg object-cover" %>
+      <% end %>
+      <%= form.file_field :cover_image, accept: "image/*", class: "field-input" %>
+    </div>
+  </div>
+
+  <div class="rounded-xl border border-line bg-white p-6">
+    <%= form.label :description, class: "field-label" %>
+    <%= form.rich_textarea :description %>
+  </div>
+
+  <div class="flex flex-wrap items-center gap-4">
+    <%= form.submit class: "btn btn-primary cursor-pointer" %>
+    <%= link_to t("admin.shared.cancel"), admin_courses_path, class: "link-quiet text-sm text-ink-mute" %>
+  </div>
+<% end %>

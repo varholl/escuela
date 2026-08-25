@@ -1,0 +1,277 @@
+en:
+  date:
+    formats:
+      long_month: "%B %-d, %Y"
+      short_month: "%b %-d, %Y"
+
+  site:
+    name: "Maflor"
+    tagline: "A space for the unfolding of the self"
+    meta_description: "A wellbeing school: courses and gatherings in mindfulness, meditation and spirituality, grounded in body-mind-spirit coherence."
+    coherence: "body · mind · spirit"
+
+  nav:
+    home: "Home"
+    about: "About"
+    philosophy: "Philosophy"
+    courses: "Courses"
+    articles: "Journal"
+    contact: "Contact"
+    admin: "Admin"
+    sign_in: "Sign in"
+    sign_out: "Sign out"
+    menu: "Menu"
+    close: "Close"
+    skip_to_content: "Skip to content"
+
+  footer:
+    rights: "All rights reserved."
+    written_by: "Written and tended by"
+    sections: "Sections"
+    language: "Language"
+
+  locales:
+    es: "Español"
+    en: "English"
+
+  home:
+    hero:
+      eyebrow: "A wellbeing school"
+      title: "A space for the unfolding of the self"
+      body: "Courses, gatherings and practices for coming home to yourself. Clinical and contemplative at once, grounded in body-mind-spirit coherence."
+      primary_cta: "See the courses"
+      secondary_cta: "Read the journal"
+    pillars:
+      eyebrow: "Coherence"
+      title: "Three doors into one work"
+      body: "None of the three is enough on its own. Wellbeing shows up when what the body feels, the mind thinks and the spirit reaches for stop contradicting each other."
+      body_title: "Inhabit the body"
+      body_text: "Breath, movement and rest as the starting point. The body registers long before the mind can name it."
+      mind_title: "Quiet the mind"
+      mind_text: "Clinically grounded mindfulness practice, to watch thought without being caught by it."
+      spirit_title: "Listen to the spirit"
+      spirit_text: "Meaning, values, whatever holds you up. Intimate work that asks you to believe nothing — only to look honestly."
+    approach:
+      eyebrow: "The frame"
+      title: "Clinical rigour, contemplative gaze"
+      body: "I am a psychiatrist. Everything I teach passes first through the filter of evidence and of personal practice. No shortcuts and no promises: tools, time and company."
+      cta: "Read my background"
+    courses:
+      eyebrow: "Programmes"
+      title: "Courses and gatherings"
+      body: "Short programmes and long processes, live and recorded."
+      cta: "See all courses"
+      empty: "The first courses are taking shape. Leave me your email and I will let you know when enrolment opens."
+    articles:
+      eyebrow: "Journal"
+      title: "What I am writing"
+      body: "Notes on mental health, contemplative practice and everyday life."
+      cta: "Read all notes"
+      empty: "The first notes will appear here soon."
+    contact:
+      title: "Shall we talk?"
+      body: "Tell me what you are looking for and where you are right now. I read every message myself."
+      cta: "Write to me"
+
+  pages:
+    about:
+      default_title: "About me"
+      default_subtitle: "Psychiatrist. I accompany processes of inner development."
+    philosophy:
+      default_title: "Body-mind-spirit coherence"
+      default_subtitle: "Why I teach what I teach, and where it comes from."
+    empty: "This page has no content yet."
+
+  articles:
+    index:
+      eyebrow: "Journal"
+      title: "Writing"
+      body: "Notes on mental health, contemplative practice and everyday life."
+      empty: "No notes published in this language yet."
+    show:
+      back: "Back to the journal"
+      related: "Keep reading"
+      draft_notice: "You are looking at a draft. Nobody else can reach this note yet."
+    reading_time:
+      one: "1 minute read"
+      other: "%{count} minute read"
+
+  courses:
+    index:
+      eyebrow: "Programmes"
+      title: "Courses and gatherings"
+      body: "Programmes to walk alone or in company, with practice at the centre."
+      empty: "No courses published in this language yet."
+    show:
+      back: "Back to the courses"
+      about: "About this course"
+      contents: "Contents"
+      details: "Details"
+      cta: "I would like to know more"
+      draft_notice: "You are looking at an unpublished course."
+      lessons_pending: "The detailed programme is published when enrolment opens."
+    modality:
+      online_live: "Live online"
+      on_demand: "At your own pace"
+      in_person: "In person"
+      hybrid: "Blended"
+    status:
+      draft: "Draft"
+      published: "Published"
+      archived: "Archived"
+    free: "Free"
+    starts_on: "Starts %{date}"
+    duration: "Length"
+    price: "Investment"
+    lessons_count:
+      one: "1 session"
+      other: "%{count} sessions"
+    free_preview: "Open session"
+
+  inquiries:
+    new:
+      eyebrow: "Contact"
+      title: "Write to me"
+      body: "Tell me where you are and what you would like to work on. I answer personally, which can take a few days."
+      submit: "Send message"
+      general_interest: "General enquiry"
+      course_label: "I am interested in"
+    create:
+      success: "Thank you for writing. I will reply as soon as I can."
+    throttled: "We received several messages from you recently. Please try again shortly."
+    honeypot_label: "Leave this field empty"
+
+  sessions:
+    new:
+      title: "Sign in"
+      body: "Access to the admin panel."
+      submit: "Sign in"
+      forgot_password: "I forgot my password"
+    invalid_credentials: "That email and password do not match."
+    throttled: "Too many attempts. Try again in a few minutes."
+    signed_out: "You have signed out."
+
+  passwords:
+    new:
+      title: "Reset your password"
+      body: "We will email you a link to choose a new one."
+      submit: "Send link"
+    edit:
+      title: "Choose a new password"
+      submit: "Save password"
+    reset_sent: "If an account exists for that email, we have sent the instructions."
+    invalid_token: "That link is invalid or has expired. Please request a new one."
+    updated: "Your password has been updated. You can sign in now."
+    mismatch: "The passwords do not match."
+
+  admin:
+    access_denied: "You do not have access to the admin panel."
+    title: "Admin"
+    nav:
+      dashboard: "Overview"
+      articles: "Notes"
+      courses: "Courses"
+      pages: "Pages"
+      inquiries: "Messages"
+      view_site: "View site"
+    dashboard:
+      title: "Overview"
+      greeting: "Hello, %{name}"
+      articles: "Notes"
+      published_articles: "Published notes"
+      courses: "Courses"
+      published_courses: "Published courses"
+      unhandled_inquiries: "Unanswered messages"
+      recent_articles: "Latest notes"
+      recent_courses: "Courses"
+      recent_inquiries: "Unanswered messages"
+      all_handled: "Nothing pending."
+    shared:
+      new: "New"
+      edit: "Edit"
+      delete: "Delete"
+      save: "Save"
+      cancel: "Cancel"
+      back: "Back"
+      confirm: "Are you sure? This cannot be undone."
+      empty: "Nothing here yet."
+      publish: "Publish"
+      unpublish: "Move to draft"
+      preview: "View"
+      draft: "Draft"
+      published: "Published"
+      scheduled: "Scheduled"
+      published_at_hint: "Empty = draft. A future date schedules it."
+      slug_hint: "Generated from the title. Changing it breaks links already shared."
+      locale: "Language"
+      optional: "optional"
+    articles:
+      title: "Notes"
+      new: "New note"
+      created: "Note created."
+      updated: "Note saved."
+      destroyed: "Note deleted."
+      empty: "You have not written any notes yet."
+    courses:
+      title: "Courses"
+      new: "New course"
+      created: "Course created."
+      updated: "Course saved."
+      destroyed: "Course deleted."
+      empty: "You have not added any courses yet."
+      lessons: "Sessions"
+      enrollments: "Enrolments"
+      price_hint: "In cents, no separators. 25,000 pesos is entered as 2500000."
+    lessons:
+      title: "Sessions in %{course}"
+      new: "New session"
+      created: "Session created."
+      updated: "Session saved."
+      destroyed: "Session deleted."
+      empty: "This course has no sessions yet."
+      video_hint: "Phase 2: choose where the video lives and paste its identifier."
+      phase_two_notice: "Sessions are not shown on the public site yet. They go live when we open sales."
+    enrollments:
+      title: "Enrolments in %{course}"
+      new: "Grant access"
+      created: "Access granted."
+      destroyed: "Access removed."
+      empty: "Nobody has access to this course yet."
+      email_label: "Student email"
+      email_hint: "If they have no account, one is created."
+      name_label: "Name"
+      granted_at: "Since"
+      manual_notice: "Phase 1: access is granted by hand. Once the payment provider is connected, its webhook will create these same records."
+    pages:
+      title: "Pages"
+      updated: "Page saved."
+      keys:
+        about: "About me"
+        philosophy: "Philosophy"
+    inquiries:
+      title: "Messages"
+      destroyed: "Message deleted."
+      marked_handled: "Marked as answered."
+      marked_unhandled: "Marked as pending."
+      empty: "No messages have arrived yet."
+      handled: "Answered"
+      unhandled: "Pending"
+      mark_handled: "Mark answered"
+      mark_unhandled: "Mark pending"
+      reply: "Reply by email"
+      about_course: "Enquiry about %{course}"
+      general: "General enquiry"
+
+  inquiry_mailer:
+    notify:
+      subject: "New message from %{name}"
+      heading: "A new message arrived"
+      course: "Enquiry about"
+      reply_hint: "You can reply directly to this email."
+
+  errors:
+    not_found:
+      title: "We could not find this page"
+      body: "The link may have changed, or the content may no longer be published."
+      cta: "Back to the home page"
+    form: "Please check the following:"

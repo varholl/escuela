@@ -1,0 +1,18 @@
+<% content_for :title, page_title(t("courses.index.title")) %>
+<% content_for :description, meta_description(t("courses.index.body")) %>
+
+<%= render "shared/page_header",
+      eyebrow: t("courses.index.eyebrow"),
+      title: t("courses.index.title"),
+      body: t("courses.index.body") %>
+
+<div class="mx-auto max-w-6xl px-6 pb-8">
+  <% if @courses.any? %>
+    <div class="grid gap-12 md:grid-cols-2 lg:grid-cols-3">
+      <%= render partial: "courses/course_card", collection: @courses, as: :course %>
+    </div>
+  <% else %>
+    <p class="text-lg text-ink-mute"><%= t("courses.index.empty") %></p>
+    <p class="mt-8"><%= link_to t("home.contact.cta"), new_contact_path, class: "btn btn-primary" %></p>
+  <% end %>
+</div>

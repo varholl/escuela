@@ -1,0 +1,59 @@
+<% content_for :title, page_title(@inquiry.name) %>
+
+<%= render "admin/shared/header",
+      title: @inquiry.name,
+      eyebrow: t("admin.inquiries.title"),
+      actions: capture {
+        link_to t("admin.shared.back"), admin_inquiries_path, class: "link-quiet text-sm text-ink-mute"
+      } %>
+
+<div class="max-w-2xl space-y-6">
+  <div class="rounded-xl border border-line bg-white p-6">
+    <dl class="divide-y divide-line">
+      <div class="flex flex-wrap items-baseline justify-between gap-3 pb-3">
+        <dt class="text-sm text-ink-mute"><%= Inquiry.human_attribute_name(:email) %></dt>
+        <dd><%= mail_to @inquiry.email, class: "link-quiet text-iris" %></dd>
+      </div>
+
+      <% if @inquiry.phone.present? %>
+        <div class="flex flex-wrap items-baseline justify-between gap-3 py-3">
+          <dt class="text-sm text-ink-mute"><%= Inquiry.human_attribute_name(:phone) %></dt>
+          <dd><%= @inquiry.phone %></dd>
+        </div>
+      <% end %>
+
+      <div class="flex flex-wrap items-baseline justify-between gap-3 py-3">
+        <dt class="text-sm text-ink-mute"><%= Inquiry.human_attribute_name(:course) %></dt>
+        <dd><%= @inquiry.course&.title || t("admin.inquiries.general") %></dd>
+      </div>
+
+      <div class="flex flex-wrap items-baseline justify-between gap-3 pt-3">
+        <dt class="text-sm text-ink-mute"><%= Inquiry.human_attribute_name(:created_at) %></dt>
+        <dd><%= l(@inquiry.created_at, format: :long) %></dd>
+      </div>
+    </dl>
+  </div>
+
+  <div class="rounded-xl border border-line bg-white p-6">
+    <h2 class="field-label"><%= Inquiry.human_attribute_name(:message) %></h2>
+    <p class="mt-2 whitespace-pre-line leading-relaxed text-ink-soft"><%= @inquiry.message %></p>
+  </div>
+
+  <div class="flex flex-wrap items-center gap-4">
+    <%= link_to t("admin.inquiries.reply"),
+          "mailto:#{@inquiry.email}?subject=#{ERB::Util.url_encode(t("site.name"))}",
+          class: "btn btn-primary py-2.5 px-5 text-sm" %>
+
+    <% if @inquiry.handled? %>
+      <%= button_to t("admin.inquiries.mark_unhandled"), admin_inquiry_handling_path(@inquiry), method: :delete,
+            class: "link-quiet cursor-pointer text-sm text-ink-soft" %>
+    <% else %>
+      <%= button_to t("admin.inquiries.mark_handled"), admin_inquiry_handling_path(@inquiry), method: :post,
+            class: "link-quiet cursor-pointer text-sm font-semibold text-iris" %>
+    <% end %>
+
+    <%= button_to t("admin.shared.delete"), admin_inquiry_path(@inquiry), method: :delete,
+          form: { data: { turbo_confirm: t("admin.shared.confirm") } },
+          class: "link-quiet cursor-pointer text-sm text-rose" %>
+  </div>
+</div>

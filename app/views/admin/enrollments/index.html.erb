@@ -1,0 +1,44 @@
+<% content_for :title, page_title(t("admin.enrollments.title", course: @course.title)) %>
+
+<%= render "admin/shared/header",
+      title: t("admin.enrollments.title", course: @course.title),
+      eyebrow: t("admin.courses.enrollments"),
+      actions: capture {
+        safe_join([
+          link_to(t("admin.enrollments.new"), new_admin_course_enrollment_path(@course), class: "btn btn-primary py-2.5 px-5 text-sm"),
+          link_to(t("admin.shared.back"), edit_admin_course_path(@course), class: "link-quiet text-sm text-ink-mute")
+        ], " ")
+      } %>
+
+<p class="mb-6 rounded-xl border-l-2 border-gold bg-gold/10 px-5 py-3.5 text-[0.9375rem]">
+  <%= t("admin.enrollments.manual_notice") %>
+</p>
+
+<% if @enrollments.any? %>
+  <div class="overflow-hidden rounded-xl border border-line bg-white">
+    <ul class="divide-y divide-line">
+      <% @enrollments.each do |enrollment| %>
+        <li class="flex flex-wrap items-center gap-x-4 gap-y-2 px-5 py-4">
+          <div class="min-w-0 flex-1">
+            <p class="font-medium"><%= enrollment.user.display_name %></p>
+            <p class="mt-1 text-sm text-ink-mute"><%= enrollment.user.email_address %></p>
+          </div>
+
+          <p class="text-sm text-ink-mute">
+            <%= t("admin.enrollments.granted_at") %>
+            <%= localized_date(enrollment.granted_at || enrollment.created_at, format: :short_month) %>
+          </p>
+
+          <%= button_to t("admin.shared.delete"), admin_course_enrollment_path(@course, enrollment), method: :delete,
+                form: { data: { turbo_confirm: t("admin.shared.confirm") } },
+                class: "link-quiet cursor-pointer text-sm text-rose" %>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+<% else %>
+  <div class="rounded-xl border border-dashed border-line bg-white p-12 text-center">
+    <p class="text-ink-mute"><%= t("admin.enrollments.empty") %></p>
+    <p class="mt-5"><%= link_to t("admin.enrollments.new"), new_admin_course_enrollment_path(@course), class: "btn btn-primary" %></p>
+  </div>
+<% end %>

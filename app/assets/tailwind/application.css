@@ -1,0 +1,343 @@
+@import "tailwindcss";
+
+/* ---------------------------------------------------------------------------
+   Design tokens
+   ---------------------------------------------------------------------------
+   Every colour below is sampled from the monogram itself. The mark is a precise
+   ellipse drawn around free calligraphy -- a clinical frame holding something
+   handmade -- and that tension is the whole visual argument of the site.
+   Its stroke runs violet -> rose -> gold, and those three stops are reused
+   throughout as the three pillars: body, mind, spirit.
+--------------------------------------------------------------------------- */
+@theme {
+  --color-ink: #1b1023;
+  --color-ink-soft: #2e1d3b;
+  --color-ink-mute: #6b5f74;
+
+  --color-iris: #7717b5;
+  --color-iris-bright: #8e12d0;
+  --color-iris-pale: #efe4f8;
+
+  --color-rose: #b0636a;
+  --color-gold: #dba51b;
+  --color-gold-bright: #f9c609;
+
+  --color-aqua: #0ac6fd;
+  --color-aqua-deep: #1b7fcb;
+
+  --color-paper: #fbf9fc;
+  --color-haze: #efe8f3;
+  --color-line: #e2d9e8;
+  --color-line-dark: #40304d;
+
+  --font-display: "Newsreader", ui-serif, Georgia, "Times New Roman", serif;
+  --font-sans: "Karla", ui-sans-serif, system-ui, -apple-system, sans-serif;
+
+  --breath-duration: 7.5s;
+}
+
+/* ---------------------------------------------------------------------------
+   Base
+--------------------------------------------------------------------------- */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    /* The hero's glow is deliberately drawn outside its box; clip (not hidden,
+       which would break the sticky header) keeps it from widening the page. */
+    overflow-x: clip;
+    background-color: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: 1.0625rem;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    font-weight: 300;
+    line-height: 1.08;
+    letter-spacing: -0.015em;
+    text-wrap: balance;
+  }
+
+  /* Spanish sets long words; never let them collide with the gutter. */
+  p, li {
+    text-wrap: pretty;
+    hyphens: auto;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-aqua-deep);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  ::selection {
+    background-color: var(--color-iris);
+    color: #fff;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+    }
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Components
+--------------------------------------------------------------------------- */
+@layer components {
+  /* The eyebrow is the only uppercase type on the site: it labels, never shouts. */
+  .eyebrow {
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--color-iris);
+  }
+
+  .eyebrow-on-ink { color: var(--color-gold); }
+
+  /* The mark's own gradient, flattened into a hairline. It is the site's only
+     section divider, so the brand literally draws the structure. */
+  .rule-gradient {
+    height: 1px;
+    border: 0;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      var(--color-iris) 18%,
+      var(--color-rose) 50%,
+      var(--color-gold) 82%,
+      transparent 100%
+    );
+    opacity: 0.75;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.9rem 1.75rem;
+    border-radius: 999px;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    transition: transform 180ms ease, background-color 180ms ease, color 180ms ease, border-color 180ms ease;
+  }
+
+  .btn:hover { transform: translateY(-1px); }
+  .btn:active { transform: translateY(0); }
+
+  .btn-primary {
+    background-color: var(--color-iris);
+    color: #fff;
+  }
+  .btn-primary:hover { background-color: var(--color-iris-bright); }
+
+  .btn-ghost {
+    border: 1px solid var(--color-line);
+    color: var(--color-ink);
+  }
+  .btn-ghost:hover { border-color: var(--color-iris); color: var(--color-iris); }
+
+  .btn-on-ink {
+    border: 1px solid var(--color-line-dark);
+    color: #fff;
+  }
+  .btn-on-ink:hover { border-color: var(--color-gold); color: var(--color-gold); }
+
+  /* A link that grows a gold underline from the left, echoing a pen stroke. */
+  .link-quiet {
+    position: relative;
+    display: inline-block;
+    color: inherit;
+  }
+  .link-quiet::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    width: 100%;
+    height: 1px;
+    background-color: currentColor;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 260ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .link-quiet:hover::after,
+  .link-quiet:focus-visible::after { transform: scaleX(1); }
+
+  /* The hero aperture: her portrait when she has uploaded one, a slow bloom
+     when she has not. One breath in, one breath out, at a resting rate. */
+  .breathe {
+    animation: breathe var(--breath-duration) ease-in-out infinite;
+    transform-origin: center;
+  }
+
+  @keyframes breathe {
+    0%, 100% { transform: scale(0.9); opacity: 0.55; }
+    50%      { transform: scale(1.06); opacity: 0.95; }
+  }
+
+  /* Admin surfaces: same tokens, none of the drama. */
+  .field-label {
+    display: block;
+    margin-bottom: 0.35rem;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    color: var(--color-ink-soft);
+  }
+
+  .field-input {
+    display: block;
+    width: 100%;
+    padding: 0.625rem 0.8rem;
+    border: 1px solid var(--color-line);
+    border-radius: 0.5rem;
+    background-color: #fff;
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: 0.9375rem;
+    transition: border-color 150ms ease, box-shadow 150ms ease;
+  }
+
+  .field-input:focus {
+    border-color: var(--color-iris);
+    box-shadow: 0 0 0 3px var(--color-iris-pale);
+    outline: none;
+  }
+
+  .field-hint {
+    margin-top: 0.35rem;
+    font-size: 0.8125rem;
+    color: var(--color-ink-mute);
+  }
+
+  .field-error {
+    margin-top: 0.35rem;
+    font-size: 0.8125rem;
+    color: #b3261e;
+  }
+
+  /* Action Text's editor should look like the rest of the admin fields. */
+  trix-editor {
+    min-height: 20rem;
+    border: 1px solid var(--color-line);
+    border-radius: 0 0 0.5rem 0.5rem;
+    background-color: #fff;
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    line-height: 1.65;
+  }
+
+  trix-editor:focus {
+    border-color: var(--color-iris);
+    box-shadow: 0 0 0 3px var(--color-iris-pale);
+    outline: none;
+  }
+
+  trix-toolbar .trix-button-group {
+    border-color: var(--color-line);
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Action Text output
+   ---------------------------------------------------------------------------
+   Deliberately NOT inside @layer components. Action Text ships actiontext.css
+   with an unlayered `.trix-content * { margin: 0; padding: 0 }` reset, and in
+   the CSS cascade unlayered rules beat every layered one regardless of
+   specificity -- so anything in @layer components would silently lose here.
+   These rules stay unlayered and win on source order instead.
+
+   Action Text also wraps the body in a .trix-content div, which is why the flow
+   spacing has to match one level deeper as well as at the top level.
+--------------------------------------------------------------------------- */
+.prose-note {
+  font-size: 1.125rem;
+  line-height: 1.75;
+  color: var(--color-ink-soft);
+}
+
+.prose-note > * + *,
+.prose-note > .trix-content > * + * {
+  margin-top: 1.35em;
+}
+
+.prose-note h2,
+.prose-note h3 {
+  color: var(--color-ink);
+  margin-bottom: -0.55em;
+}
+
+.prose-note > * + h2,
+.prose-note > * + h3,
+.prose-note > .trix-content > * + h2,
+.prose-note > .trix-content > * + h3 {
+  margin-top: 2.4em;
+}
+
+.prose-note h2 { font-size: 1.9rem; }
+.prose-note h3 { font-size: 1.45rem; }
+
+.prose-note a {
+  color: var(--color-iris);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+.prose-note a:hover { color: var(--color-iris-bright); }
+
+.prose-note strong { font-weight: 700; color: var(--color-ink); }
+.prose-note em { font-style: italic; }
+
+.prose-note blockquote {
+  margin-left: 0;
+  padding-left: 1.5rem;
+  border-left: 2px solid var(--color-gold);
+  border-right: 0;
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  font-style: italic;
+  font-weight: 300;
+  line-height: 1.5;
+  color: var(--color-ink);
+}
+
+.prose-note ul,
+.prose-note ol { padding-left: 1.35rem; }
+.prose-note ul { list-style: disc; }
+.prose-note ol { list-style: decimal; }
+.prose-note li { margin-left: 0; }
+.prose-note li::marker { color: var(--color-iris); }
+.prose-note li + li { margin-top: 0.4em; }
+
+.prose-note img,
+.prose-note figure { border-radius: 0.5rem; }
+
+.prose-note figcaption {
+  margin-top: 0.6rem;
+  font-size: 0.875rem;
+  color: var(--color-ink-mute);
+}
+
+.prose-note pre {
+  padding: 1rem 1.25rem;
+  border-radius: 0.5rem;
+  background-color: var(--color-haze);
+  overflow-x: auto;
+  font-size: 0.9rem;
+}

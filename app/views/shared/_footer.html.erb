@@ -1,0 +1,53 @@
+<footer class="<%= "mt-32" unless local_assigns[:flush] %> bg-ink text-white/70">
+  <div class="mx-auto max-w-6xl px-6 py-20">
+    <div class="grid grid-cols-1 gap-12 md:grid-cols-[1.5fr_1fr_1fr]">
+      <div>
+        <%= render "shared/wordmark", on_ink: true %>
+        <p class="mt-5 max-w-xs font-display text-lg font-light leading-snug text-white/80">
+          <%= t("site.tagline") %>
+        </p>
+        <p class="eyebrow eyebrow-on-ink mt-6"><%= t("site.coherence") %></p>
+      </div>
+
+      <nav aria-label="<%= t("footer.sections") %>">
+        <h2 class="eyebrow eyebrow-on-ink"><%= t("footer.sections") %></h2>
+        <ul class="mt-5 space-y-3 text-[0.9375rem]">
+          <% [ [ t("nav.about"), about_path ],
+               [ t("nav.philosophy"), philosophy_path ],
+               [ t("nav.courses"), courses_path ],
+               [ t("nav.articles"), articles_path ],
+               [ t("nav.contact"), new_contact_path ] ].each do |label, path| %>
+            <li><%= link_to label, path, class: "link-quiet text-white/70 hover:text-white" %></li>
+          <% end %>
+        </ul>
+      </nav>
+
+      <div>
+        <h2 class="eyebrow eyebrow-on-ink"><%= t("footer.language") %></h2>
+        <ul class="mt-5 space-y-3 text-[0.9375rem]">
+          <% I18n.available_locales.each do |locale| %>
+            <li>
+              <% if locale == I18n.locale %>
+                <span class="text-white"><%= t("locales.#{locale}") %></span>
+              <% else %>
+                <%= link_to t("locales.#{locale}"), locale_switch_url(locale),
+                      class: "link-quiet text-white/70 hover:text-white", lang: locale %>
+              <% end %>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+
+    <hr class="rule-gradient my-12">
+
+    <div class="flex flex-col gap-3 text-sm text-white/50 sm:flex-row sm:items-center sm:justify-between">
+      <p>&copy; <%= Date.current.year %> <%= t("site.name") %>. <%= t("footer.rights") %></p>
+      <% if admin? %>
+        <%= link_to t("nav.admin"), admin_root_path, class: "link-quiet hover:text-white" %>
+      <% else %>
+        <%= link_to t("nav.sign_in"), new_session_path, class: "link-quiet hover:text-white" %>
+      <% end %>
+    </div>
+  </div>
+</footer>

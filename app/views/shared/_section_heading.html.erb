@@ -1,0 +1,11 @@
+<%
+  on_ink = local_assigns.fetch(:on_ink, false)
+  body   = local_assigns[:body]
+%>
+<div class="max-w-2xl">
+  <p class="eyebrow <%= "eyebrow-on-ink" if on_ink %>"><%= eyebrow %></p>
+  <h2 class="mt-4 text-[clamp(1.9rem,4vw,2.9rem)] <%= on_ink ? "text-white" : "text-ink" %>"><%= title %></h2>
+  <% if body.present? %>
+    <p class="mt-5 text-lg leading-relaxed <%= on_ink ? "text-white/70" : "text-ink-soft" %>"><%= body %></p>
+  <% end %>
+</div>

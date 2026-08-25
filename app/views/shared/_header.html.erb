@@ -1,0 +1,62 @@
+<%
+  links = [
+    [ t("nav.about"),      about_path ],
+    [ t("nav.philosophy"), philosophy_path ],
+    [ t("nav.courses"),    courses_path ],
+    [ t("nav.articles"),   articles_path ]
+  ]
+%>
+<header class="sticky top-0 z-40 border-b border-line/70 bg-paper/85 backdrop-blur-md">
+  <div class="mx-auto flex max-w-6xl items-center justify-between gap-6 px-6 py-4">
+    <%= link_to root_path, class: "shrink-0", aria: { label: t("nav.home") } do %>
+      <%= render "shared/wordmark" %>
+    <% end %>
+
+    <nav class="hidden items-center gap-8 lg:flex" aria-label="<%= t("nav.menu") %>">
+      <% links.each do |label, path| %>
+        <%= link_to label, path,
+              class: class_names(
+                "link-quiet text-[0.9375rem]",
+                "text-iris" => current_page?(path),
+                "text-ink-soft hover:text-iris" => !current_page?(path)
+              ),
+              aria: { current: ("page" if current_page?(path)) } %>
+      <% end %>
+    </nav>
+
+    <div class="hidden items-center gap-5 lg:flex">
+      <% alternate_locales.each do |locale| %>
+        <%= link_to t("locales.#{locale}"), locale_switch_url(locale),
+              class: "text-xs font-semibold uppercase tracking-[0.14em] text-ink-mute hover:text-iris",
+              lang: locale %>
+      <% end %>
+      <%= link_to t("nav.contact"), new_contact_path, class: "btn btn-primary py-2.5 px-6 text-sm" %>
+    </div>
+
+    <%# A disclosure element keeps the mobile menu working without any JavaScript. %>
+    <details class="group relative lg:hidden">
+      <summary class="flex cursor-pointer list-none items-center gap-2 rounded-full border border-line px-4 py-2 text-sm font-semibold text-ink-soft [&::-webkit-details-marker]:hidden">
+        <span class="group-open:hidden"><%= t("nav.menu") %></span>
+        <span class="hidden group-open:inline"><%= t("nav.close") %></span>
+      </summary>
+
+      <nav class="absolute right-0 mt-3 w-60 rounded-2xl border border-line bg-paper p-2 shadow-xl shadow-ink/5"
+           aria-label="<%= t("nav.menu") %>">
+        <% links.each do |label, path| %>
+          <%= link_to label, path,
+                class: "block rounded-xl px-4 py-2.5 text-[0.9375rem] text-ink-soft hover:bg-haze hover:text-iris" %>
+        <% end %>
+        <%= link_to t("nav.contact"), new_contact_path,
+              class: "block rounded-xl px-4 py-2.5 text-[0.9375rem] font-semibold text-iris hover:bg-haze" %>
+
+        <hr class="my-2 border-line">
+
+        <% alternate_locales.each do |locale| %>
+          <%= link_to t("locales.#{locale}"), locale_switch_url(locale),
+                class: "block rounded-xl px-4 py-2.5 text-xs font-semibold uppercase tracking-[0.14em] text-ink-mute hover:bg-haze",
+                lang: locale %>
+        <% end %>
+      </nav>
+    </details>
+  </div>
+</header>

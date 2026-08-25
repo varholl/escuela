@@ -1,0 +1,47 @@
+<% content_for :title, page_title(@article.title) %>
+<% content_for :description, meta_description(@article.summary) %>
+
+<article>
+  <header class="mx-auto max-w-2xl px-6 pt-16 md:pt-24">
+    <%= link_to t("articles.show.back"), articles_path, class: "link-quiet text-sm text-ink-mute" %>
+
+    <% unless @article.published? %>
+      <p class="mt-6 rounded-xl border-l-2 border-rose bg-rose/10 px-5 py-3.5 text-[0.9375rem]">
+        <%= t("articles.show.draft_notice") %>
+      </p>
+    <% end %>
+
+    <h1 class="mt-8 text-[clamp(2.2rem,5vw,3.5rem)]"><%= @article.title %></h1>
+
+    <p class="mt-6 text-sm text-ink-mute"><%= article_meta(@article).join(" · ") %></p>
+
+    <% if @article.excerpt.present? %>
+      <p class="mt-7 font-display text-xl font-light italic leading-snug text-ink-mute">
+        <%= @article.excerpt %>
+      </p>
+    <% end %>
+
+    <hr class="rule-gradient mt-10">
+  </header>
+
+  <% if @article.cover_image.attached? %>
+    <figure class="mx-auto mt-10 max-w-4xl px-6">
+      <%= image_tag @article.cover_image.variant(resize_to_limit: [ 1600, 1000 ]), alt: "",
+            class: "w-full rounded-xl object-cover" %>
+    </figure>
+  <% end %>
+
+  <div class="mx-auto mt-12 max-w-2xl px-6">
+    <div class="prose-note"><%= @article.body %></div>
+  </div>
+</article>
+
+<% if @related.any? %>
+  <aside class="mx-auto mt-24 max-w-6xl px-6">
+    <hr class="rule-gradient">
+    <h2 class="eyebrow mt-12"><%= t("articles.show.related") %></h2>
+    <div class="mt-8 grid gap-10 md:grid-cols-2">
+      <%= render partial: "articles/article_card", collection: @related, as: :article %>
+    </div>
+  </aside>
+<% end %>

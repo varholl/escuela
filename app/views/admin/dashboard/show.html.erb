@@ -1,0 +1,60 @@
+<% content_for :title, page_title(t("admin.dashboard.title")) %>
+
+<%= render "admin/shared/header",
+      title: t("admin.dashboard.greeting", name: Current.user.display_name),
+      eyebrow: t("admin.dashboard.title") %>
+
+<div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+  <% [ :published_articles, :published_courses, :articles, :unhandled_inquiries ].each do |key| %>
+    <div class="rounded-xl border border-line bg-white p-5">
+      <p class="text-sm text-ink-mute"><%= t("admin.dashboard.#{key}") %></p>
+      <p class="mt-2 font-display text-4xl font-light <%= "text-iris" if key == :unhandled_inquiries && @counts[key].to_i.positive? %>">
+        <%= @counts[key] %>
+      </p>
+    </div>
+  <% end %>
+</div>
+
+<div class="mt-8 grid gap-6 lg:grid-cols-2">
+  <section class="rounded-xl border border-line bg-white p-6">
+    <div class="flex items-center justify-between gap-4">
+      <h2 class="font-display text-xl font-light"><%= t("admin.dashboard.recent_articles") %></h2>
+      <%= link_to t("admin.articles.new"), new_admin_article_path, class: "link-quiet text-sm font-semibold text-iris" %>
+    </div>
+
+    <% if @articles.any? %>
+      <ul class="mt-5 divide-y divide-line">
+        <% @articles.each do |article| %>
+          <li class="flex items-center justify-between gap-4 py-3">
+            <%= link_to article.title, edit_admin_article_path(article), class: "link-quiet min-w-0 truncate text-[0.9375rem]" %>
+            <%= render "admin/shared/state_badge", record: article %>
+          </li>
+        <% end %>
+      </ul>
+    <% else %>
+      <p class="mt-5 text-sm text-ink-mute"><%= t("admin.articles.empty") %></p>
+    <% end %>
+  </section>
+
+  <section class="rounded-xl border border-line bg-white p-6">
+    <div class="flex items-center justify-between gap-4">
+      <h2 class="font-display text-xl font-light"><%= t("admin.dashboard.recent_inquiries") %></h2>
+      <%= link_to t("admin.nav.inquiries"), admin_inquiries_path, class: "link-quiet text-sm font-semibold text-iris" %>
+    </div>
+
+    <% if @inquiries.any? %>
+      <ul class="mt-5 divide-y divide-line">
+        <% @inquiries.each do |inquiry| %>
+          <li class="py-3">
+            <%= link_to admin_inquiry_path(inquiry), class: "group block" do %>
+              <p class="text-[0.9375rem] group-hover:text-iris"><%= inquiry.name %></p>
+              <p class="mt-1 truncate text-sm text-ink-mute"><%= inquiry.message %></p>
+            <% end %>
+          </li>
+        <% end %>
+      </ul>
+    <% else %>
+      <p class="mt-5 text-sm text-ink-mute"><%= t("admin.dashboard.all_handled") %></p>
+    <% end %>
+  </section>
+</div>

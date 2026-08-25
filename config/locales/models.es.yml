@@ -1,0 +1,85 @@
+es:
+  activerecord:
+    models:
+      article:
+        one: "Nota"
+        other: "Notas"
+      course:
+        one: "Curso"
+        other: "Cursos"
+      lesson:
+        one: "Clase"
+        other: "Clases"
+      enrollment:
+        one: "Inscripción"
+        other: "Inscripciones"
+      inquiry:
+        one: "Mensaje"
+        other: "Mensajes"
+      page:
+        one: "Página"
+        other: "Páginas"
+      user:
+        one: "Persona"
+        other: "Personas"
+    attributes:
+      article:
+        title: "Título"
+        slug: "Enlace"
+        excerpt: "Copete"
+        body: "Texto"
+        cover_image: "Imagen de portada"
+        locale: "Idioma"
+        published_at: "Publicación"
+      course:
+        title: "Título"
+        slug: "Enlace"
+        subtitle: "Bajada"
+        summary: "Resumen"
+        description: "Descripción"
+        cover_image: "Imagen de portada"
+        locale: "Idioma"
+        status: "Estado"
+        modality: "Modalidad"
+        price_cents: "Precio"
+        currency: "Moneda"
+        duration_label: "Duración"
+        starts_on: "Comienza"
+        position: "Orden"
+        published_at: "Publicación"
+      lesson:
+        title: "Título"
+        slug: "Enlace"
+        summary: "Resumen"
+        notes: "Material"
+        position: "Orden"
+        duration_seconds: "Duración en segundos"
+        video_provider: "Dónde vive el video"
+        video_reference: "Identificador del video"
+        video: "Archivo de video"
+        free_preview: "Clase abierta"
+        published_at: "Publicación"
+      inquiry:
+        name: "Nombre"
+        email: "Correo"
+        phone: "Teléfono"
+        message: "Mensaje"
+        course: "Curso"
+        course_id: "Curso"
+        created_at: "Recibido"
+      page:
+        title: "Título"
+        subtitle: "Bajada"
+        body: "Texto"
+        cover_image: "Retrato"
+      user:
+        name: "Nombre"
+        email_address: "Correo"
+        password: "Contraseña"
+        password_confirmation: "Repetir contraseña"
+        role: "Rol"
+  helpers:
+    submit:
+      create: "Crear %{model}"
+      update: "Guardar %{model}"
+      submit: "Guardar %{model}"

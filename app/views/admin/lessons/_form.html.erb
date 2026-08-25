@@ -1,0 +1,61 @@
+<%= form_with model: [ :admin, course, lesson ], class: "space-y-6" do |form| %>
+  <%= render "shared/form_errors", record: lesson %>
+
+  <div class="rounded-xl border border-line bg-white p-6 space-y-6">
+    <div>
+      <%= form.label :title, class: "field-label" %>
+      <%= form.text_field :title, required: true, autofocus: lesson.new_record?, class: "field-input" %>
+    </div>
+
+    <div>
+      <%= form.label :summary, class: "field-label" %>
+      <%= form.text_area :summary, rows: 2, class: "field-input resize-y" %>
+    </div>
+
+    <div class="grid gap-6 sm:grid-cols-3">
+      <div>
+        <%= form.label :position, class: "field-label" %>
+        <%= form.number_field :position, min: 0, step: 1, class: "field-input" %>
+      </div>
+
+      <div>
+        <%= form.label :duration_seconds, class: "field-label" %>
+        <%= form.number_field :duration_seconds, min: 1, step: 1, class: "field-input" %>
+      </div>
+
+      <div>
+        <%= form.label :published_at, class: "field-label" %>
+        <%= form.datetime_field :published_at, class: "field-input" %>
+      </div>
+    </div>
+
+    <div class="grid gap-6 sm:grid-cols-2">
+      <div>
+        <%= form.label :video_provider, class: "field-label" %>
+        <%= form.select :video_provider, Lesson::VIDEO_PROVIDERS,
+              { include_blank: true }, class: "field-input" %>
+        <p class="field-hint"><%= t("admin.lessons.video_hint") %></p>
+      </div>
+
+      <div>
+        <%= form.label :video_reference, class: "field-label" %>
+        <%= form.text_field :video_reference, class: "field-input" %>
+      </div>
+    </div>
+
+    <label class="flex items-center gap-3">
+      <%= form.check_box :free_preview, class: "size-4 rounded border-line text-iris" %>
+      <span class="text-[0.9375rem]"><%= Lesson.human_attribute_name(:free_preview) %></span>
+    </label>
+  </div>
+
+  <div class="rounded-xl border border-line bg-white p-6">
+    <%= form.label :notes, class: "field-label" %>
+    <%= form.rich_textarea :notes %>
+  </div>
+
+  <div class="flex flex-wrap items-center gap-4">
+    <%= form.submit class: "btn btn-primary cursor-pointer" %>
+    <%= link_to t("admin.shared.cancel"), admin_course_lessons_path(course), class: "link-quiet text-sm text-ink-mute" %>
+  </div>
+<% end %>

@@ -1,0 +1,15 @@
+<% content_for :title, page_title(@course.title) %>
+
+<%= render "admin/shared/header",
+      title: @course.title,
+      eyebrow: t("admin.courses.title"),
+      actions: capture {
+        safe_join([
+          render("admin/shared/state_badge", record: @course),
+          link_to(t("admin.courses.lessons"), admin_course_lessons_path(@course), class: "link-quiet text-sm text-ink-soft"),
+          link_to(t("admin.courses.enrollments"), admin_course_enrollments_path(@course), class: "link-quiet text-sm text-ink-soft"),
+          link_to(t("admin.shared.back"), admin_courses_path, class: "link-quiet text-sm text-ink-mute")
+        ], " ")
+      } %>
+
+<%= render "form", course: @course %>

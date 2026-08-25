@@ -1,0 +1,41 @@
+Rails.application.routes.draw do
+  # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
+  # Can be used by load balancers and uptime monitors to verify that the app is live.
+  get "up" => "rails/health#show", as: :rails_health_check
+
+  # Authentication and the admin panel live outside the locale scope: they are
+  # back-office screens for the owner, always rendered in the default locale.
+  resource :session, only: %i[ new create destroy ]
+  resources :passwords, param: :token, only: %i[ new create edit update ]
+
+  namespace :admin do
+    root "dashboard#show"
+
+    resources :articles
+    resources :courses do
+      resources :lessons, except: :show
+      resources :enrollments, only: %i[ index new create destroy ]
+    end
+    resources :pages, only: %i[ index edit update ]
+    resources :inquiries, only: %i[ index show destroy ] do
+      resource :handling, only: %i[ create destroy ], module: :inquiries
+    end
+  end
+
+  # The public site. Spanish is served from the bare path (/notas) and English
+  # from an /en prefix (/en/notas); see ApplicationController#default_url_options.
+  #
+  # Because :locale is an optional leading segment, a single positional argument
+  # binds to it rather than to :id. Always name the key on these helpers:
+  #   article_path(id: article)   NOT   article_path(article)
+  scope "(:locale)", locale: /es|en/ do
+    get "sobre-mi"  => "pages#about",      as: :about
+    get "filosofia" => "pages#philosophy", as: :philosophy
+
+    resources :articles, path: "notas",  only: %i[ index show ]
+    resources :courses,  path: "cursos", only: %i[ index show ]
+    resource  :inquiry,  path: "contacto", only: %i[ new create ], as: :contact
+
+    root "pages#home"
+  end
+end

@@ -1,0 +1,113 @@
+<% content_for :title, page_title(@course.title) %>
+<% content_for :description, meta_description(@course.summary.presence || @course.subtitle) %>
+
+<article>
+  <header class="mx-auto max-w-6xl px-6 pt-16 md:pt-24">
+    <%= link_to t("courses.show.back"), courses_path, class: "link-quiet text-sm text-ink-mute" %>
+
+    <% unless @course.published? %>
+      <p class="mt-6 rounded-xl border-l-2 border-rose bg-rose/10 px-5 py-3.5 text-[0.9375rem]">
+        <%= t("courses.show.draft_notice") %>
+      </p>
+    <% end %>
+
+    <div class="mt-8 grid grid-cols-1 items-start gap-14 lg:grid-cols-[1.1fr_0.9fr]">
+      <div>
+        <p class="eyebrow"><%= course_modality(@course) %></p>
+        <h1 class="mt-5 text-[clamp(2.2rem,5vw,3.5rem)]"><%= @course.title %></h1>
+
+        <% if @course.subtitle.present? %>
+          <p class="mt-6 font-display text-xl font-light italic leading-snug text-ink-mute">
+            <%= @course.subtitle %>
+          </p>
+        <% end %>
+
+        <% if @course.summary.present? %>
+          <p class="mt-7 max-w-xl text-lg leading-relaxed text-ink-soft"><%= @course.summary %></p>
+        <% end %>
+
+        <p class="mt-9">
+          <%= link_to t("courses.show.cta"), new_contact_path(course: @course.slug), class: "btn btn-primary" %>
+        </p>
+      </div>
+
+      <div class="w-full">
+        <% if @course.cover_image.attached? %>
+          <%= image_tag @course.cover_image.variant(resize_to_fill: [ 1000, 750 ]), alt: "",
+                class: "aspect-[4/3] w-full rounded-xl object-cover" %>
+        <% end %>
+
+        <dl class="<%= "mt-8" if @course.cover_image.attached? %> divide-y divide-line border-y border-line">
+          <div class="flex items-baseline justify-between gap-4 py-3.5">
+            <dt class="text-sm text-ink-mute"><%= Course.human_attribute_name(:modality) %></dt>
+            <dd class="text-right text-[0.9375rem]"><%= course_modality(@course) %></dd>
+          </div>
+
+          <% if @course.starts_on.present? %>
+            <div class="flex items-baseline justify-between gap-4 py-3.5">
+              <dt class="text-sm text-ink-mute"><%= Course.human_attribute_name(:starts_on) %></dt>
+              <dd class="text-right text-[0.9375rem]"><%= localized_date(@course.starts_on) %></dd>
+            </div>
+          <% end %>
+
+          <% if @course.duration_label.present? %>
+            <div class="flex items-baseline justify-between gap-4 py-3.5">
+              <dt class="text-sm text-ink-mute"><%= t("courses.duration") %></dt>
+              <dd class="text-right text-[0.9375rem]"><%= @course.duration_label %></dd>
+            </div>
+          <% end %>
+
+          <div class="flex items-baseline justify-between gap-4 py-3.5">
+            <dt class="text-sm text-ink-mute"><%= t("courses.price") %></dt>
+            <dd class="text-right text-[0.9375rem] font-semibold"><%= formatted_price(@course) %></dd>
+          </div>
+        </dl>
+      </div>
+    </div>
+
+    <hr class="rule-gradient mt-14">
+  </header>
+
+  <% if @course.description.present? %>
+    <section class="mx-auto max-w-2xl px-6 pt-12">
+      <h2 class="eyebrow"><%= t("courses.show.about") %></h2>
+      <div class="prose-note mt-6"><%= @course.description %></div>
+    </section>
+  <% end %>
+
+  <section class="mx-auto max-w-2xl px-6 pt-16">
+    <h2 class="eyebrow"><%= t("courses.show.contents") %></h2>
+
+    <% if @lessons.any? %>
+      <ol class="mt-6 divide-y divide-line border-y border-line">
+        <% @lessons.each_with_index do |lesson, index| %>
+          <li class="flex items-baseline gap-5 py-4">
+            <span class="w-6 shrink-0 font-display text-lg text-ink-mute"><%= index + 1 %></span>
+            <div class="flex-1">
+              <p class="text-[0.9375rem] text-ink"><%= lesson.title %></p>
+              <% if lesson.summary.present? %>
+                <p class="mt-1 text-sm text-ink-mute"><%= lesson.summary %></p>
+              <% end %>
+            </div>
+            <div class="shrink-0 text-right text-sm text-ink-mute">
+              <% if lesson.free_preview? %>
+                <span class="font-semibold text-gold"><%= t("courses.free_preview") %></span>
+              <% elsif lesson.duration.present? %>
+                <%= lesson.duration %>
+              <% end %>
+            </div>
+          </li>
+        <% end %>
+      </ol>
+    <% else %>
+      <p class="mt-6 text-ink-mute"><%= t("courses.show.lessons_pending") %></p>
+    <% end %>
+  </section>
+
+  <section class="mx-auto max-w-2xl px-6 pt-16">
+    <hr class="rule-gradient">
+    <p class="mt-10">
+      <%= link_to t("courses.show.cta"), new_contact_path(course: @course.slug), class: "btn btn-primary" %>
+    </p>
+  </section>
+</article>

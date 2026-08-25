@@ -1,0 +1,44 @@
+<% content_for :title, page_title(t("admin.pages.keys.#{@page.key}")) %>
+
+<%= render "admin/shared/header",
+      title: t("admin.pages.keys.#{@page.key}"),
+      eyebrow: "#{t("admin.pages.title")} · #{@page.locale.upcase}",
+      actions: capture {
+        link_to t("admin.shared.back"), admin_pages_path, class: "link-quiet text-sm text-ink-mute"
+      } %>
+
+<%= form_with model: [ :admin, @page ], class: "space-y-6" do |form| %>
+  <%= render "shared/form_errors", record: @page %>
+
+  <div class="rounded-xl border border-line bg-white p-6 space-y-6">
+    <div>
+      <%= form.label :title, class: "field-label" %>
+      <%= form.text_field :title, class: "field-input" %>
+    </div>
+
+    <div>
+      <%= form.label :subtitle, class: "field-label" %>
+      <%= form.text_field :subtitle, class: "field-input" %>
+    </div>
+
+    <div>
+      <%= form.label :cover_image, Page.human_attribute_name(:cover_image), class: "field-label" %>
+      <% if @page.cover_image.attached? %>
+        <%= image_tag @page.cover_image.variant(resize_to_limit: [ 480, 480 ]), alt: "",
+              class: "mb-3 w-40 rounded-full object-cover" %>
+      <% end %>
+      <%= form.file_field :cover_image, accept: "image/*", class: "field-input" %>
+      <p class="field-hint"><%= t("admin.shared.optional") %></p>
+    </div>
+  </div>
+
+  <div class="rounded-xl border border-line bg-white p-6">
+    <%= form.label :body, class: "field-label" %>
+    <%= form.rich_textarea :body %>
+  </div>
+
+  <div class="flex flex-wrap items-center gap-4">
+    <%= form.submit class: "btn btn-primary cursor-pointer" %>
+    <%= link_to t("admin.shared.cancel"), admin_pages_path, class: "link-quiet text-sm text-ink-mute" %>
+  </div>
+<% end %>

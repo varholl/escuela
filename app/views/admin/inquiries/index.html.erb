@@ -1,0 +1,38 @@
+<% content_for :title, page_title(t("admin.inquiries.title")) %>
+
+<%= render "admin/shared/header", title: t("admin.inquiries.title") %>
+
+<% if @inquiries.any? %>
+  <div class="overflow-hidden rounded-xl border border-line bg-white">
+    <ul class="divide-y divide-line">
+      <% @inquiries.each do |inquiry| %>
+        <li class="flex flex-wrap items-start gap-x-4 gap-y-3 px-5 py-4 <%= "bg-gold/5" unless inquiry.handled? %>">
+          <div class="min-w-0 flex-1">
+            <%= link_to inquiry.name, admin_inquiry_path(inquiry), class: "link-quiet font-medium" %>
+            <p class="mt-1 truncate text-sm text-ink-mute"><%= inquiry.message %></p>
+            <p class="mt-1.5 text-xs text-ink-mute">
+              <%= l(inquiry.created_at, format: :short) %> ·
+              <%= inquiry.course ? t("admin.inquiries.about_course", course: inquiry.course.title) : t("admin.inquiries.general") %>
+            </p>
+          </div>
+
+          <span class="inline-flex shrink-0 rounded-full px-2.5 py-1 text-xs font-semibold <%= inquiry.handled? ? "bg-iris/10 text-iris" : "bg-gold/20 text-ink" %>">
+            <%= inquiry.handled? ? t("admin.inquiries.handled") : t("admin.inquiries.unhandled") %>
+          </span>
+
+          <% if inquiry.handled? %>
+            <%= button_to t("admin.inquiries.mark_unhandled"), admin_inquiry_handling_path(inquiry), method: :delete,
+                  class: "link-quiet cursor-pointer text-sm text-ink-soft" %>
+          <% else %>
+            <%= button_to t("admin.inquiries.mark_handled"), admin_inquiry_handling_path(inquiry), method: :post,
+                  class: "link-quiet cursor-pointer text-sm font-semibold text-iris" %>
+          <% end %>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+<% else %>
+  <div class="rounded-xl border border-dashed border-line bg-white p-12 text-center">
+    <p class="text-ink-mute"><%= t("admin.inquiries.empty") %></p>
+  </div>
+<% end %>

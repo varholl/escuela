@@ -1,0 +1,51 @@
+# Fly.io deployment. See DEPLOY.md for the full walkthrough.
+#
+# The database is SQLite, which means this app must run on exactly ONE machine:
+# a second machine would get its own copy of the volume and the two would drift
+# apart silently. Keep `fly scale count 1`.
+
+app = "maflor"
+primary_region = "eze"          # Ezeiza, Buenos Aires
+console_command = "/rails/bin/rails console"
+
+[build]
+
+[env]
+  RAILS_ENV = "production"
+  RAILS_MAX_THREADS = "5"
+  # Run Solid Queue inside Puma rather than paying for a second machine.
+  SOLID_QUEUE_IN_PUMA = "true"
+
+[http_service]
+  internal_port = 80
+  force_https = true
+  auto_start_machines = true
+  auto_stop_machines = "suspend"
+  min_machines_running = 1
+  processes = ["app"]
+
+  [http_service.concurrency]
+    type = "requests"
+    soft_limit = 100
+    hard_limit = 200
+
+# Both the SQLite databases and the Active Storage uploads live in storage/,
+# so this single volume holds everything that must survive a deploy.
+[[mounts]]
+  source = "maflor_storage"
+  destination = "/rails/storage"
+  initial_size = "3gb"
+  snapshot_retention = 14
+
+[[vm]]
+  size = "shared-cpu-1x"
+  memory = "1gb"
+
+[checks]
+  [checks.up]
+    type = "http"
+    port = 80
+    path = "/up"
+    interval = "30s"
+    timeout = "5s"
+    grace_period = "15s"

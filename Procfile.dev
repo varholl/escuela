@@ -1,0 +1,4 @@
+web: bin/rails server
+# "always" keeps the watcher alive when stdin is not a TTY; without it the
+# process exits after the first build and foreman tears down the whole dev stack.
+css: bin/rails "tailwindcss:watch[always]"

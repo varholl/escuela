@@ -1,0 +1,10 @@
+<% if record.errors.any? %>
+  <div class="rounded-xl border-l-2 border-rose bg-rose/10 px-5 py-4" role="alert">
+    <p class="text-[0.9375rem] font-semibold text-ink"><%= t("errors.form") %></p>
+    <ul class="mt-2 list-disc space-y-1 pl-5 text-[0.9375rem] text-ink-soft">
+      <% record.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>

@@ -1,0 +1,20 @@
+# Editable copy for the standing pages, so the owner can rewrite her own bio
+# from the admin panel instead of waiting on a deploy.
+class Page < ApplicationRecord
+  include Localizable
+
+  KEYS = %w[ about philosophy ].freeze
+
+  has_rich_text :body
+  has_one_attached :cover_image
+
+  validates :key, presence: true, inclusion: { in: KEYS }, uniqueness: { scope: :locale }
+  validates :title, length: { maximum: 160 }
+  validates :subtitle, length: { maximum: 240 }
+
+  # Falls back to the default locale so an untranslated page still renders.
+  def self.for(key, locale: I18n.locale)
+    in_locale(locale).find_by(key: key.to_s) ||
+      in_locale(I18n.default_locale).find_by(key: key.to_s)
+  end
+end

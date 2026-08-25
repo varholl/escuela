@@ -1,0 +1,8 @@
+<header class="mx-auto max-w-6xl px-6 pt-16 pb-12 md:pt-24">
+  <p class="eyebrow"><%= eyebrow %></p>
+  <h1 class="mt-5 max-w-3xl text-[clamp(2.4rem,5.5vw,4rem)]"><%= title %></h1>
+  <% if local_assigns[:body].present? %>
+    <p class="mt-6 max-w-xl text-lg leading-relaxed text-ink-soft"><%= body %></p>
+  <% end %>
+  <hr class="rule-gradient mt-12">
+</header>

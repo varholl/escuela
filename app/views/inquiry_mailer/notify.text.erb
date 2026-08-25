@@ -1,0 +1,13 @@
+<%= t("inquiry_mailer.notify.heading") %>
+
+<%= @inquiry.name %> <<%= @inquiry.email %>>
+<% if @inquiry.phone.present? %><%= Inquiry.human_attribute_name(:phone) %>: <%= @inquiry.phone %><% end %>
+<% if @inquiry.course.present? %><%= t("inquiry_mailer.notify.course") %>: <%= @inquiry.course.title %><% end %>
+
+---
+
+<%= @inquiry.message %>
+
+---
+
+<%= t("inquiry_mailer.notify.reply_hint") %>

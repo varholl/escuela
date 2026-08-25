@@ -1,0 +1,38 @@
+<% content_for :title, page_title(t("admin.courses.title")) %>
+
+<%= render "admin/shared/header", title: t("admin.courses.title"), actions: capture {
+      link_to t("admin.courses.new"), new_admin_course_path, class: "btn btn-primary py-2.5 px-5 text-sm"
+    } %>
+
+<% if @courses.any? %>
+  <div class="overflow-hidden rounded-xl border border-line bg-white">
+    <ul class="divide-y divide-line">
+      <% @courses.each do |course| %>
+        <li class="flex flex-wrap items-center gap-x-4 gap-y-3 px-5 py-4">
+          <div class="min-w-0 flex-1">
+            <%= link_to course.title, edit_admin_course_path(course), class: "link-quiet font-medium" %>
+            <p class="mt-1 text-sm text-ink-mute">
+              <%= course.locale.upcase %> · <%= course_modality(course) %> · <%= formatted_price(course) %>
+            </p>
+          </div>
+
+          <%= render "admin/shared/state_badge", record: course %>
+
+          <div class="flex items-center gap-3 text-sm">
+            <%= link_to t("admin.courses.lessons"), admin_course_lessons_path(course), class: "link-quiet text-ink-soft" %>
+            <%= link_to t("admin.courses.enrollments"), admin_course_enrollments_path(course), class: "link-quiet text-ink-soft" %>
+            <%= link_to t("admin.shared.preview"), course_path(id: course, locale: course.locale), class: "link-quiet text-ink-soft" %>
+            <%= button_to t("admin.shared.delete"), admin_course_path(course), method: :delete,
+                  form: { data: { turbo_confirm: t("admin.shared.confirm") } },
+                  class: "link-quiet cursor-pointer text-rose" %>
+          </div>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+<% else %>
+  <div class="rounded-xl border border-dashed border-line bg-white p-12 text-center">
+    <p class="text-ink-mute"><%= t("admin.courses.empty") %></p>
+    <p class="mt-5"><%= link_to t("admin.courses.new"), new_admin_course_path, class: "btn btn-primary" %></p>
+  </div>
+<% end %>

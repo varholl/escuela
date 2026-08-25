@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="<%= I18n.locale %>">
+  <head>
+    <title><%= content_for(:title) || page_title(t("sessions.new.title")) %></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="robots" content="noindex">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <link rel="icon" href="/favicon.png" type="image/png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..600;1,6..72,200..500&family=Karla:ital,wght@0,300..700;1,300..600&display=swap">
+    <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+  </head>
+
+  <body class="grid min-h-screen place-items-center bg-haze px-6 py-12">
+    <div class="w-full max-w-sm">
+      <%= link_to root_path, class: "mx-auto block w-fit" do %>
+        <%= render "shared/wordmark" %>
+      <% end %>
+
+      <div class="mt-8 rounded-2xl border border-line bg-white p-8 shadow-sm shadow-ink/5">
+        <% flash.each do |level, message| %>
+          <div class="mb-6 rounded-xl border-l-2 px-4 py-3 text-sm <%= flash_classes(level) %>"
+               role="<%= level.to_s.in?(%w[alert error]) ? "alert" : "status" %>">
+            <%= message %>
+          </div>
+        <% end %>
+
+        <%= yield %>
+      </div>
+
+      <p class="mt-6 text-center text-sm">
+        <%= link_to t("errors.not_found.cta"), root_path, class: "link-quiet text-ink-mute" %>
+      </p>
+    </div>
+  </body>
+</html>
