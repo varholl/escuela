@@ -9,6 +9,7 @@ namespace :sample_content do
   ].freeze
 
   SAMPLE_COURSE_SLUGS = %w[
+    introduccion-a-la-respiracion
     fundamentos-de-atencion-plena
     habitar-el-cuerpo
   ].freeze

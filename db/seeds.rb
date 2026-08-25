@@ -171,6 +171,24 @@ puts "  Notes: #{Article.count}"
 # ---------------------------------------------------------------------------
 COURSES = [
   {
+    title: "Introducción a la respiración",
+    subtitle: "Tres prácticas breves para empezar hoy.",
+    summary: "Un curso corto y sin costo para conocer la práctica antes de comprometerte con algo más largo.",
+    modality: :on_demand,
+    duration_label: "3 clases",
+    price_cents: 0,
+    status: :published,
+    position: 0,
+    description: <<~HTML,
+      <p>Empezá por acá. Son tres encuentros breves, sin costo, para que veas si esta forma de trabajar te hace sentido antes de invertir tiempo o dinero en algo más largo.</p>
+    HTML
+    lessons: [
+      { title: "Por qué respirar", summary: "De dónde sale que la respiración cambie algo.", free_preview: true, duration_seconds: 420 },
+      { title: "La respiración cuadrada", summary: "La práctica, paso a paso.", duration_seconds: 540 },
+      { title: "Llevarlo al día", summary: "Cómo sostenerlo cuando no hay tiempo.", duration_seconds: 480 }
+    ]
+  },
+  {
     title: "Fundamentos de atención plena",
     subtitle: "Ocho semanas para construir una práctica que se sostenga sola.",
     summary: "Un programa introductorio con base clínica: práctica guiada, marco teórico y seguimiento personal para instalar el hábito.",
@@ -211,10 +229,20 @@ if seed_samples
     next if course.persisted?
 
     course.assign_attributes(
-      attributes.except(:description).merge(locale: "es", currency: "ARS", published_at: Time.current)
+      attributes.except(:description, :lessons).merge(locale: "es", currency: "ARS", published_at: Time.current)
     )
     course.description = attributes[:description]
     course.save!
+
+    # A free course with no lessons cannot show what the student area does.
+    attributes.fetch(:lessons, []).each_with_index do |lesson_attributes, index|
+      lesson = course.lessons.find_or_initialize_by(slug: lesson_attributes[:title].parameterize)
+      next if lesson.persisted?
+
+      lesson.assign_attributes(lesson_attributes.merge(position: index + 1, published_at: Time.current))
+      lesson.notes = "<p>Acá va el material de apoyo de la clase.</p>"
+      lesson.save!
+    end
   end
 end
 puts "  Courses: #{Course.count}"
