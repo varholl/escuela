@@ -1,5 +1,17 @@
 # Idempotent: safe to run again on an existing database. Nothing here is
 # destructive, and existing records keep whatever the owner has edited.
+#
+# Two tiers:
+#   always        the administrator account and one empty Page per key/locale
+#   sample only   invented notes, courses and biographies
+#
+# The sample tier never runs in production. It reads as her own writing, and
+# publishing invented biography under a real doctor's name is not a mistake
+# worth risking for the convenience of a populated homepage. Pass
+# SEED_SAMPLE_CONTENT=1 to force it anywhere.
+seed_samples = ENV["SEED_SAMPLE_CONTENT"].present? || !Rails.env.production?
+
+puts "\n  Seeding #{Rails.env} (sample content: #{seed_samples ? "yes" : "no"})"
 
 # ---------------------------------------------------------------------------
 # Administrator
@@ -75,16 +87,21 @@ PAGE_CONTENT = {
   }
 }.freeze
 
-PAGE_CONTENT.each do |(key, locale), attributes|
+# The records always exist so the admin panel lists every page; the invented
+# copy inside them is sample content.
+Page::KEYS.product(I18n.available_locales.map(&:to_s)).each do |key, locale|
   page = Page.find_or_initialize_by(key: key, locale: locale)
   next if page.persisted?
 
-  page.title = attributes[:title]
-  page.subtitle = attributes[:subtitle]
-  page.body = attributes[:body]
+  if seed_samples && (attributes = PAGE_CONTENT[[ key, locale ]])
+    page.title = attributes[:title]
+    page.subtitle = attributes[:subtitle]
+    page.body = attributes[:body]
+  end
+
   page.save!
 end
-puts "  Standing pages: #{Page.count}"
+puts "  Standing pages: #{Page.count}#{" (empty, ready to write)" unless seed_samples}"
 
 # ---------------------------------------------------------------------------
 # Sample notes
@@ -131,13 +148,15 @@ ARTICLES = [
   }
 ].freeze
 
-ARTICLES.each do |attributes|
-  article = Article.find_or_initialize_by(slug: attributes[:title].parameterize)
-  next if article.persisted?
+if seed_samples
+  ARTICLES.each do |attributes|
+    article = Article.find_or_initialize_by(slug: attributes[:title].parameterize)
+    next if article.persisted?
 
-  article.assign_attributes(attributes.except(:body).merge(locale: "es"))
-  article.body = attributes[:body]
-  article.save!
+    article.assign_attributes(attributes.except(:body).merge(locale: "es"))
+    article.body = attributes[:body]
+    article.save!
+  end
 end
 puts "  Notes: #{Article.count}"
 
@@ -180,15 +199,17 @@ COURSES = [
   }
 ].freeze
 
-COURSES.each do |attributes|
-  course = Course.find_or_initialize_by(slug: attributes[:title].parameterize)
-  next if course.persisted?
+if seed_samples
+  COURSES.each do |attributes|
+    course = Course.find_or_initialize_by(slug: attributes[:title].parameterize)
+    next if course.persisted?
 
-  course.assign_attributes(
-    attributes.except(:description).merge(locale: "es", currency: "ARS", published_at: Time.current)
-  )
-  course.description = attributes[:description]
-  course.save!
+    course.assign_attributes(
+      attributes.except(:description).merge(locale: "es", currency: "ARS", published_at: Time.current)
+    )
+    course.description = attributes[:description]
+    course.save!
+  end
 end
 puts "  Courses: #{Course.count}"
 puts "  Seed complete.\n\n"

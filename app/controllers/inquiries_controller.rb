@@ -14,7 +14,7 @@ class InquiriesController < ApplicationController
     return redirect_to(new_contact_path, notice: t("inquiries.create.success")) if honeypot_tripped?
 
     if @inquiry.save
-      InquiryMailer.notify(@inquiry).deliver_later
+      notify_owner
       redirect_to new_contact_path, notice: t("inquiries.create.success")
     else
       render :new, status: :unprocessable_content
@@ -22,6 +22,14 @@ class InquiriesController < ApplicationController
   end
 
   private
+    # The message is already saved; the email is a convenience, and it is only
+    # attempted where there is somewhere to send it.
+    def notify_owner
+      return unless Rails.configuration.x.deliver_inquiry_notifications
+
+      InquiryMailer.notify(@inquiry).deliver_later
+    end
+
     def inquiry_params
       params.expect(inquiry: [ :name, :email, :phone, :message, :course_id ])
     end

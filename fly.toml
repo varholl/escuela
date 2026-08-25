@@ -4,8 +4,8 @@
 # a second machine would get its own copy of the volume and the two would drift
 # apart silently. Keep `fly scale count 1`.
 
-app = "maflor"
-primary_region = "eze"          # Ezeiza, Buenos Aires
+app = "maflor-escuela"
+primary_region = "gru"          # Sao Paulo: the closest region Fly offers to Argentina
 console_command = "/rails/bin/rails console"
 
 [build]
@@ -15,9 +15,12 @@ console_command = "/rails/bin/rails console"
   RAILS_MAX_THREADS = "5"
   # Run Solid Queue inside Puma rather than paying for a second machine.
   SOLID_QUEUE_IN_PUMA = "true"
+  # The image runs as uid 1000, which may not bind privileged ports, so
+  # Thruster listens high and Fly's proxy forwards 443 -> 8080.
+  HTTP_PORT = "8080"
 
 [http_service]
-  internal_port = 80
+  internal_port = 8080
   force_https = true
   auto_start_machines = true
   auto_stop_machines = "suspend"
@@ -44,7 +47,7 @@ console_command = "/rails/bin/rails console"
 [checks]
   [checks.up]
     type = "http"
-    port = 80
+    port = 8080
     path = "/up"
     interval = "30s"
     timeout = "5s"

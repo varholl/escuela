@@ -1,8 +1,9 @@
 # Maflor
 
 Escuela de bienestar: sitio público, notas y cursos, con un panel de
-administración propio. *Maflor* es un nombre provisorio — ver
-[Cambiar el nombre](#cambiar-el-nombre).
+administración propio.
+
+**En línea:** <https://maflor-escuela.fly.dev>
 
 > «Un espacio de desarrollo del ser, en la coherencia cuerpo-mente-espíritu.»
 
@@ -132,7 +133,7 @@ Todo desde `/admin`, sin tocar código:
 bin/rails test
 ```
 
-97 tests cubren los modelos, el ruteo por idioma, que los borradores no se
+98 tests cubren los modelos, el ruteo por idioma, que los borradores no se
 filtren, el formulario de contacto (incluido el honeypot), las páginas de error y que el
 panel sólo sea accesible para administradores.
 
@@ -147,6 +148,9 @@ panel sólo sea accesible para administradores.
 3. El módulo Ruby `Maflor` en `config/application.rb` y `config.ru` — cambiarlo
    es opcional; no se ve en ningún lado.
 
+Fly no permite renombrar una app, así que `maflor-escuela.fly.dev` queda fijo.
+En cuanto haya dominio propio deja de importar: ver `DEPLOY.md`.
+
 Los logos están en `app/assets/images/` (`logo-mark.png` para fondo claro,
 `logo-mark-light.png` para fondo oscuro) y los favicons en `public/`.
 
@@ -158,4 +162,5 @@ Los logos están en `app/assets/images/` (`logo-mark.png` para fondo claro,
   [`docs/PHASE_2.md`](docs/PHASE_2.md).
 - **Paginación de notas.** Hoy `/notas` lista todo. Recién hace falta pasadas
   unas treinta notas.
-- **Deploy.** Ver [`DEPLOY.md`](DEPLOY.md).
+- **Correo.** El formulario guarda todo, pero el aviso por correo necesita
+  SMTP configurado. Ver [`DEPLOY.md`](DEPLOY.md).

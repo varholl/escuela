@@ -26,6 +26,10 @@ module Maflor
     config.i18n.fallbacks = [ :es ]
     config.i18n.load_path += Dir[Rails.root.join("config/locales/**/*.{rb,yml}")]
 
+    # Whether the contact form also emails a copy. The message is always
+    # stored either way, so this only controls the notification.
+    config.x.deliver_inquiry_notifications = true
+
     # Render error pages through the app so a stale link lands somewhere that
     # still looks like the site. public/*.html remains the fallback for the
     # case where the app itself cannot render.

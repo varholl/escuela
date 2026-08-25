@@ -59,8 +59,9 @@ Rails.application.configure do
   config.action_mailer.default_url_options = { host: ENV.fetch("APP_HOST", "localhost"), protocol: "https" }
 
   # SMTP is configured entirely from the environment so no credentials live in
-  # the repository. Until SMTP_ADDRESS is set, mail is written to the log and
-  # the contact form still records every message in the database.
+  # the repository. Until SMTP_ADDRESS is set the notification is skipped
+  # outright -- the contact form still records every message in the database,
+  # and attempting delivery with nowhere to send would only pile up failed jobs.
   if ENV["SMTP_ADDRESS"].present?
     config.action_mailer.delivery_method = :smtp
     config.action_mailer.raise_delivery_errors = true
@@ -73,8 +74,9 @@ Rails.application.configure do
       enable_starttls_auto: true
     }
   else
-    config.action_mailer.delivery_method = :logger
+    config.action_mailer.delivery_method = :test
     config.action_mailer.raise_delivery_errors = false
+    config.x.deliver_inquiry_notifications = false
   end
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
