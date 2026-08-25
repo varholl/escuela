@@ -3,6 +3,11 @@ Rails.application.routes.draw do
   # Can be used by load balancers and uptime monitors to verify that the app is live.
   get "up" => "rails/health#show", as: :rails_health_check
 
+  # Error pages, reached through config.exceptions_app rather than by linking.
+  match "/404", to: "errors#not_found",      via: :all
+  match "/422", to: "errors#unprocessable",  via: :all
+  match "/500", to: "errors#server_error",   via: :all
+
   # Authentication and the admin panel live outside the locale scope: they are
   # back-office screens for the owner, always rendered in the default locale.
   resource :session, only: %i[ new create destroy ]

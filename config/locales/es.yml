@@ -274,4 +274,10 @@ es:
       title: "No encontramos esta página"
       body: "Puede que el enlace haya cambiado o que el contenido ya no esté publicado."
       cta: "Volver al inicio"
+    unprocessable:
+      title: "No pudimos procesar eso"
+      body: "Algo en el formulario no llegó como esperábamos. Probá de nuevo, y si sigue pasando escribime."
+    server_error:
+      title: "Algo se rompió de nuestro lado"
+      body: "No es culpa tuya. Ya quedó registrado; probá de nuevo en un rato."
     form: "Revisá lo siguiente:"

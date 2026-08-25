@@ -25,5 +25,10 @@ module Maflor
     config.i18n.default_locale = :es
     config.i18n.fallbacks = [ :es ]
     config.i18n.load_path += Dir[Rails.root.join("config/locales/**/*.{rb,yml}")]
+
+    # Render error pages through the app so a stale link lands somewhere that
+    # still looks like the site. public/*.html remains the fallback for the
+    # case where the app itself cannot render.
+    config.exceptions_app = routes
   end
 end

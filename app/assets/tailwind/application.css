@@ -232,26 +232,6 @@
     color: #b3261e;
   }
 
-  /* Action Text's editor should look like the rest of the admin fields. */
-  trix-editor {
-    min-height: 20rem;
-    border: 1px solid var(--color-line);
-    border-radius: 0 0 0.5rem 0.5rem;
-    background-color: #fff;
-    font-family: var(--font-sans);
-    font-size: 1rem;
-    line-height: 1.65;
-  }
-
-  trix-editor:focus {
-    border-color: var(--color-iris);
-    box-shadow: 0 0 0 3px var(--color-iris-pale);
-    outline: none;
-  }
-
-  trix-toolbar .trix-button-group {
-    border-color: var(--color-line);
-  }
 }
 
 /* ---------------------------------------------------------------------------
@@ -340,4 +320,62 @@
   background-color: var(--color-haze);
   overflow-x: auto;
   font-size: 0.9rem;
+}
+
+/* ---------------------------------------------------------------------------
+   The Trix editor
+   ---------------------------------------------------------------------------
+   Unlayered for the same reason as .prose-note above: actiontext.css sets
+   `trix-editor { min-height: 5em; border: 1px solid #bbb }` without a layer, and
+   unlayered rules beat every layered one. Inside @layer components these were
+   silently dropped and the editor stayed a five-line box.
+--------------------------------------------------------------------------- */
+trix-editor {
+  min-height: 20rem;
+  padding: 0.9rem 1rem;
+  border: 1px solid var(--color-line);
+  border-radius: 0 0 0.5rem 0.5rem;
+  background-color: #fff;
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  line-height: 1.65;
+}
+
+trix-editor:empty:not(:focus)::before {
+  color: var(--color-ink-mute);
+}
+
+trix-editor:focus {
+  border-color: var(--color-iris);
+  box-shadow: 0 0 0 3px var(--color-iris-pale);
+  outline: none;
+}
+
+trix-editor h1 {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  font-weight: 400;
+  line-height: 1.2;
+}
+
+trix-editor blockquote {
+  border-left: 2px solid var(--color-gold);
+  padding-left: 1rem;
+  font-family: var(--font-display);
+  font-style: italic;
+}
+
+trix-toolbar .trix-button-group {
+  border-color: var(--color-line);
+  border-radius: 0.5rem;
+}
+
+trix-toolbar .trix-button {
+  border-color: var(--color-line);
+}
+
+trix-toolbar .trix-button.trix-active {
+  background-color: var(--color-iris-pale);
+  color: var(--color-iris);
 }

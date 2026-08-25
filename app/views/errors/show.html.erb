@@ -1,0 +1,27 @@
+<%
+  key = case status
+        when :not_found then "not_found"
+        when :unprocessable_content then "unprocessable"
+        else "server_error"
+        end
+%>
+<% content_for :title, page_title(t("errors.#{key}.title")) %>
+
+<section class="mx-auto grid max-w-6xl grid-cols-1 items-center gap-14 px-6 pt-20 pb-28 lg:grid-cols-[1.05fr_0.95fr] lg:gap-20">
+  <div>
+    <p class="eyebrow"><%= status == :not_found ? "404" : Rack::Utils.status_code(status) %></p>
+
+    <h1 class="mt-6 text-[clamp(2.2rem,5vw,3.5rem)]"><%= t("errors.#{key}.title") %></h1>
+
+    <p class="mt-7 max-w-md text-lg leading-relaxed text-ink-soft"><%= t("errors.#{key}.body") %></p>
+
+    <div class="mt-10 flex flex-wrap items-center gap-4">
+      <%= link_to t("errors.not_found.cta"), root_path, class: "btn btn-primary" %>
+      <%= link_to t("nav.articles"), articles_path, class: "btn btn-ghost" %>
+    </div>
+  </div>
+
+  <div class="mx-auto w-full max-w-sm lg:max-w-none">
+    <%= render "shared/aperture", id: "error" %>
+  </div>
+</section>

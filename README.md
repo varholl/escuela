@@ -90,12 +90,25 @@ Dos decisiones que conviene no deshacer sin querer:
 
 - Los tres pilares (cuerpo, mente, espíritu) se marcan con **tercios de un mismo
   anillo**, no con números: no son una secuencia, son simultáneos.
-- Los estilos de `.prose-note` están **fuera** de `@layer components` a
-  propósito. Action Text trae un `.trix-content * { margin: 0 }` sin capa, y en
-  la cascada de CSS lo que está sin capa le gana a cualquier capa, sin importar
-  la especificidad.
+- Los estilos de `.prose-note` y los de `trix-editor` están **fuera** de
+  `@layer components` a propósito. Action Text trae reglas sin capa
+  (`.trix-content * { margin: 0 }` y `trix-editor { min-height: 5em }`), y en la
+  cascada de CSS lo que está sin capa le gana a cualquier capa sin importar la
+  especificidad. Metidos en la capa, esos estilos se pierden en silencio: los
+  párrafos quedan pegados y el editor queda de cinco renglones.
 
 Tipografías: **Newsreader** para títulos y **Karla** para texto, desde Google Fonts.
+
+### Páginas de error
+
+Un enlace viejo o un borrador dan un 404 con la identidad del sitio, no el de
+Rails: `config.exceptions_app` enruta los errores por `ErrorsController`, que
+además conserva el idioma que estaba leyendo el visitante. Los `public/*.html`
+quedan como último recurso para cuando la aplicación no puede ni renderizar.
+
+> Si en desarrollo el CSS parece no actualizarse, borrá los assets precompilados
+> que pudo dejar una prueba de producción: `bin/rails assets:clobber`. Mientras
+> existan, `public/assets/` se sirve antes que Propshaft.
 
 ---
 
@@ -119,9 +132,9 @@ Todo desde `/admin`, sin tocar código:
 bin/rails test
 ```
 
-92 tests cubren los modelos, el ruteo por idioma, que los borradores no se
-filtren, el formulario de contacto (incluido el honeypot) y que el panel sólo
-sea accesible para administradores.
+97 tests cubren los modelos, el ruteo por idioma, que los borradores no se
+filtren, el formulario de contacto (incluido el honeypot), las páginas de error y que el
+panel sólo sea accesible para administradores.
 
 ---
 
