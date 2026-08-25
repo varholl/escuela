@@ -1,3 +1,7 @@
+# Los textos dirigidos a quien estudia se escriben en neutro: no sabemos su
+# género y no hay motivo para preguntarlo. Cuando hace falta un sustantivo,
+# "estudiante" sirve para cualquiera. Lo que habla de ella (la psiquiatra) sí va
+# en femenino, porque ahí sí sabemos de quién hablamos.
 es:
   date:
     formats:
@@ -151,7 +155,7 @@ es:
       have_account: "Ya tengo cuenta"
       password_hint: "Mínimo 8 caracteres."
     create:
-      success: "Bienvenida, %{name}."
+      success: "Hola, %{name}. Qué bueno tenerte acá."
     throttled: "Demasiados intentos. Probá de nuevo en un rato."
 
   enrollments:
@@ -160,7 +164,7 @@ es:
     sign_in_to_join: "Entrar para sumarme"
     create:
       success: "Listo, ya tenés acceso al curso."
-      already: "Ya estabas inscripta en este curso."
+      already: "Ya tenías acceso a este curso."
       unavailable: "Este curso no se puede tomar por tu cuenta. Escribime y lo vemos."
     enrolled_badge: "Ya tenés acceso"
 
@@ -173,7 +177,7 @@ es:
 
   lessons:
     show:
-      locked: "Necesitás estar inscripta para ver esta clase."
+      locked: "Necesitás inscribirte al curso para ver esta clase."
       back: "Volver al curso"
       materials: "Material de la clase"
       no_content: "Esta clase todavía no tiene contenido cargado."
@@ -277,18 +281,18 @@ es:
       destroyed: "Clase eliminada."
       empty: "Este curso todavía no tiene clases."
       video_hint: "Elegí dónde vive el video y pegá el enlace o el identificador. Sirve pegar la URL de YouTube o Vimeo tal cual."
-      visibility_notice: "Una clase publicada la ven las alumnas inscriptas al curso. Marcala como «clase abierta» para que la vea cualquiera, como muestra."
+      visibility_notice: "Una clase publicada se ve únicamente con inscripción al curso. Mientras esté sin publicar no la ve nadie más que vos."
     enrollments:
       title: "Inscripciones a %{course}"
       new: "Dar acceso"
       created: "Acceso otorgado."
       destroyed: "Acceso retirado."
       empty: "Nadie tiene acceso a este curso todavía."
-      email_label: "Correo del alumno"
+      email_label: "Correo de quien se inscribe"
       email_hint: "Si no tiene cuenta, se crea una."
       name_label: "Nombre"
       granted_at: "Desde"
-      manual_notice: "A los cursos sin costo las alumnas se suman solas. Acá podés dar acceso a mano a cualquier curso, y cuando conectemos la pasarela de pago va a escribir estos mismos registros."
+      manual_notice: "A los cursos sin costo cada quien se suma por su cuenta desde el sitio. Acá podés dar acceso a mano a cualquier curso, y cuando conectemos la pasarela de pago va a escribir estos mismos registros."
     pages:
       title: "Páginas"
       updated: "Página guardada."

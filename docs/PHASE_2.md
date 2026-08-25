@@ -27,11 +27,11 @@ end
 | `Course` con precio (`price_cents`) y moneda | hecho |
 | `Lesson` con `video_provider` + `video_reference` | hecho |
 | `Enrollment` con `status`, `source`, `granted_at`, `expires_at` | hecho |
-| Alta de alumnas por correo desde el panel (crea la cuenta) | hecho |
+| Alta por correo desde el panel (crea la cuenta) | hecho |
 | Autenticación de usuarios (Rails 8) con rol `student` | hecho |
-| Registro público: la alumna elige su contraseña | hecho |
-| Inscripción sola a cursos sin costo (`source: "self_serve"`) | hecho |
-| Área de alumnas (`/mis-cursos`) y reproductor por clase | hecho |
+| Registro público: cada quien elige su contraseña | hecho |
+| Inscripción por cuenta propia a cursos sin costo (`source: "self_serve"`) | hecho |
+| Área de estudiantes (`/mis-cursos`) y reproductor por clase | hecho |
 | Control de acceso: `Lesson#viewable_by?` / `Course#enrolled?` | hecho |
 
 `video_provider` / `video_reference` es a propósito un par genérico: el primero
@@ -55,7 +55,7 @@ create_table :plans do |t|
   t.timestamps
 end
 
-# El vínculo recurrente con la alumna. Independiente de la pasarela.
+# El vínculo recurrente con la estudiante. Independiente de la pasarela.
 create_table :subscriptions do |t|
   t.references :user, null: false, foreign_key: true
   t.references :plan, null: false, foreign_key: true
@@ -86,7 +86,7 @@ end
 ```
 
 El índice único sobre `[provider, provider_reference]` es lo que vuelve
-**idempotentes** los webhooks: las pasarelas reintentan, y sin eso una alumna
+**idempotentes** los webhooks: las pasarelas reintentan, y sin eso una estudiante
 podría quedar cobrada dos veces.
 
 ### 2. Un puerto, dos adaptadores
@@ -105,8 +105,8 @@ Cada adaptador traduce el evento del proveedor a un puñado de eventos propios
 (`payment_succeeded`, `subscription_renewed`, `subscription_cancelled`) y un
 único objeto de dominio decide qué hacer con ellos.
 
-**Para elegir:** Mercado Pago si las alumnas son de Argentina (pesos, tarjetas
-locales, cuotas); Stripe si cobra en dólares a alumnas de afuera. Se puede
+**Para elegir:** Mercado Pago si quienes cursan están en Argentina (pesos, tarjetas
+locales, cuotas); Stripe si cobra en dólares a estudiantes de afuera. Se puede
 empezar con uno y agregar el otro sin tocar el resto de la aplicación.
 
 ### 3. Video
@@ -125,7 +125,7 @@ El límite práctico de subir al sitio es el espacio: el volumen de Fly son 3 GB
 compartidos con la base. Alcanza para unas pocas horas de video comprimido; si
 la escuela crece, ahí conviene mover a Mux.
 
-### 4. Área de alumnas — **hecho**
+### 4. Área de estudiantes — **hecho**
 
 Ya está: `/mis-cursos`, `/cursos/:slug/clases/:slug` detrás de la verificación,
 y registro público. Falta sólo el correo de bienvenida, que espera a que haya
@@ -139,7 +139,7 @@ Argentina requiere factura electrónica. Suele resolverse con un servicio extern
 
 ## Orden sugerido
 
-1. ~~Registro público y área de alumnas.~~ **Hecho.** Ya se puede vender por
+1. ~~Registro público y área de estudiantes.~~ **Hecho.** Ya se puede vender por
    transferencia y dar el acceso a mano desde el panel.
 2. Elegir hosting de video para lo pago. Hoy sirve YouTube/Vimeo, que alcanza
    para lo gratuito pero no protege un curso que se cobra.

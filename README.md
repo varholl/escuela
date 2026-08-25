@@ -50,8 +50,8 @@ El acceso al panel está en `/session/new` y el panel en `/admin`.
 |--------------|--------------------------------------------------------------------------|
 | `Article`    | Las notas. Texto rico con Action Text, imagen de portada, publicación con fecha. |
 | `Course`     | Cursos y encuentros: precio, modalidad, fecha de inicio, estado.          |
-| `Lesson`     | Las clases de un curso: video, material y orden. Visibles para quien esté inscripta. |
-| `Enrollment` | Quién puede ver qué curso. A los gratuitos las alumnas se suman solas.    |
+| `Lesson`     | Las clases de un curso: video, material y orden. Sólo visibles con inscripción. |
+| `Enrollment` | Quién puede ver qué curso. A los gratuitos cada quien se suma por su cuenta. |
 | `Page`       | Los textos de «Sobre mí» y «Filosofía», editables sin deploy.             |
 | `Inquiry`    | Los mensajes del formulario de contacto.                                 |
 | `User`       | Personas. `role` distingue `student` de `admin`.                         |
@@ -113,20 +113,20 @@ quedan como último recurso para cuando la aplicación no puede ni renderizar.
 
 ---
 
-## Cursos y alumnas
+## Cursos y estudiantes
 
-A los cursos **sin costo** las alumnas se suman solas: se registran eligiendo su
-propia contraseña y quedan inscriptas en el mismo paso. Todo el camino funciona
+A los cursos **sin costo** cada quien se suma por su cuenta: se registra eligiendo su
+propia contraseña y la inscripción queda hecha en el mismo paso. Todo el camino funciona
 **sin enviar un solo correo**, que es lo que permite que ande hoy.
 
-Los cursos son **privados**. Sin estar inscripta no se ve ninguna clase, ni
+Los cursos son **privados**. Sin inscripción no se ve ninguna clase, ni
 aunque alguien comparta el enlace directo:
 
 | | Clase publicada | Clase sin publicar |
 |---|---|---|
 | Visitante sin cuenta | no | no |
-| Con cuenta, sin inscribir | no | no |
-| Alumna inscripta | **sí** | no |
+| Con cuenta, sin inscripción | no | no |
+| Con inscripción al curso | **sí** | no |
 | Ella (admin) | sí | sí |
 
 La lista de clases del curso sí es pública: sirve de índice, muestra los títulos
@@ -149,7 +149,7 @@ público, su URL sigue siendo pública aunque el sitio esté cerrado con llave.
 | **YouTube «no listado»** | **No.** Cualquiera con el enlace lo mira en YouTube. Sirve para material gratuito o de difusión, no para un curso cerrado. |
 
 Los embeds de YouTube van en modo `nocookie`, así que ver una clase no entrega a
-las alumnas al perfil publicitario de Google — pero eso es privacidad de datos,
+quien mira al perfil publicitario de Google — pero eso es privacidad de datos,
 no control de acceso.
 
 ## Trabajo diario de ella
@@ -172,10 +172,11 @@ Todo desde `/admin`, sin tocar código:
 bin/rails test
 ```
 
-165 tests cubren los modelos, el ruteo por idioma, que los borradores no se
+171 tests cubren los modelos, el ruteo por idioma, que los borradores no se
 filtren, el formulario de contacto (incluido el honeypot), las páginas de error, quién
-puede ver cada clase, el registro y la inscripción a cursos gratuitos, y que el
-panel sólo sea accesible para administradores.
+puede ver cada clase (incluido que un enlace compartido no abra para nadie de
+afuera), el registro y la inscripción a cursos gratuitos, y que el panel sólo
+sea accesible para administradores.
 
 ---
 
