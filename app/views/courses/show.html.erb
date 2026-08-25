@@ -26,9 +26,28 @@
           <p class="mt-7 max-w-xl text-lg leading-relaxed text-ink-soft"><%= @course.summary %></p>
         <% end %>
 
-        <p class="mt-9">
-          <%= link_to t("courses.show.cta"), new_contact_path(course: @course.slug), class: "btn btn-primary" %>
-        </p>
+        <div class="mt-9 flex flex-wrap items-center gap-4">
+          <% if @course.enrolled?(current_user) %>
+            <span class="inline-flex rounded-full bg-iris/10 px-4 py-2 text-sm font-semibold text-iris">
+              <%= t("enrollments.enrolled_badge") %>
+            </span>
+            <% if (first = @lessons.first) %>
+              <%= link_to t("library.continue"), course_lesson_path(course_id: @course, id: first),
+                    class: "btn btn-primary" %>
+            <% end %>
+          <% elsif @course.free? %>
+            <% if current_user %>
+              <%= button_to t("enrollments.join"), course_enrollment_path(course_id: @course),
+                    class: "btn btn-primary cursor-pointer" %>
+            <% else %>
+              <%= link_to t("enrollments.join"), new_registration_path(course: @course.slug),
+                    class: "btn btn-primary" %>
+            <% end %>
+            <span class="text-sm text-ink-mute"><%= t("enrollments.join_hint") %></span>
+          <% else %>
+            <%= link_to t("courses.show.cta"), new_contact_path(course: @course.slug), class: "btn btn-primary" %>
+          <% end %>
+        </div>
       </div>
 
       <div class="w-full">
@@ -84,7 +103,12 @@
           <li class="flex items-baseline gap-5 py-4">
             <span class="w-6 shrink-0 font-display text-lg text-ink-mute"><%= index + 1 %></span>
             <div class="flex-1">
-              <p class="text-[0.9375rem] text-ink"><%= lesson.title %></p>
+              <% if lesson.viewable_by?(current_user) %>
+                <%= link_to lesson.title, course_lesson_path(course_id: @course, id: lesson),
+                      class: "link-quiet text-[0.9375rem] text-ink" %>
+              <% else %>
+                <p class="text-[0.9375rem] text-ink-mute" title="<%= t("lessons.locked_hint") %>"><%= lesson.title %></p>
+              <% end %>
               <% if lesson.summary.present? %>
                 <p class="mt-1 text-sm text-ink-mute"><%= lesson.summary %></p>
               <% end %>
@@ -104,10 +128,19 @@
     <% end %>
   </section>
 
-  <section class="mx-auto max-w-2xl px-6 pt-16">
-    <hr class="rule-gradient">
-    <p class="mt-10">
-      <%= link_to t("courses.show.cta"), new_contact_path(course: @course.slug), class: "btn btn-primary" %>
-    </p>
-  </section>
+  <% unless @course.enrolled?(current_user) %>
+    <section class="mx-auto max-w-2xl px-6 pt-16">
+      <hr class="rule-gradient">
+      <p class="mt-10">
+        <% if @course.free? && current_user.nil? %>
+          <%= link_to t("enrollments.join"), new_registration_path(course: @course.slug), class: "btn btn-primary" %>
+        <% elsif @course.free? %>
+          <%= button_to t("enrollments.join"), course_enrollment_path(course_id: @course),
+                class: "btn btn-primary cursor-pointer" %>
+        <% else %>
+          <%= link_to t("courses.show.cta"), new_contact_path(course: @course.slug), class: "btn btn-primary" %>
+        <% end %>
+      </p>
+    </section>
+  <% end %>
 </article>

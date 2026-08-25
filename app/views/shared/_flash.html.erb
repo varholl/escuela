@@ -1,5 +1,6 @@
 <% if flash.any? %>
-  <div class="mx-auto w-full max-w-3xl px-6 pt-6">
+  <%# Same width as the page content, so a notice lines up with what it is about. %>
+  <div class="mx-auto w-full max-w-6xl px-6 pt-6">
     <% flash.each do |level, message| %>
       <div class="rounded-xl border-l-2 px-5 py-3.5 text-[0.9375rem] <%= flash_classes(level) %>"
            role="<%= level.to_s.in?(%w[alert error]) ? "alert" : "status" %>">

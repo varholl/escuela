@@ -41,12 +41,21 @@ class PasswordsControllerTest < ActionDispatch::IntegrationTest
 
   test "update" do
     assert_changes -> { @user.reload.password_digest } do
-      put password_path(@user.password_reset_token), params: { password: "new", password_confirmation: "new" }
+      put password_path(@user.password_reset_token),
+        params: { password: "una-clave-nueva", password_confirmation: "una-clave-nueva" }
       assert_redirected_to new_session_path
     end
 
     follow_redirect!
     assert_notice "contraseña quedó actualizada"
+  end
+
+  test "update refuses a password that is too short" do
+    token = @user.password_reset_token
+    assert_no_changes -> { @user.reload.password_digest } do
+      put password_path(token), params: { password: "corta", password_confirmation: "corta" }
+      assert_redirected_to edit_password_path(token)
+    end
   end
 
   test "update with non matching passwords" do

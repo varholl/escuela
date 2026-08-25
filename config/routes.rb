@@ -41,9 +41,17 @@ Rails.application.routes.draw do
     get "sobre-mi"  => "pages#about",      as: :about
     get "filosofia" => "pages#philosophy", as: :philosophy
 
-    resources :articles, path: "notas",  only: %i[ index show ]
-    resources :courses,  path: "cursos", only: %i[ index show ]
-    resource  :inquiry,  path: "contacto", only: %i[ new create ], as: :contact
+    resource :registration, path: "registro", only: %i[ new create ]
+    get "mis-cursos" => "library#show", as: :library
+
+    resources :articles, path: "notas", only: %i[ index show ]
+
+    resources :courses, path: "cursos", only: %i[ index show ] do
+      resource :enrollment, only: :create
+      resources :lessons, path: "clases", only: :show
+    end
+
+    resource :inquiry, path: "contacto", only: %i[ new create ], as: :contact
 
     root "pages#home"
   end

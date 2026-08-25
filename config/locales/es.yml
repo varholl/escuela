@@ -18,6 +18,7 @@ es:
     articles: "Notas"
     contact: "Contacto"
     admin: "Panel"
+    library: "Mis cursos"
     sign_in: "Ingresar"
     sign_out: "Cerrar sesión"
     menu: "Menú"
@@ -141,6 +142,46 @@ es:
     throttled: "Recibimos varios mensajes tuyos hace poco. Probá de nuevo en un rato."
     honeypot_label: "Dejá este campo vacío"
 
+  registrations:
+    new:
+      eyebrow: "Crear cuenta"
+      title: "Sumarte"
+      body: "Elegí una contraseña y ya podés entrar a los cursos gratuitos."
+      for_course: "Te estás sumando a %{course}."
+      submit: "Crear mi cuenta"
+      have_account: "Ya tengo cuenta"
+      password_hint: "Mínimo 8 caracteres."
+    create:
+      success: "Bienvenida, %{name}."
+    throttled: "Demasiados intentos. Probá de nuevo en un rato."
+
+  enrollments:
+    join: "Sumarme gratis"
+    join_hint: "Sin costo. Sólo necesitás una cuenta."
+    sign_in_to_join: "Entrar para sumarme"
+    create:
+      success: "Listo, ya tenés acceso al curso."
+      already: "Ya estabas inscripta en este curso."
+      unavailable: "Este curso no se puede tomar por tu cuenta. Escribime y lo vemos."
+    enrolled_badge: "Ya tenés acceso"
+
+  library:
+    title: "Mis cursos"
+    body: "Todo lo que tenés disponible para ver."
+    empty: "Todavía no tenés ningún curso. Mirá los que están abiertos."
+    cta: "Ver los cursos"
+    continue: "Entrar"
+
+  lessons:
+    show:
+      locked: "Necesitás estar inscripta para ver esta clase."
+      back: "Volver al curso"
+      materials: "Material de la clase"
+      no_content: "Esta clase todavía no tiene contenido cargado."
+      next: "Siguiente clase"
+      previous: "Clase anterior"
+    locked_hint: "Sumate al curso para ver esta clase"
+
   sessions:
     new:
       title: "Ingresar"
@@ -236,8 +277,8 @@ es:
       updated: "Clase guardada."
       destroyed: "Clase eliminada."
       empty: "Este curso todavía no tiene clases."
-      video_hint: "Fase 2: elegí dónde vive el video y pegá su identificador."
-      phase_two_notice: "Las clases todavía no se muestran en el sitio público. Se activan cuando abramos la venta."
+      video_hint: "Elegí dónde vive el video y pegá el enlace o el identificador. Sirve pegar la URL de YouTube o Vimeo tal cual."
+      visibility_notice: "Una clase publicada la ven las alumnas inscriptas al curso. Marcala como «clase abierta» para que la vea cualquiera, como muestra."
     enrollments:
       title: "Inscripciones a %{course}"
       new: "Dar acceso"
@@ -248,7 +289,7 @@ es:
       email_hint: "Si no tiene cuenta, se crea una."
       name_label: "Nombre"
       granted_at: "Desde"
-      manual_notice: "Fase 1: los accesos se otorgan a mano. Cuando conectemos la pasarela de pago, el webhook va a crear estos mismos registros."
+      manual_notice: "A los cursos sin costo las alumnas se suman solas. Acá podés dar acceso a mano a cualquier curso, y cuando conectemos la pasarela de pago va a escribir estos mismos registros."
     pages:
       title: "Páginas"
       updated: "Página guardada."

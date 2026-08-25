@@ -2,7 +2,7 @@
 # these by hand from the admin panel; when payments land, the provider's webhook
 # becomes just another writer of the same record -- `source` says which.
 class Enrollment < ApplicationRecord
-  SOURCES = %w[ manual payment gift ].freeze
+  SOURCES = %w[ manual self_serve payment gift ].freeze
 
   belongs_to :user
   belongs_to :course

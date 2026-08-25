@@ -18,6 +18,7 @@ en:
     articles: "Journal"
     contact: "Contact"
     admin: "Admin"
+    library: "My courses"
     sign_in: "Sign in"
     sign_out: "Sign out"
     menu: "Menu"
@@ -141,6 +142,46 @@ en:
     throttled: "We received several messages from you recently. Please try again shortly."
     honeypot_label: "Leave this field empty"
 
+  registrations:
+    new:
+      eyebrow: "Create account"
+      title: "Join"
+      body: "Choose a password and you can start the free courses right away."
+      for_course: "You are joining %{course}."
+      submit: "Create my account"
+      have_account: "I already have an account"
+      password_hint: "At least 8 characters."
+    create:
+      success: "Welcome, %{name}."
+    throttled: "Too many attempts. Please try again shortly."
+
+  enrollments:
+    join: "Join for free"
+    join_hint: "No cost. You only need an account."
+    sign_in_to_join: "Sign in to join"
+    create:
+      success: "You now have access to the course."
+      already: "You were already enrolled in this course."
+      unavailable: "This course cannot be joined on your own. Write to me and we will sort it out."
+    enrolled_badge: "You have access"
+
+  library:
+    title: "My courses"
+    body: "Everything you can watch."
+    empty: "You have no courses yet. Have a look at the open ones."
+    cta: "See the courses"
+    continue: "Open"
+
+  lessons:
+    show:
+      locked: "You need to be enrolled to watch this session."
+      back: "Back to the course"
+      materials: "Session materials"
+      no_content: "This session has no content yet."
+      next: "Next session"
+      previous: "Previous session"
+    locked_hint: "Join the course to watch this session"
+
   sessions:
     new:
       title: "Sign in"
@@ -236,8 +277,8 @@ en:
       updated: "Session saved."
       destroyed: "Session deleted."
       empty: "This course has no sessions yet."
-      video_hint: "Phase 2: choose where the video lives and paste its identifier."
-      phase_two_notice: "Sessions are not shown on the public site yet. They go live when we open sales."
+      video_hint: "Choose where the video lives and paste the link or the identifier. A YouTube or Vimeo URL works as-is."
+      visibility_notice: "A published session is visible to students enrolled in the course. Mark it as an open session for anyone to watch it as a sample."
     enrollments:
       title: "Enrolments in %{course}"
       new: "Grant access"
@@ -248,7 +289,7 @@ en:
       email_hint: "If they have no account, one is created."
       name_label: "Name"
       granted_at: "Since"
-      manual_notice: "Phase 1: access is granted by hand. Once the payment provider is connected, its webhook will create these same records."
+      manual_notice: "Students join free courses on their own. Here you can grant access to any course by hand, and once the payment provider is connected it will write these same records."
     pages:
       title: "Pages"
       updated: "Page saved."

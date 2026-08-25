@@ -45,6 +45,8 @@
       <p>&copy; <%= Date.current.year %> <%= t("site.name") %>. <%= t("footer.rights") %></p>
       <% if admin? %>
         <%= link_to t("nav.admin"), admin_root_path, class: "link-quiet hover:text-white" %>
+      <% elsif current_user %>
+        <%= link_to t("nav.library"), library_path, class: "link-quiet hover:text-white" %>
       <% else %>
         <%= link_to t("nav.sign_in"), new_session_path, class: "link-quiet hover:text-white" %>
       <% end %>

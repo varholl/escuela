@@ -29,6 +29,10 @@ end
 | `Enrollment` con `status`, `source`, `granted_at`, `expires_at` | hecho |
 | Alta de alumnas por correo desde el panel (crea la cuenta) | hecho |
 | Autenticación de usuarios (Rails 8) con rol `student` | hecho |
+| Registro público: la alumna elige su contraseña | hecho |
+| Inscripción sola a cursos sin costo (`source: "self_serve"`) | hecho |
+| Área de alumnas (`/mis-cursos`) y reproductor por clase | hecho |
+| Control de acceso: `Lesson#viewable_by?` / `Course#enrolled?` | hecho |
 
 `video_provider` / `video_reference` es a propósito un par genérico: el primero
 dice dónde vive el video (`active_storage`, `vimeo`, `mux`, `youtube`) y el
@@ -115,12 +119,11 @@ Recomendación al llegar acá: **Mux** o **Vimeo**, con URLs firmadas de corta
 duración generadas en el servidor sólo si `Enrollment#grants_access?`. El
 esquema ya lo soporta: `video_provider: "mux"`, `video_reference: <playback_id>`.
 
-### 4. Área de alumnas
+### 4. Área de alumnas — **hecho**
 
-- `/mis-cursos` — lo que compró
-- `/cursos/:slug/clases/:slug` — el reproductor, detrás de la verificación
-- Registro público (hoy las cuentas sólo se crean desde el panel)
-- Correo de bienvenida con el enlace para elegir contraseña
+Ya está: `/mis-cursos`, `/cursos/:slug/clases/:slug` detrás de la verificación,
+y registro público. Falta sólo el correo de bienvenida, que espera a que haya
+SMTP configurado.
 
 ### 5. Facturación
 
@@ -130,11 +133,13 @@ Argentina requiere factura electrónica. Suele resolverse con un servicio extern
 
 ## Orden sugerido
 
-1. Registro público y área de alumnas, con accesos todavía otorgados a mano.
-   Ya se puede vender por transferencia y dar el acceso a dedo.
-2. Elegir hosting de video y poner el reproductor detrás de `Enrollment`.
-3. Recién entonces enchufar la pasarela: para ese momento sólo falta que el
-   webhook cree el `Enrollment` que ya sabés otorgar a mano.
+1. ~~Registro público y área de alumnas.~~ **Hecho.** Ya se puede vender por
+   transferencia y dar el acceso a mano desde el panel.
+2. Elegir hosting de video para lo pago. Hoy sirve YouTube/Vimeo, que alcanza
+   para lo gratuito pero no protege un curso que se cobra.
+3. Recién entonces enchufar la pasarela: a esta altura sólo falta que el webhook
+   cree el `Enrollment` que el panel ya sabe otorgar, y que `Course#join!` ya
+   sabe construir.
 
 Ese orden permite cobrar desde el primer paso y deja lo irreversible para el
 final.

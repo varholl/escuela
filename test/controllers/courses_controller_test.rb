@@ -54,9 +54,18 @@ class CoursesControllerTest < ActionDispatch::IntegrationTest
     assert_select "li", text: /#{draft.title}/, count: 0
   end
 
-  test "the enquiry link carries the course" do
+  test "a paid course sends the reader to the contact form, carrying the course" do
+    @published.update!(price_cents: 10_000_00)
+
     get course_path(id: @published)
 
     assert_select "a[href=?]", new_contact_path(course: @published.slug)
+  end
+
+  test "a free course offers to be joined instead of asking for an enquiry" do
+    get course_path(id: @published)
+
+    assert_select "a[href=?]", new_registration_path(course: @published.slug)
+    assert_select "a[href=?]", new_contact_path(course: @published.slug), count: 0
   end
 end

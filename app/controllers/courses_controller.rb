@@ -5,7 +5,7 @@ class CoursesController < ApplicationController
 
   def show
     @course = visible_courses.find_by!(slug: params[:id])
-    @lessons = @course.lessons.published.ordered
+    @lessons = @course.lessons_visible_to(current_user)
   end
 
   private

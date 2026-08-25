@@ -17,6 +17,11 @@ class User < ApplicationRecord
     uniqueness: { case_sensitive: false },
     format: { with: URI::MailTo::EMAIL_REGEXP }
   validates :name, length: { maximum: 120 }
+  validates :password, length: { minimum: 8 }, allow_nil: true
+
+  def enrolled_courses
+    Course.joins(:enrollments).merge(enrollments.granting_access).distinct
+  end
 
   def display_name
     name.presence || email_address.split("@").first

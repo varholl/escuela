@@ -35,4 +35,26 @@ class Course < ApplicationRecord
   def upcoming?
     starts_on.present? && starts_on >= Date.current
   end
+
+  # Enrollment is the gate even when the course costs nothing: she wants to know
+  # who her students are, and phase two hangs the paid flow on the same record.
+  def enrolled?(user)
+    user.present? && enrollments.granting_access.exists?(user: user)
+  end
+
+  # Only free courses can be joined without her: a paid one still goes through
+  # the contact form until there is a way to take money.
+  def joinable_by?(user)
+    user.present? && published? && free? && !enrolled?(user)
+  end
+
+  def join!(user, source: "self_serve")
+    enrollments.create!(user: user, status: :active, source: source, granted_at: Time.current)
+  end
+
+  def lessons_visible_to(user)
+    return lessons.ordered if user&.admin?
+
+    lessons.published.ordered
+  end
 end

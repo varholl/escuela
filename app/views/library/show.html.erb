@@ -1,0 +1,36 @@
+<% content_for :title, page_title(t("library.title")) %>
+
+<%= render "shared/page_header",
+      eyebrow: t("nav.library"),
+      title: t("library.title"),
+      body: t("library.body") %>
+
+<div class="mx-auto max-w-6xl px-6 pb-8">
+  <% if @courses.any? %>
+    <div class="grid gap-12 md:grid-cols-2 lg:grid-cols-3">
+      <% @courses.each do |course| %>
+        <article class="border-t border-line pt-6">
+          <p class="eyebrow"><%= course_modality(course) %></p>
+          <h2 class="mt-3 font-display text-2xl font-light">
+            <%= link_to course.title, course_path(id: course), class: "link-quiet" %>
+          </h2>
+          <% if course.subtitle.present? %>
+            <p class="mt-2 font-display text-lg font-light italic text-ink-mute"><%= course.subtitle %></p>
+          <% end %>
+
+          <% count = course.lessons_visible_to(current_user).size %>
+          <p class="mt-4 text-sm text-ink-mute">
+            <%= count.positive? ? t("courses.lessons_count", count: count) : t("courses.show.lessons_pending") %>
+          </p>
+
+          <p class="mt-5">
+            <%= link_to t("library.continue"), course_path(id: course), class: "btn btn-ghost py-2.5 px-5 text-sm" %>
+          </p>
+        </article>
+      <% end %>
+    </div>
+  <% else %>
+    <p class="text-lg text-ink-mute"><%= t("library.empty") %></p>
+    <p class="mt-8"><%= link_to t("library.cta"), courses_path, class: "btn btn-primary" %></p>
+  <% end %>
+</div>

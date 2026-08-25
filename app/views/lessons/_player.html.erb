@@ -1,0 +1,18 @@
+<%
+  embed = lesson_embed_url(lesson)
+  uploaded = lesson.video_provider == "active_storage" && lesson.video.attached?
+%>
+<% if embed.present? %>
+  <div class="aspect-video w-full overflow-hidden rounded-xl bg-ink">
+    <iframe src="<%= embed %>"
+            class="h-full w-full"
+            title="<%= lesson.title %>"
+            loading="lazy"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; picture-in-picture; fullscreen"
+            allowfullscreen></iframe>
+  </div>
+<% elsif uploaded %>
+  <%= video_tag lesson.video, controls: true, preload: "metadata",
+        class: "aspect-video w-full rounded-xl bg-ink object-contain" %>
+<% end %>

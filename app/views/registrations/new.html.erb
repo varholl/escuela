@@ -1,0 +1,41 @@
+<% content_for :title, page_title(t("registrations.new.title")) %>
+
+<h1 class="font-display text-2xl font-light"><%= t("registrations.new.title") %></h1>
+<p class="mt-2 text-sm text-ink-mute"><%= t("registrations.new.body") %></p>
+
+<% if @requested_course %>
+  <p class="mt-4 rounded-xl border-l-2 border-iris bg-iris-pale px-4 py-3 text-sm">
+    <%= t("registrations.new.for_course", course: @requested_course.title) %>
+  </p>
+<% end %>
+
+<%= form_with model: @user, url: registration_path(course: params[:course]), class: "mt-7 space-y-5" do |form| %>
+  <%= render "shared/form_errors", record: @user %>
+
+  <div>
+    <%= form.label :name, class: "field-label" %>
+    <%= form.text_field :name, autofocus: true, autocomplete: "name", class: "field-input" %>
+  </div>
+
+  <div>
+    <%= form.label :email_address, class: "field-label" %>
+    <%= form.email_field :email_address, required: true, autocomplete: "username", class: "field-input" %>
+  </div>
+
+  <div>
+    <%= form.label :password, class: "field-label" %>
+    <%= form.password_field :password, required: true, autocomplete: "new-password", class: "field-input" %>
+    <p class="field-hint"><%= t("registrations.new.password_hint") %></p>
+  </div>
+
+  <div>
+    <%= form.label :password_confirmation, class: "field-label" %>
+    <%= form.password_field :password_confirmation, required: true, autocomplete: "new-password", class: "field-input" %>
+  </div>
+
+  <%= form.submit t("registrations.new.submit"), class: "btn btn-primary w-full cursor-pointer" %>
+<% end %>
+
+<p class="mt-6 text-center text-sm">
+  <%= link_to t("registrations.new.have_account"), new_session_path, class: "link-quiet text-ink-mute" %>
+</p>

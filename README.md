@@ -50,8 +50,8 @@ El acceso al panel está en `/session/new` y el panel en `/admin`.
 |--------------|--------------------------------------------------------------------------|
 | `Article`    | Las notas. Texto rico con Action Text, imagen de portada, publicación con fecha. |
 | `Course`     | Cursos y encuentros: precio, modalidad, fecha de inicio, estado.          |
-| `Lesson`     | Las clases de un curso. Cargadas pero **todavía no visibles** al público. |
-| `Enrollment` | Quién puede ver qué curso. Hoy se otorga a mano desde el panel.           |
+| `Lesson`     | Las clases de un curso: video, material y orden. Visibles para quien esté inscripta. |
+| `Enrollment` | Quién puede ver qué curso. A los gratuitos las alumnas se suman solas.    |
 | `Page`       | Los textos de «Sobre mí» y «Filosofía», editables sin deploy.             |
 | `Inquiry`    | Los mensajes del formulario de contacto.                                 |
 | `User`       | Personas. `role` distingue `student` de `admin`.                         |
@@ -113,6 +113,33 @@ quedan como último recurso para cuando la aplicación no puede ni renderizar.
 
 ---
 
+## Cursos y alumnas
+
+A los cursos **sin costo** las alumnas se suman solas: se registran eligiendo su
+propia contraseña y quedan inscriptas en el mismo paso. Todo el camino funciona
+**sin enviar un solo correo**, que es lo que permite que ande hoy.
+
+Quién ve qué:
+
+| | Clase publicada | Clase marcada «abierta» | Clase sin publicar |
+|---|---|---|---|
+| Visitante | no | **sí** | no |
+| Alumna inscripta | **sí** | **sí** | no |
+| Ella (admin) | sí | sí | sí |
+
+Un curso **con precio** no se puede tomar solo: muestra el formulario de
+contacto, hasta que haya pasarela de pago. Ella igual puede dar acceso a mano
+desde el panel, a cualquier curso.
+
+El video vive donde ella quiera: pegar la URL de YouTube o de Vimeo alcanza (se
+acepta también el identificador pelado), o subir el archivo con Active Storage.
+YouTube se embebe en modo `nocookie`.
+
+> Los embeds públicos de YouTube no son realmente privados: quien tenga el
+> enlace del video puede verlo fuera del sitio. Para cursos pagos conviene Vimeo
+> con restricción por dominio, o Mux con URLs firmadas. Ver
+> [`docs/PHASE_2.md`](docs/PHASE_2.md).
+
 ## Trabajo diario de ella
 
 Todo desde `/admin`, sin tocar código:
@@ -133,8 +160,9 @@ Todo desde `/admin`, sin tocar código:
 bin/rails test
 ```
 
-102 tests cubren los modelos, el ruteo por idioma, que los borradores no se
-filtren, el formulario de contacto (incluido el honeypot), las páginas de error y que el
+165 tests cubren los modelos, el ruteo por idioma, que los borradores no se
+filtren, el formulario de contacto (incluido el honeypot), las páginas de error, quién
+puede ver cada clase, el registro y la inscripción a cursos gratuitos, y que el
 panel sólo sea accesible para administradores.
 
 ---
