@@ -22,6 +22,7 @@ module Admin
       )
 
       if @enrollment.user&.persisted? && @enrollment.save
+        StudentMailer.enrolled(@enrollment).deliver_later if ApplicationMailer.enabled?
         redirect_to admin_course_enrollments_path(@course), notice: t("admin.enrollments.created")
       else
         render :new, status: :unprocessable_content

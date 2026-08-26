@@ -190,6 +190,7 @@ es:
       title: "Ingresar"
       body: "Acceso al panel de administración."
       submit: "Ingresar"
+      no_recovery_html: "¿Olvidaste la contraseña? Por ahora, %{contact}."
       forgot_password: "Olvidé mi contraseña"
     invalid_credentials: "El correo o la contraseña no coinciden."
     throttled: "Demasiados intentos. Probá de nuevo en unos minutos."
@@ -203,6 +204,7 @@ es:
     edit:
       title: "Elegí una nueva contraseña"
       submit: "Guardar contraseña"
+    unavailable: "La recuperación de contraseña todavía no está disponible. Escribinos y te ayudamos."
     reset_sent: "Si existe una cuenta con ese correo, te enviamos las instrucciones."
     invalid_token: "El enlace no es válido o ya venció. Pedí uno nuevo."
     updated: "Tu contraseña quedó actualizada. Ya podés ingresar."
@@ -318,6 +320,28 @@ es:
       reply: "Responder por correo"
       about_course: "Consulta por %{course}"
       general: "Consulta general"
+
+  passwords_mailer:
+    reset:
+      subject: "Restablecer tu contraseña"
+      heading: "Elegí una contraseña nueva"
+      body: "Pediste recuperar el acceso. Tocá el botón y elegí una contraseña nueva."
+      action: "Elegir contraseña"
+      expiry: "El enlace vence en %{duration}."
+      ignore: "Si no fuiste vos, podés ignorar este correo: nada cambió."
+
+  student_mailer:
+    welcome:
+      subject: "Bienvenida a %{site}"
+      heading: "Hola, %{name}"
+      body: "Ya tenés tu cuenta. Desde «Mis cursos» vas a ver todo lo que tengas disponible."
+      action: "Ir a mis cursos"
+      footer: "Si alguna vez olvidás la contraseña, se puede recuperar desde la pantalla de ingreso."
+    enrolled:
+      subject: "Ya tenés acceso a %{course}"
+      heading: "Se abrió %{course}"
+      body: "Te dimos acceso a %{course}. Podés empezar cuando quieras, a tu ritmo."
+      action: "Entrar al curso"
 
   inquiry_mailer:
     notify:

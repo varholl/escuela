@@ -1,0 +1,5 @@
+<%= t("student_mailer.enrolled.heading", course: @course.title) %>
+
+<%= t("student_mailer.enrolled.body", course: @course.title) %>
+
+<%= course_url(id: @course, locale: @course.locale) %>

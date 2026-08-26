@@ -77,7 +77,7 @@ Rails.application.configure do
   else
     config.action_mailer.delivery_method = :test
     config.action_mailer.raise_delivery_errors = false
-    config.x.deliver_inquiry_notifications = false
+    config.x.email_enabled = false
   end
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to

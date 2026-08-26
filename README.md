@@ -113,6 +113,40 @@ quedan como último recurso para cuando la aplicación no puede ni renderizar.
 
 ---
 
+## Correo
+
+**Apagado hasta que haya dominio propio.** `config.x.email_enabled` es false en
+producción mientras no exista `SMTP_ADDRESS`, y `ApplicationMailer` cancela la
+entrega de cualquier correo con un `after_action`, así que un mailer nuevo no se
+puede olvidar de respetarlo.
+
+El motivo no es pereza: mandar "desde" una dirección `@gmail.com` a través del
+servidor de otro rompe la alineación de DMARC y termina en spam. Para avisarle a
+ella da igual; para escribirle a estudiantes, no.
+
+Nada depende del correo para funcionar: el formulario de contacto **siempre**
+guarda el mensaje, y quien se registra elige su propia contraseña. Lo único que
+no se puede sin correo es recuperar la contraseña — y la pantalla de ingreso deja
+de ofrecerlo cuando no puede cumplirlo, en vez de decir "te enviamos las
+instrucciones" sin enviar nada.
+
+Los tres correos automáticos ya están escritos, traducidos y con tests:
+
+| Cuándo | Qué |
+|---|---|
+| Se registra | Bienvenida, con el enlace a «Mis cursos» |
+| Pide recuperar la contraseña | Enlace para elegir una nueva, con su vencimiento |
+| Le dan acceso a un curso desde el panel | Aviso con el enlace al curso |
+
+Salen en el idioma que la persona estaba leyendo: Active Job guarda el locale en
+el trabajo y lo restaura al enviarlo.
+
+Se pueden mirar sin enviar nada en `/rails/mailers` (sólo en desarrollo).
+
+Para encenderlo: configurar SMTP como indica [`DEPLOY.md`](DEPLOY.md) y
+comprobar con `bin/rails mail:test`, que entrega en el momento y falla ruidosa
+si algo está mal.
+
 ## Cursos y estudiantes
 
 A los cursos **sin costo** cada quien se suma por su cuenta: se registra eligiendo su

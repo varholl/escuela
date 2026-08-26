@@ -59,7 +59,7 @@ class InquiriesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "the message is still stored when notifications are switched off" do
-    Rails.configuration.x.deliver_inquiry_notifications = false
+    Rails.configuration.x.email_enabled = false
 
     assert_difference -> { Inquiry.count }, 1 do
       assert_enqueued_emails 0 do
@@ -69,7 +69,7 @@ class InquiriesControllerTest < ActionDispatch::IntegrationTest
 
     assert_redirected_to new_contact_path
   ensure
-    Rails.configuration.x.deliver_inquiry_notifications = true
+    Rails.configuration.x.email_enabled = true
   end
 
   test "create attaches the chosen course" do

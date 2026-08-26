@@ -1,0 +1,17 @@
+<h1 style="margin:24px 0 0 0; font-family:Georgia,serif; font-weight:normal; font-size:26px; color:#1b1023;">
+  <%= t("student_mailer.welcome.heading", name: @user.display_name) %>
+</h1>
+
+<p style="margin:16px 0 0 0;"><%= t("student_mailer.welcome.body") %></p>
+
+<p style="margin:28px 0 0 0;">
+  <a href="<%= library_url %>"
+     style="display:inline-block; padding:13px 26px; border-radius:999px; background-color:#7717b5;
+            color:#ffffff; font-weight:bold; text-decoration:none;">
+    <%= t("student_mailer.welcome.action") %>
+  </a>
+</p>
+
+<p style="margin:24px 0 0 0; font-size:14px; color:#6b5f74;">
+  <%= t("student_mailer.welcome.footer") %>
+</p>

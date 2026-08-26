@@ -1,0 +1,13 @@
+<h1 style="margin:24px 0 0 0; font-family:Georgia,serif; font-weight:normal; font-size:26px; color:#1b1023;">
+  <%= t("student_mailer.enrolled.heading", course: @course.title) %>
+</h1>
+
+<p style="margin:16px 0 0 0;"><%= t("student_mailer.enrolled.body", course: @course.title) %></p>
+
+<p style="margin:28px 0 0 0;">
+  <a href="<%= course_url(id: @course, locale: @course.locale) %>"
+     style="display:inline-block; padding:13px 26px; border-radius:999px; background-color:#7717b5;
+            color:#ffffff; font-weight:bold; text-decoration:none;">
+    <%= t("student_mailer.enrolled.action") %>
+  </a>
+</p>

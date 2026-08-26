@@ -17,6 +17,7 @@ class RegistrationsController < ApplicationController
     if @user.save
       start_new_session_for @user
       join_requested_course
+      StudentMailer.welcome(@user).deliver_later if ApplicationMailer.enabled?
       redirect_to destination, notice: t("registrations.create.success", name: @user.display_name)
     else
       render :new, status: :unprocessable_content

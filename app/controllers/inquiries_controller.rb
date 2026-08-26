@@ -25,7 +25,7 @@ class InquiriesController < ApplicationController
     # The message is already saved; the email is a convenience, and it is only
     # attempted where there is somewhere to send it.
     def notify_owner
-      return unless Rails.configuration.x.deliver_inquiry_notifications
+      return unless Rails.configuration.x.email_enabled
 
       InquiryMailer.notify(@inquiry).deliver_later
     end

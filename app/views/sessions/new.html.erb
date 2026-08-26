@@ -18,6 +18,12 @@
   <%= form.submit t("sessions.new.submit"), class: "btn btn-primary w-full cursor-pointer" %>
 <% end %>
 
-<p class="mt-6 text-center text-sm">
-  <%= link_to t("sessions.new.forgot_password"), new_password_path, class: "link-quiet text-ink-mute" %>
-</p>
+<% if ApplicationMailer.enabled? %>
+  <p class="mt-6 text-center text-sm">
+    <%= link_to t("sessions.new.forgot_password"), new_password_path, class: "link-quiet text-ink-mute" %>
+  </p>
+<% else %>
+  <p class="mt-6 text-center text-sm text-ink-mute">
+    <%= t("sessions.new.no_recovery_html", contact: link_to(t("nav.contact"), new_contact_path, class: "link-quiet text-iris")).html_safe %>
+  </p>
+<% end %>

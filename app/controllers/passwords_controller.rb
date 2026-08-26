@@ -1,5 +1,6 @@
 class PasswordsController < ApplicationController
   layout "auth"
+  before_action :require_email_delivery
   before_action :set_user_by_token, only: %i[ edit update ]
   rate_limit to: 10, within: 3.minutes, only: :create, with: -> { redirect_to new_password_path, alert: t("sessions.throttled") }
 
@@ -27,6 +28,12 @@ class PasswordsController < ApplicationController
   end
 
   private
+    def require_email_delivery
+      return if ApplicationMailer.enabled?
+
+      redirect_to new_session_path, alert: t("passwords.unavailable")
+    end
+
     def set_user_by_token
       @user = User.find_by_password_reset_token!(params[:token])
     rescue ActiveSupport::MessageVerifier::InvalidSignature
