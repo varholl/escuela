@@ -55,8 +55,34 @@ class AttachmentRelocationTest < ActiveSupport::TestCase
 
     assert_equal "cursos/x/y/clase.mp4", first.reload.key
     assert_not_equal first.key, second.reload.key
-    assert_match %r{\Acursos/x/y/clase-[0-9a-f]{8}\.mp4\z}, second.key
+    assert_equal "cursos/x/y/clase-#{second.id}.mp4", second.key
     assert_equal "bytes", second.download
+  end
+
+  test "the name it picks on a collision is stable across runs" do
+    blob_for("clase.mp4").then { |first| AttachmentRelocation.new(first, folder: "cursos/x/y").call }
+    second = blob_for("clase.mp4")
+
+    AttachmentRelocation.new(second, folder: "cursos/x/y").call
+    settled = second.reload.key
+
+    assert_equal :unchanged, AttachmentRelocation.new(second.reload, folder: "cursos/x/y").call
+    assert_equal settled, second.reload.key, "the file moved again on a second run"
+  end
+
+  test "an object already in the bucket is never overwritten" do
+    first = blob_for("clase.mp4")
+    AttachmentRelocation.new(first, folder: "cursos/x/y").call
+
+    # The database no longer knows about it, but the file is still there.
+    ActiveStorage::Blob.where(id: first.id).delete_all
+    second = blob_for("clase.mp4")
+
+    AttachmentRelocation.new(second, folder: "cursos/x/y").call
+
+    assert_not_equal "cursos/x/y/clase.mp4", second.reload.key
+    assert_equal "bytes", second.download
+    assert first.service.exist?("cursos/x/y/clase.mp4"), "the orphan file was clobbered"
   end
 
   test "an unnameable filename still gets a key" do

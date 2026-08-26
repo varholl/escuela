@@ -60,6 +60,33 @@ class OrganisedAttachmentsTest < ActiveSupport::TestCase
     assert_equal "contenido", lesson.reload.video.download
   end
 
+  test "the move waits until Active Storage has finished analysing" do
+    lesson = @course.lessons.create!(title: "Primera práctica")
+    lesson.video.attach(io: StringIO.new("bytes"), filename: "clase.mp4", content_type: "video/mp4")
+    lesson.save!
+    blob = lesson.reload.video.blob
+    blob.update!(metadata: {})
+    original = blob.key
+
+    # Moving now would break the analyser, which is still looking at this key.
+    OrganiseAttachmentsJob.perform_now(lesson)
+
+    assert_equal original, blob.reload.key, "the file moved out from under the analyser"
+    assert_enqueued_with job: OrganiseAttachmentsJob
+  end
+
+  test "it gives up waiting rather than leaving a file unorganised forever" do
+    lesson = @course.lessons.create!(title: "Primera práctica")
+    lesson.video.attach(io: StringIO.new("bytes"), filename: "clase.mp4", content_type: "video/mp4")
+    lesson.save!
+    blob = lesson.reload.video.blob
+    blob.update!(metadata: {})
+
+    OrganiseAttachmentsJob.perform_now(lesson, attempt: OrganiseAttachmentsJob::ATTEMPTS_WAITING_FOR_ANALYSIS)
+
+    assert_equal "cursos/atencion-plena/primera-practica/clase.mp4", blob.reload.key
+  end
+
   test "saving a record with no files enqueues nothing" do
     lesson = @course.lessons.create!(title: "Sin archivos")
 

@@ -33,11 +33,19 @@ class AttachmentRelocation
   end
 
   private
+    # A pure function of folder, filename and blob, which is what makes running
+    # this again a no-op. A random suffix would pick a new name every save and
+    # the file would move around the bucket forever.
     def desired_key
-      @desired_key ||= begin
-        candidate = "#{@folder}/#{readable_filename}"
-        taken?(candidate) ? "#{@folder}/#{readable_basename}-#{SecureRandom.hex(4)}#{extension}" : candidate
+      @desired_key ||= if taken?(plain_key)
+        "#{@folder}/#{readable_basename}-#{@blob.id}#{extension}"
+      else
+        plain_key
       end
+    end
+
+    def plain_key
+      "#{@folder}/#{readable_filename}"
     end
 
     def readable_filename
@@ -53,8 +61,15 @@ class AttachmentRelocation
       ext.present? ? ".#{ext.downcase}" : ""
     end
 
+    # The storage service is the authority, not the database: a record can be
+    # gone while its object lingers, and overwriting somebody else's file to
+    # save a suffix is never the right trade. Its own current key is not taken
+    # by anyone, which is what keeps re-running this a no-op.
     def taken?(candidate)
-      ActiveStorage::Blob.where(key: candidate).where.not(id: @blob.id).exists?
+      return false if candidate == @blob.key
+
+      ActiveStorage::Blob.where(key: candidate).where.not(id: @blob.id).exists? ||
+        service.exist?(candidate)
     end
 
     def service
