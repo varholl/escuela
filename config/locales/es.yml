@@ -188,10 +188,12 @@ es:
   sessions:
     new:
       title: "Ingresar"
-      body: "Acceso al panel de administración."
+      body: "Entrá para ver tus cursos."
       submit: "Ingresar"
       no_recovery_html: "¿Olvidaste la contraseña? Por ahora, %{contact}."
       forgot_password: "Olvidé mi contraseña"
+      no_account: "¿Todavía no tenés cuenta?"
+      create_account: "Crear una"
     invalid_credentials: "El correo o la contraseña no coinciden."
     throttled: "Demasiados intentos. Probá de nuevo en unos minutos."
     google: "Continuar con Google"

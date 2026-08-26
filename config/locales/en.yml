@@ -184,10 +184,12 @@ en:
   sessions:
     new:
       title: "Sign in"
-      body: "Access to the admin panel."
+      body: "Sign in to see your courses."
       submit: "Sign in"
       no_recovery_html: "Forgot your password? For now, %{contact}."
       forgot_password: "I forgot my password"
+      no_account: "No account yet?"
+      create_account: "Create one"
     invalid_credentials: "That email and password do not match."
     throttled: "Too many attempts. Try again in a few minutes."
     google: "Continue with Google"

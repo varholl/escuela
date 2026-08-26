@@ -31,3 +31,8 @@
     <%= t("sessions.new.no_recovery_html", contact: link_to(t("nav.contact"), new_contact_path, class: "link-quiet text-iris")).html_safe %>
   </p>
 <% end %>
+
+<p class="mt-4 text-center text-sm text-ink-mute">
+  <%= t("sessions.new.no_account") %>
+  <%= link_to t("sessions.new.create_account"), new_registration_path, class: "link-quiet text-iris" %>
+</p>
