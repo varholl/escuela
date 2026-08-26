@@ -81,7 +81,7 @@ module Admin
 
       get edit_admin_account_path
 
-      assert_redirected_to root_path
+      assert_redirected_to library_path
     end
   end
 end

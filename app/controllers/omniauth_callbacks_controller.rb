@@ -42,9 +42,8 @@ class OmniauthCallbacksController < ApplicationController
     end
 
     def destination(user)
-      return @pending_course && course_path(id: @pending_course) if @pending_course
-      return admin_root_path if user.admin?
+      return course_path(id: @pending_course) if @pending_course
 
-      session.delete(:return_to_after_authenticating) || library_path
+      after_authentication_url(user)
     end
 end

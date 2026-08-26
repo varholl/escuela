@@ -24,10 +24,4 @@ class SessionsController < ApplicationController
     terminate_session
     redirect_to root_path, status: :see_other, notice: t("sessions.signed_out")
   end
-
-  private
-    def after_authentication_url
-      session.delete(:return_to_after_authenticating) ||
-        (Current.user.admin? ? admin_root_url : root_url)
-    end
 end

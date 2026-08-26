@@ -34,8 +34,31 @@ module Authentication
       redirect_to new_session_path
     end
 
-    def after_authentication_url
-      session.delete(:return_to_after_authenticating) || root_url
+    # A dónde va alguien recién autenticada.
+    #
+    # Se respeta la página que quiso abrir antes de que le pidiéramos entrar,
+    # salvo que no tenga permiso para verla: si estando deslogueada abrió
+    # /admin, mandarla de vuelta ahí sólo produce un "no tenés permiso" en la
+    # cara apenas entra. En ese caso va a donde sí le sirve.
+    def after_authentication_url(user = Current.user)
+      requested = session.delete(:return_to_after_authenticating)
+      return requested if requested.present? && reachable_after_signing_in?(requested, user)
+
+      default_url_after_authenticating(user)
+    end
+
+    def default_url_after_authenticating(user)
+      user&.admin? ? admin_root_url : library_url
+    end
+
+    # El panel es lo único cerrado por rol, así que es lo único que hay que
+    # comprobar.
+    def reachable_after_signing_in?(url, user)
+      return true if user&.admin?
+
+      !URI.parse(url).path.to_s.start_with?("/admin")
+    rescue URI::InvalidURIError
+      false
     end
 
     def start_new_session_for(user)

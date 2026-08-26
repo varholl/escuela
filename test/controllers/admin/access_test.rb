@@ -21,7 +21,8 @@ module Admin
 
       ENTRANCES.each do |entrance|
         get public_send(entrance)
-        assert_redirected_to root_path, "#{entrance} should be admin-only"
+        # Offered her own courses rather than left at the front door.
+        assert_redirected_to library_path, "#{entrance} should be admin-only"
       end
     end
 
