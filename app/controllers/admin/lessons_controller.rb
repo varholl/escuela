@@ -25,6 +25,8 @@ module Admin
     end
 
     def update
+      purge_video_if_requested
+
       if @lesson.update(lesson_params)
         redirect_to admin_course_lessons_path(@course), notice: t("admin.lessons.updated")
       else
@@ -56,6 +58,15 @@ module Admin
           :video_provider, :video_reference, :published_at,
           :notes, :video
         ])
+      end
+
+      # Ticking "remove" while also choosing a new file means the new file wins:
+      # purging then would throw away what was just uploaded.
+      def purge_video_if_requested
+        return unless params.dig(:lesson, :remove_video) == "1"
+        return if lesson_params[:video].present?
+
+        @lesson.video.purge_later
       end
   end
 end

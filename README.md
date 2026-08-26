@@ -173,6 +173,16 @@ Hay dos formas de entregar, y la diferencia es plata:
   ($0,04/GB desde São Paulo)** y ocupa la máquina. Se activa con
   `fly secrets set VIDEO_DELIVERY=proxy`.
 
+**Subida directa.** El campo del video usa `direct_upload: true`: el archivo
+viaja del navegador a R2 sin pasar por la aplicación. Sin eso, un video de
+cientos de megas se bufferearía por el proxy de Fly y por Puma.
+
+Eso obliga a que R2 acepte un `PUT` desde el origen del sitio. La política se
+carga una sola vez en **Cloudflare → R2 → bucket → Settings → CORS Policy**; la
+tarea `bin/rails r2:configure_cors` la imprime lista para pegar (no puede
+aplicarla sola porque el token de la aplicación tiene permisos sólo sobre
+objetos, que es como debe ser).
+
 > **Dos ajustes de `storage.yml` que no son opcionales:**
 > `request_checksum_calculation` y `response_checksum_validation` en
 > `when_required`. Las versiones recientes de `aws-sdk-s3` mandan varios
