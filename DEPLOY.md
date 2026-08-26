@@ -64,21 +64,53 @@ volumen, que después la app no puede escribir.
 
 ## Correo
 
-**Todavía sin configurar.** El formulario de contacto guarda todos los mensajes
-en la base y se leen en `/admin/inquiries`; simplemente no sale el aviso por
-correo, y la app ni siquiera intenta enviarlo para no acumular trabajos fallidos.
-
-Para activarlo con cualquier proveedor (Resend, Postmark, SendGrid):
+**Configurado** con [Resend](https://resend.com) el 2026-08-26, sobre el dominio
+`volveralalma.com.ar`.
 
 ```bash
 fly secrets set --app maflor-escuela \
-  SMTP_ADDRESS="smtp.resend.com" \
-  SMTP_PORT="587" \
-  SMTP_USER_NAME="resend" \
-  SMTP_PASSWORD="..."
+  SMTP_ADDRESS="smtp.resend.com" SMTP_PORT="587" \
+  SMTP_USER_NAME="resend" SMTP_PASSWORD="<api key de Resend>" \
+  MAILER_SENDER="Volver al alma <hola@volveralalma.com.ar>"
 ```
 
-Con `SMTP_ADDRESS` presente, la app pasa sola a enviar de verdad.
+El usuario SMTP es literalmente `resend`; la contraseña es la API key. Con
+`SMTP_ADDRESS` presente la app pasa sola a enviar de verdad
+(`config.x.email_enabled`).
+
+Comprobar con `fly ssh console --user rails --command "/rails/bin/rails mail:test"`,
+que entrega en el momento —no por la cola— y falla ruidosamente si algo está mal.
+`mail:status` muestra la configuración vigente.
+
+### Salida y entrada son dos cosas distintas
+
+| | |
+|---|---|
+| **Enviar** | Resend, desde `hola@volveralalma.com.ar` |
+| **Recibir** | Cloudflare Email Routing reenvía a su Gmail |
+
+Resend sólo envía: sin Email Routing, una respuesta a `hola@` no llegaría a
+ningún lado. Los `MX` de Resend viven en `send.volveralalma.com.ar` y los de
+Email Routing en el dominio pelado, así que no chocan.
+
+### Los registros DNS
+
+Los cargó la integración de Resend con Cloudflare, menos el DMARC:
+
+| Type | Name | Para qué |
+|---|---|---|
+| `TXT` | `send` | SPF |
+| `TXT` | `resend._domainkey` | DKIM |
+| `MX` | `send` | rebotes y quejas |
+| `TXT` | `_dmarc` | `v=DMARC1; p=none; rua=mailto:…` |
+
+DMARC en `p=none` es modo observación: no rechaza nada y hace llegar informes de
+quién manda correo en nombre del dominio. Endurecerlo a `quarantine` conviene
+recién cuando esos informes muestren que todo lo legítimo pasa alineado.
+
+Sin dominio propio nada de esto era posible: DMARC exige que el dominio del
+"De:" coincida con el que firma, y mandar desde una dirección `@gmail.com` a
+través de otro servidor no alinea nunca.
 
 ## Dominio propio
 
