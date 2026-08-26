@@ -379,3 +379,87 @@ trix-toolbar .trix-button.trix-active {
   background-color: var(--color-iris-pale);
   color: var(--color-iris);
 }
+
+/* ---------------------------------------------------------------------------
+   File attachments inside rich text
+   ---------------------------------------------------------------------------
+   Unlayered for the same reason as .prose-note: actiontext.css is unlayered and
+   would otherwise win. Its .attachment rules centre everything as if it were a
+   caption, which is right for an image and wrong for a download card.
+--------------------------------------------------------------------------- */
+/* Trix makes every .attachment inline-block so an image sits in the text flow.
+   A download card is not an inline image: it takes the full measure. */
+.trix-content .attachment--file {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  margin: 1.35em 0;
+  text-align: left;
+}
+
+/* Every property here is one that `.trix-content * { margin: 0; padding: 0 }`
+   would otherwise flatten, which is why none of this is a utility class. */
+.trix-content .attachment__file {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  gap: 0.9rem;
+  padding: 0.85rem 1rem;
+  border: 1px solid var(--color-line);
+  border-radius: 0.75rem;
+  background-color: #fff;
+  color: var(--color-ink);
+  text-decoration: none;
+  transition: border-color 150ms ease, color 150ms ease;
+}
+
+.trix-content .attachment__file:hover {
+  border-color: var(--color-iris);
+  color: var(--color-iris);
+  text-decoration: none;
+}
+
+.trix-content .attachment__badge {
+  flex: none;
+  display: grid;
+  place-items: center;
+  min-width: 3.1rem;
+  padding: 0.45rem 0.5rem;
+  border-radius: 0.5rem;
+  background-color: var(--color-iris-pale);
+  color: var(--color-iris);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+}
+
+.trix-content .attachment__details {
+  min-width: 0;
+  flex: 1 1 auto;
+}
+
+.trix-content .attachment__title {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-weight: 600;
+}
+
+.trix-content .attachment__meta {
+  display: block;
+  margin-top: 0.1rem;
+  font-size: 0.875rem;
+  color: var(--color-ink-mute);
+}
+
+.trix-content .attachment__download {
+  flex: none;
+  font-size: 1.1rem;
+  line-height: 1;
+  color: var(--color-ink-mute);
+}
+
+.trix-content .attachment__file:hover .attachment__download {
+  color: var(--color-iris);
+}

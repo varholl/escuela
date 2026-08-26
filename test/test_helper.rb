@@ -11,6 +11,10 @@ module ActiveSupport
     # Setup all fixtures in test/fixtures/*.yml for all tests in alphabetical order.
     fixtures :all
 
+    # Attachments are relocated in the background, so model tests need to be
+    # able to run and assert on enqueued jobs too, not only integration ones.
+    include ActiveJob::TestHelper
+
     # Add more helper methods to be used by all tests here...
   end
 end

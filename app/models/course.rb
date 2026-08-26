@@ -1,6 +1,7 @@
 class Course < ApplicationRecord
   include Sluggable
   include Localizable
+  include OrganisedAttachments
 
   slugged_from :title
 
@@ -46,6 +47,10 @@ class Course < ApplicationRecord
   # the contact form until there is a way to take money.
   def joinable_by?(user)
     user.present? && published? && free? && !enrolled?(user)
+  end
+
+  def storage_folder
+    slug.presence && "cursos/#{slug}"
   end
 
   def join!(user, source: "self_serve")

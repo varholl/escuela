@@ -183,6 +183,53 @@ tarea `bin/rails r2:configure_cors` la imprime lista para pegar (no puede
 aplicarla sola porque el token de la aplicación tiene permisos sólo sobre
 objetos, que es como debe ser).
 
+### Cómo se ordenan los archivos
+
+Active Storage le pone a cada archivo un nombre al azar, lo cual está bien para
+la aplicación e inservible para alguien que abre el panel de Cloudflare. Cada
+archivo se reubica, después de guardar, en una ruta legible:
+
+```
+cursos/<curso>/<clase>/clase-uno.mp4
+cursos/<curso>/<clase>/guia-de-practica.pdf
+cursos/<curso>/portada.jpg
+notas/<nota>/foto.jpg
+paginas/about-es/retrato.jpg
+paginas/about-es/variantes/retrato.jpg      ← miniaturas generadas
+```
+
+**Después**, y no antes, porque con subida directa el archivo llega al bucket
+antes de que se envíe el formulario: en ese momento todavía no se sabe a qué
+clase pertenece, y si la clase es nueva, ni siquiera existe. La mudanza es una
+copia del lado del servidor, así que los bytes de un video no viajan de ida y
+vuelta.
+
+```bash
+bin/rails storage:list           # qué hay y dónde
+bin/rails storage:organise       # reubicar lo ya subido (se puede repetir)
+bin/rails storage:purge_orphans  # borrar subidas que quedaron a medias
+```
+
+Lo último también corre solo, todos los días a las 4am (`config/recurring.yml`):
+un formulario abandonado deja el archivo en el bucket sin nada que lo referencie,
+y se paga igual.
+
+### Adjuntos en el material de apoyo
+
+El partial que genera Rails muestra un archivo que no es imagen como un
+`figcaption` pelado — el nombre como texto plano, sin enlace. Está reemplazado
+por una tarjeta descargable con la extensión, el peso y `disposition:
+"attachment"` en la URL firmada.
+
+> Sin `<svg>` a propósito: Action Text sanitiza el adjunto renderizado y
+> `svg`/`path` no están en la lista permitida, así que desaparecen sin avisar.
+> Ampliar esa lista dejaría pasar SVG en texto que escribe cualquiera, que es un
+> vector de XSS a cambio de un ícono.
+
+Y sus estilos van **sin capa**, por lo mismo que `.prose-note`: dentro de
+`.trix-content`, las utilidades de Tailwind pierden contra el
+`* { margin: 0; padding: 0 }` de `actiontext.css`.
+
 > **Dos ajustes de `storage.yml` que no son opcionales:**
 > `request_checksum_calculation` y `response_checksum_validation` en
 > `when_required`. Las versiones recientes de `aws-sdk-s3` mandan varios

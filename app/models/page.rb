@@ -2,6 +2,7 @@
 # from the admin panel instead of waiting on a deploy.
 class Page < ApplicationRecord
   include Localizable
+  include OrganisedAttachments
 
   KEYS = %w[ about philosophy ].freeze
 
@@ -11,6 +12,10 @@ class Page < ApplicationRecord
   validates :key, presence: true, inclusion: { in: KEYS }, uniqueness: { scope: :locale }
   validates :title, length: { maximum: 160 }
   validates :subtitle, length: { maximum: 240 }
+
+  def storage_folder
+    "paginas/#{key}-#{locale}"
+  end
 
   # Falls back to the default locale so an untranslated page still renders.
   def self.for(key, locale: I18n.locale)

@@ -4,6 +4,7 @@
 class Lesson < ApplicationRecord
   include Sluggable
   include Publishable
+  include OrganisedAttachments
 
   VIDEO_PROVIDERS = %w[ active_storage vimeo mux youtube ].freeze
 
@@ -20,6 +21,12 @@ class Lesson < ApplicationRecord
   validates :video_provider, inclusion: { in: VIDEO_PROVIDERS }, allow_blank: true
 
   scope :ordered, -> { order(:position, :id) }
+
+  def storage_folder
+    return nil if slug.blank? || course&.slug.blank?
+
+    "cursos/#{course.slug}/#{slug}"
+  end
 
   # Courses are private. Nothing here is readable without a place in the course,
   # signed in or not. Admins get through so she can proof her own material.

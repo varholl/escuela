@@ -1,14 +1,37 @@
+<%#
+  How an attachment inside rich text is rendered.
+
+  Rails' generated version prints a non-image as a bare <figcaption>: the
+  filename as plain text, with no link, so a PDF in a lesson's material looked
+  like a typo and could not be opened.
+
+  No <svg> here on purpose. Action Text sanitises the rendered attachment, and
+  svg/path are not on the allow list -- they disappear silently. Widening that
+  list would also let SVG through in text anyone can write, which is an XSS
+  vector for the sake of an icon. The extension badge says more anyway.
+
+  disposition: "attachment" travels into the signed storage URL, so the file
+  downloads instead of the browser trying to display it.
+%>
 <figure class="attachment attachment--<%= blob.representable? ? "preview" : "file" %> attachment--<%= blob.filename.extension %>">
   <% if blob.representable? %>
     <%= image_tag blob.representation(resize_to_limit: local_assigns[:in_gallery] ? [ 800, 600 ] : [ 1024, 768 ]) %>
-  <% end %>
 
-  <figcaption class="attachment__caption">
-    <% if caption = blob.try(:caption) %>
-      <%= caption %>
-    <% else %>
-      <span class="attachment__name"><%= blob.filename %></span>
-      <span class="attachment__size"><%= number_to_human_size blob.byte_size %></span>
+    <figcaption class="attachment__caption">
+      <% if caption = blob.try(:caption) %>
+        <%= caption %>
+      <% end %>
+    </figcaption>
+  <% else %>
+    <%= link_to rails_blob_url(blob, disposition: "attachment"), class: "attachment__file" do %>
+      <span class="attachment__badge"><%= blob.filename.extension.to_s.upcase.presence || "?" %></span>
+
+      <span class="attachment__details">
+        <span class="attachment__title"><%= blob.try(:caption).presence || blob.filename %></span>
+        <span class="attachment__meta"><%= number_to_human_size blob.byte_size %></span>
+      </span>
+
+      <span class="attachment__download" aria-hidden="true">&darr;</span>
     <% end %>
-  </figcaption>
+  <% end %>
 </figure>
