@@ -42,7 +42,11 @@
     <hr class="rule-gradient my-12">
 
     <div class="flex flex-col gap-3 text-sm text-white/50 sm:flex-row sm:items-center sm:justify-between">
-      <p>&copy; <%= Date.current.year %> <%= t("site.name") %>. <%= t("footer.rights") %></p>
+      <p class="flex flex-wrap items-center gap-x-4 gap-y-1">
+        <span>&copy; <%= Date.current.year %> <%= t("site.name") %>. <%= t("footer.rights") %></span>
+        <%= link_to t("nav.privacy"), privacy_path, class: "link-quiet hover:text-white" %>
+        <%= link_to t("nav.terms"), terms_path, class: "link-quiet hover:text-white" %>
+      </p>
       <% if admin? %>
         <%= link_to t("nav.admin"), admin_root_path, class: "link-quiet hover:text-white" %>
       <% elsif current_user %>

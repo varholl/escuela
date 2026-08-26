@@ -50,6 +50,8 @@ module ApplicationHelper
     case page.key
     when "home" then root_path(locale: page.locale)
     when "about" then about_path(locale: page.locale)
+    when "privacy" then privacy_path(locale: page.locale)
+    when "terms" then terms_path(locale: page.locale)
     else philosophy_path(locale: page.locale)
     end
   end

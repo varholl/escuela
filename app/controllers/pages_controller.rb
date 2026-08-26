@@ -14,6 +14,14 @@ class PagesController < ApplicationController
     @page = Page.for(:philosophy)
   end
 
+  def privacy
+    @page = Page.for(:privacy)
+  end
+
+  def terms
+    @page = Page.for(:terms)
+  end
+
   private
     def published_courses
       Course.in_locale(I18n.locale).published

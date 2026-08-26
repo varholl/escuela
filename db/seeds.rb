@@ -95,6 +95,22 @@ PAGE_CONTENT = {
 
 # The records always exist so the admin panel lists every page; the invented
 # copy inside them is sample content.
+# Privacidad y términos se siembran siempre, no como contenido de muestra:
+# describen el sistema en vez de inventar nada sobre ella, y Google exige que
+# existan y sean públicas para publicar el inicio de sesión con Google.
+require_relative "legal_content"
+
+LEGAL_CONTENT.each do |(key, locale), attributes|
+  page = Page.find_or_create_by!(key: key, locale: locale)
+  next if page.body.to_plain_text.present?
+
+  page.title = attributes[:title]
+  page.subtitle = attributes[:subtitle]
+  page.body = attributes[:body]
+  page.save!
+end
+puts "  Legal pages: #{Page.where(key: %w[privacy terms]).count}"
+
 Page::KEYS.product(I18n.available_locales.map(&:to_s)).each do |key, locale|
   page = Page.find_or_create_by!(key: key, locale: locale)
   attributes = PAGE_CONTENT[[ key, locale ]]

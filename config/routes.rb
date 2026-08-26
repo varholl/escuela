@@ -44,6 +44,8 @@ Rails.application.routes.draw do
   scope "(:locale)", locale: /es|en/ do
     get "sobre-mi"  => "pages#about",      as: :about
     get "filosofia" => "pages#philosophy", as: :philosophy
+    get "privacidad" => "pages#privacy", as: :privacy
+    get "terminos" => "pages#terms", as: :terms
 
     # The institutional video, public but still served from the private bucket.
     get "video/:id" => "page_videos#show", as: :page_video,

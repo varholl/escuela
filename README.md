@@ -137,6 +137,34 @@ página deja de describir la escuela y empieza a describirla a ella.
 
 Si el video es vertical se ve como un teléfono; si es apaisado ocupa el ancho.
 
+## Privacidad y términos
+
+`/privacidad` y `/terminos`, en los dos idiomas, editables desde el panel como
+cualquier otra página. Existen porque Google las exige para publicar el inicio
+de sesión, pero además hacían falta.
+
+El texto **describe lo que el código realmente hace**: cada dato nombrado existe
+en el esquema y cada tercero nombrado es uno al que el navegador o el servidor
+efectivamente se conectan. Si cambia el sistema, hay que cambiar el texto —
+está en `db/legal_content.rb`.
+
+Lo que hoy declara, y conviene tener presente al tocar el sistema:
+
+- Se guarda **IP y navegador** en cada sesión (tabla `sessions`).
+- **Google Fonts recibe la IP de cada visitante** en todas las páginas, porque
+  las tipografías se cargan desde sus servidores. Se puede evitar alojándolas.
+- Los datos viven **en Brasil** (Fly, región `gru`): es una transferencia
+  internacional.
+- No hay analítica ni rastreo de ningún tipo.
+
+Los términos incluyen que **los cursos no son tratamiento médico** y los
+teléfonos de crisis. Con una psiquiatra dictando cursos de bienestar, esa
+distinción protege a las dos partes.
+
+> Redactado describiendo el sistema con precisión, no por un abogado. Antes de
+> vender cursos conviene que alguien lo revise, sobre todo cancelaciones y
+> devoluciones.
+
 ## Correo
 
 **Apagado hasta que haya dominio propio.** `config.x.email_enabled` es false en

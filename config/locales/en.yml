@@ -81,6 +81,12 @@ en:
     philosophy:
       default_title: "Body-mind-spirit coherence"
       default_subtitle: "Why I teach what I teach, and where it comes from."
+    privacy:
+      default_title: "Privacy"
+      default_subtitle: "What we keep, why, and what you can ask of us."
+    terms:
+      default_title: "Terms of service"
+      default_subtitle: "The conditions for using the site and the courses."
     empty: "This page has no content yet."
 
   articles:

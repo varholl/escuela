@@ -4,7 +4,7 @@ class Page < ApplicationRecord
   include Localizable
   include OrganisedAttachments
 
-  KEYS = %w[ home about philosophy ].freeze
+  KEYS = %w[ home about philosophy privacy terms ].freeze
 
   has_rich_text :body
   has_one_attached :cover_image

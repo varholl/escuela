@@ -21,6 +21,8 @@ es:
     courses: "Cursos"
     articles: "Notas"
     contact: "Contacto"
+    privacy: "Privacidad"
+    terms: "Términos"
     admin: "Panel"
     library: "Mis cursos"
     sign_in: "Ingresar"
@@ -85,6 +87,12 @@ es:
     philosophy:
       default_title: "La coherencia cuerpo-mente-espíritu"
       default_subtitle: "Por qué enseño lo que enseño, y desde dónde."
+    privacy:
+      default_title: "Privacidad"
+      default_subtitle: "Qué datos guardamos, por qué, y qué podés pedirnos."
+    terms:
+      default_title: "Términos del servicio"
+      default_subtitle: "Las condiciones de uso del sitio y de los cursos."
     empty: "Esta página todavía no tiene contenido."
 
   articles:
@@ -317,6 +325,8 @@ es:
         home: "Inicio"
         about: "Sobre mí"
         philosophy: "Filosofía"
+        privacy: "Privacidad"
+        terms: "Términos"
     inquiries:
       title: "Mensajes"
       destroyed: "Mensaje eliminado."
