@@ -37,6 +37,15 @@ module ApplicationHelper
     ARC_COLORS[index % ARC_COLORS.size]
   end
 
+  # Where a standing page shows up on the public site.
+  def admin_page_preview_path(page)
+    case page.key
+    when "home" then root_path(locale: page.locale)
+    when "about" then about_path(locale: page.locale)
+    else philosophy_path(locale: page.locale)
+    end
+  end
+
   def flash_classes(level)
     case level.to_s
     when "alert", "error" then "border-rose bg-rose/10 text-ink"

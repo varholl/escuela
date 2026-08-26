@@ -12,6 +12,8 @@ module Admin
     end
 
     def update
+      purge_feature_video_if_requested
+
       if @page.update(page_params)
         redirect_to edit_admin_page_path(@page), notice: t("admin.pages.updated")
       else
@@ -25,7 +27,16 @@ module Admin
       end
 
       def page_params
-        params.expect(page: [ :title, :subtitle, :body, :cover_image ])
+        params.expect(page: [ :title, :subtitle, :body, :cover_image, :feature_video ])
+      end
+
+      # Same rule as a lesson video: choosing a replacement in the same submit
+      # wins over the remove box, or the purge would delete what was just sent.
+      def purge_feature_video_if_requested
+        return unless params.dig(:page, :remove_feature_video) == "1"
+        return if page_params[:feature_video].present?
+
+        @page.feature_video.purge_later
       end
 
       def ensure_all_pages_exist

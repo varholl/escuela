@@ -300,7 +300,10 @@ en:
     pages:
       title: "Pages"
       updated: "Page saved."
+      remove_video: "Remove this video"
+      feature_video_hint: "Shown on the home page beside the section about how she works. A vertical video reads like a phone; a wide one takes the full width."
       keys:
+        home: "Home"
         about: "About me"
         philosophy: "Philosophy"
     inquiries:

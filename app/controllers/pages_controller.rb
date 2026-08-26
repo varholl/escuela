@@ -3,6 +3,7 @@ class PagesController < ApplicationController
     @courses = published_courses.ordered.limit(3)
     @articles = published_articles.recent_first.limit(3)
     @portrait = Page.for(:about)&.cover_image
+    @feature = Page.for(:home)
   end
 
   def about

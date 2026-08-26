@@ -52,7 +52,7 @@ El acceso al panel está en `/session/new` y el panel en `/admin`.
 | `Course`     | Cursos y encuentros: precio, modalidad, fecha de inicio, estado.          |
 | `Lesson`     | Las clases de un curso: video, material y orden. Sólo visibles con inscripción. |
 | `Enrollment` | Quién puede ver qué curso. A los gratuitos cada quien se suma por su cuenta. |
-| `Page`       | Los textos de «Sobre mí» y «Filosofía», editables sin deploy.             |
+| `Page`       | Textos editables sin deploy: «Sobre mí», «Filosofía», y el video institucional del inicio. |
 | `Inquiry`    | Los mensajes del formulario de contacto.                                 |
 | `User`       | Personas. `role` distingue `student` de `admin`.                         |
 
@@ -112,6 +112,19 @@ quedan como último recurso para cuando la aplicación no puede ni renderizar.
 > existan, `public/assets/` se sirve antes que Propshaft.
 
 ---
+
+## El video del inicio
+
+Vive en la página `home` (`/admin/pages`), así que ella lo cambia sin deploy. Se
+muestra en la sección «Rigor clínico, mirada contemplativa», que es donde la
+página deja de describir la escuela y empieza a describirla a ella.
+
+- **`preload="none"`**: no se descarga un solo byte hasta que alguien le da play.
+- **El póster sale del propio video**, con ffmpeg. No hay que subir una imagen aparte.
+- Es **público** —es la escuela presentándose— pero el bucket sigue siendo
+  privado: sale por `/video/home`, que redirige a un enlace firmado.
+
+Si el video es vertical se ve como un teléfono; si es apaisado ocupa el ancho.
 
 ## Correo
 

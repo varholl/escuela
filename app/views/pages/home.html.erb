@@ -53,17 +53,24 @@
 
 <%# ---- The frame -------------------------------------------------------- %>
 <section class="bg-haze">
-  <div class="mx-auto grid max-w-6xl grid-cols-1 gap-10 px-6 py-20 md:grid-cols-[0.9fr_1.1fr] md:items-center md:py-28">
-    <%= render "shared/section_heading",
-          eyebrow: t("home.approach.eyebrow"),
-          title: t("home.approach.title") %>
-
+  <div class="mx-auto grid max-w-6xl grid-cols-1 items-center gap-12 px-6 py-20 md:py-28
+              <%= @feature&.feature_video? ? "lg:grid-cols-[1.1fr_0.9fr]" : "md:grid-cols-[0.9fr_1.1fr]" %>">
     <div>
-      <p class="text-lg leading-relaxed text-ink-soft"><%= t("home.approach.body") %></p>
+      <%= render "shared/section_heading",
+            eyebrow: t("home.approach.eyebrow"),
+            title: @feature&.title.presence || t("home.approach.title") %>
+
+      <p class="mt-6 text-lg leading-relaxed text-ink-soft">
+        <%= @feature&.subtitle.presence || t("home.approach.body") %>
+      </p>
       <p class="mt-7">
         <%= link_to t("home.approach.cta"), about_path, class: "link-quiet font-semibold text-iris" %>
       </p>
     </div>
+
+    <% if @feature&.feature_video? %>
+      <%= render "pages/feature_video", page: @feature %>
+    <% end %>
   </div>
 </section>
 

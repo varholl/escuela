@@ -304,7 +304,10 @@ es:
     pages:
       title: "Páginas"
       updated: "Página guardada."
+      remove_video: "Quitar este video"
+      feature_video_hint: "Se muestra en el inicio, junto a «Rigor clínico, mirada contemplativa». Si el video es vertical se ve como un teléfono; si es apaisado, ocupa el ancho."
       keys:
+        home: "Inicio"
         about: "Sobre mí"
         philosophy: "Filosofía"
     inquiries:

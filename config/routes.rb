@@ -41,6 +41,10 @@ Rails.application.routes.draw do
     get "sobre-mi"  => "pages#about",      as: :about
     get "filosofia" => "pages#philosophy", as: :philosophy
 
+    # The institutional video, public but still served from the private bucket.
+    get "video/:id" => "page_videos#show", as: :page_video,
+      constraints: { id: Regexp.union(Page::KEYS) }
+
     resource :registration, path: "registro", only: %i[ new create ]
     get "mis-cursos" => "library#show", as: :library
 

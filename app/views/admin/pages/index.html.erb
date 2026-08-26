@@ -12,9 +12,7 @@
           <p class="mt-1 text-sm text-ink-mute"><%= t("admin.pages.keys.#{page.key}") %> · <%= page.locale.upcase %></p>
         </div>
 
-        <%= link_to t("admin.shared.preview"),
-              (page.key == "about" ? about_path(locale: page.locale) : philosophy_path(locale: page.locale)),
-              class: "link-quiet text-sm text-ink-soft" %>
+        <%= link_to t("admin.shared.preview"), admin_page_preview_path(page), class: "link-quiet text-sm text-ink-soft" %>
       </li>
     <% end %>
   </ul>

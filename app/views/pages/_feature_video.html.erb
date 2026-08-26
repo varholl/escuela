@@ -1,0 +1,22 @@
+<%#
+  The institutional video. Shot vertically, so it gets a tall frame rather than
+  being letterboxed into a wide one.
+
+  preload="none" is deliberate: the file is large, and nothing should be pulled
+  down until someone actually asks to watch. The poster is a frame taken from
+  the video itself, so the space is not empty while nothing is loading.
+%>
+<figure class="mx-auto w-full max-w-xs sm:max-w-sm">
+  <div class="overflow-hidden rounded-2xl bg-ink shadow-xl shadow-ink/10">
+    <video
+      controls
+      playsinline
+      preload="none"
+      class="aspect-[9/16] w-full bg-ink object-cover"
+      <% if page.feature_video.previewable? %>
+        poster="<%= rails_representation_url(page.feature_video.preview(resize_to_limit: [ 720, 1280 ]).processed) %>"
+      <% end %>
+      src="<%= page_video_path(id: page.key) %>">
+    </video>
+  </div>
+</figure>

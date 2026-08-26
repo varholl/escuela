@@ -71,6 +71,7 @@ es:
         subtitle: "Bajada"
         body: "Texto"
         cover_image: "Retrato"
+        feature_video: "Video institucional"
       user:
         name: "Nombre"
         email_address: "Correo"

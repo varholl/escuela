@@ -7,7 +7,17 @@
         link_to t("admin.shared.back"), admin_pages_path, class: "link-quiet text-sm text-ink-mute"
       } %>
 
-<%= form_with model: [ :admin, @page ], class: "space-y-6" do |form| %>
+<%= form_with model: [ :admin, @page ], class: "space-y-6",
+      data: {
+        controller: "upload-progress",
+        action: "direct-upload:start->upload-progress#start " \
+                "direct-upload:progress->upload-progress#progress " \
+                "direct-upload:error->upload-progress#error " \
+                "direct-upload:end->upload-progress#end",
+        upload_progress_uploading_text_value: t("admin.lessons.uploading"),
+        upload_progress_done_text_value: t("admin.lessons.upload_done"),
+        upload_progress_error_text_value: t("admin.lessons.upload_error")
+      } do |form| %>
   <%= render "shared/form_errors", record: @page %>
 
   <div class="rounded-xl border border-line bg-white p-6 space-y-6">
@@ -32,13 +42,42 @@
     </div>
   </div>
 
+  <% if @page.key == "home" %>
+    <div class="rounded-xl border border-line bg-white p-6">
+      <%= form.label :feature_video, class: "field-label" %>
+
+      <% if @page.feature_video.attached? %>
+        <div class="mb-4 flex flex-wrap items-center gap-3 rounded-lg bg-haze px-4 py-3 text-sm">
+          <span class="font-medium"><%= @page.feature_video.filename %></span>
+          <span class="text-ink-mute"><%= number_to_human_size(@page.feature_video.byte_size) %></span>
+          <label class="ml-auto flex items-center gap-2 text-rose">
+            <%= form.check_box :remove_feature_video, { class: "size-4 rounded border-line" }, "1", "0" %>
+            <span><%= t("admin.pages.remove_video") %></span>
+          </label>
+        </div>
+      <% end %>
+
+      <%= form.file_field :feature_video, accept: "video/*", direct_upload: true, class: "field-input" %>
+      <p class="field-hint"><%= t("admin.pages.feature_video_hint") %></p>
+
+      <div class="mt-4 hidden" data-upload-progress-target="wrapper">
+        <div class="h-1.5 w-full overflow-hidden rounded-full bg-line">
+          <div class="h-full w-0 rounded-full bg-iris transition-[width] duration-200"
+               data-upload-progress-target="bar"></div>
+        </div>
+        <p class="field-hint" data-upload-progress-target="status"></p>
+      </div>
+    </div>
+  <% end %>
+
   <div class="rounded-xl border border-line bg-white p-6">
     <%= form.label :body, class: "field-label" %>
     <%= form.rich_textarea :body %>
   </div>
 
   <div class="flex flex-wrap items-center gap-4">
-    <%= form.submit class: "btn btn-primary cursor-pointer" %>
+    <%= form.submit class: "btn btn-primary cursor-pointer disabled:opacity-50",
+          data: { upload_progress_target: "submit" } %>
     <%= link_to t("admin.shared.cancel"), admin_pages_path, class: "link-quiet text-sm text-ink-mute" %>
   </div>
 <% end %>
