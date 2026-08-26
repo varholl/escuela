@@ -1,6 +1,6 @@
 # Deploy a Fly.io
 
-**En línea:** <https://maflor-escuela.fly.dev>
+**En línea:** <https://volveralalma.com.ar>
 
 El sitio corre en **una sola máquina** con un volumen. La base es SQLite: una
 segunda máquina tendría su propia copia del volumen y las dos se separarían en
@@ -82,13 +82,28 @@ Con `SMTP_ADDRESS` presente, la app pasa sola a enviar de verdad.
 
 ## Dominio propio
 
+Hecho el 2026-08-26 con `volveralalma.com.ar`, registrado en nic.ar y con el DNS
+en Cloudflare:
+
 ```bash
-fly certs add --app maflor-escuela maflor.com
-fly certs add --app maflor-escuela www.maflor.com
-fly secrets set --app maflor-escuela APP_HOST="maflor.com"
+fly certs add --app maflor-escuela volveralalma.com.ar
+fly certs add --app maflor-escuela www.volveralalma.com.ar
+fly secrets set --app maflor-escuela APP_HOST="volveralalma.com.ar"
 ```
 
-Fly indica los registros DNS a cargar (un `A`, un `AAAA` y un `CNAME`).
+En Cloudflare, tres registros **sin proxear** (nube gris):
+
+| Type | Name | Content |
+|---|---|---|
+| `A` | `@` | la IPv4 compartida de Fly |
+| `AAAA` | `@` | la IPv6 dedicada de Fly |
+| `CNAME` | `www` | `maflor-escuela.fly.dev` |
+
+> La nube naranja rompe la emisión del certificado: la validación de Fly necesita
+> llegar a su propio servidor y Cloudflare se interpone. Si más adelante quieren
+> su CDN, se puede prender **después**, con el modo SSL en "Full (strict)".
+
+`fly ips list` da los valores actuales.
 
 ## Día a día
 

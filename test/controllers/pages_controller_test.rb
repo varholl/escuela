@@ -46,6 +46,16 @@ class PagesControllerTest < ActionDispatch::IntegrationTest
     assert_select "h3", text: english.title, count: 0
   end
 
+  test "hreflang links are absolute, or search engines ignore them" do
+    get root_path
+
+    css_select("link[rel=alternate]").each do |link|
+      assert link["href"].start_with?("http"), "hreflang href must be absolute: #{link["href"]}"
+    end
+    assert_select "link[rel=alternate][hreflang=es]"
+    assert_select "link[rel=alternate][hreflang=en]"
+  end
+
   test "about renders the stored page" do
     page = Page.create!(key: "about", locale: "es", title: "Sobre mí", subtitle: "Psiquiatra")
     page.body = "<p>Mi recorrido.</p>"

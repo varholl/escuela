@@ -34,6 +34,11 @@ module Maflor
     # ALLOW_INDEXING=true; see robots.txt and the layout's robots meta tag.
     config.x.allow_indexing = ENV.fetch("ALLOW_INDEXING", "false") == "true"
 
+    # The one host the site answers on. Everything else -- www, the fly.dev
+    # name, an old domain -- redirects here, so there is a single URL to share
+    # and a single one for search engines to index.
+    config.x.canonical_host = ENV["APP_HOST"].presence
+
     # Whether the app sends mail at all. False until SMTP is configured, which
     # needs a domain of its own: mail sent "from" a gmail.com address through
     # someone else's server fails DMARC alignment and lands in spam.

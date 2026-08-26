@@ -27,7 +27,7 @@
     <meta name="twitter:image" content="<%= image_url("og-image.png") %>">
 
     <% I18n.available_locales.each do |locale| %>
-      <link rel="alternate" hreflang="<%= locale %>" href="<%= locale_switch_url(locale) %>">
+      <link rel="alternate" hreflang="<%= locale %>" href="<%= locale_alternate_url(locale) %>">
     <% end %>
 
     <%= csrf_meta_tags %>

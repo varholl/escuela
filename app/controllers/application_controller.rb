@@ -12,6 +12,7 @@ class ApplicationController < ActionController::Base
   # Changes to the importmap will invalidate the etag for HTML responses
   stale_when_importmap_changes
 
+  before_action :redirect_to_canonical_host
   around_action :switch_locale
 
   helper_method :current_user, :admin?
@@ -23,6 +24,17 @@ class ApplicationController < ActionController::Base
   end
 
   private
+    # Rails' health check controller does not inherit from here, so /up is never
+    # redirected and Fly's checks keep working.
+    def redirect_to_canonical_host
+      canonical = Rails.configuration.x.canonical_host
+      return if canonical.blank? || request.host == canonical
+
+      # fullpath keeps the path and the query string exactly as they were.
+      redirect_to "https://#{canonical}#{request.fullpath}",
+        status: :moved_permanently, allow_other_host: true
+    end
+
     def switch_locale(&action)
       I18n.with_locale(requested_locale, &action)
     end

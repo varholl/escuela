@@ -24,6 +24,14 @@ module ApplicationHelper
     root_path(locale: locale_segment(locale))
   end
 
+  # hreflang is ignored unless the URL is absolute, so the head needs its own
+  # variant rather than the relative one the navigation uses.
+  def locale_alternate_url(locale)
+    url_for(locale: locale_segment(locale), only_path: false)
+  rescue ActionController::UrlGenerationError
+    root_url(locale: locale_segment(locale))
+  end
+
   def arc_dasharray
     third = ARC_CIRCUMFERENCE / 3
     "#{third.round(2)} #{(ARC_CIRCUMFERENCE - third).round(2)}"

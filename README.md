@@ -3,7 +3,7 @@
 Escuela de bienestar: sitio público, notas y cursos, con un panel de
 administración propio.
 
-**En línea:** <https://maflor-escuela.fly.dev>
+**En línea:** <https://volveralalma.com.ar>
 
 > «Un espacio de desarrollo del ser, en la coherencia cuerpo-mente-espíritu.»
 
@@ -65,6 +65,17 @@ Tres concerns transversales en `app/models/concerns/`:
 - **`Localizable`** — cada contenido se escribe una vez por idioma. Una nota en
   español y su versión en inglés son dos registros distintos, no una traducción
   campo por campo. El sitio sólo lista los que coinciden con el idioma activo.
+
+### Una sola dirección
+
+`APP_HOST` define el host canónico. Todo lo demás —`www`, el nombre de
+`fly.dev`— redirige ahí con un 301, así un enlace compartido siempre es el mismo
+enlace y los buscadores ven un sitio y no tres copias.
+
+La redirección vive en `ApplicationController`, no en Cloudflare, porque el
+nombre de `fly.dev` no pasa por Cloudflare y quedaría afuera. `/up` no se ve
+afectado: el controlador de salud de Rails no hereda de ahí, así que los chequeos
+de Fly siguen funcionando.
 
 ### Idiomas y URLs
 
