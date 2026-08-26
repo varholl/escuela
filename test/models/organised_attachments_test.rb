@@ -87,6 +87,39 @@ class OrganisedAttachmentsTest < ActiveSupport::TestCase
     assert_equal "cursos/atencion-plena/primera-practica/clase.mp4", blob.reload.key
   end
 
+  test "the duration is taken from the analysed video" do
+    lesson = @course.lessons.create!(title: "Primera práctica")
+    lesson.video.attach(io: StringIO.new("bytes"), filename: "clase.mp4", content_type: "video/mp4")
+    lesson.save!
+    lesson.reload.video.blob.update!(metadata: { analyzed: true, duration: 92.6 })
+
+    perform_enqueued_jobs { OrganiseAttachmentsJob.perform_now(lesson) }
+
+    assert_equal 93, lesson.reload.duration_seconds
+  end
+
+  test "a duration typed by hand is never overwritten" do
+    lesson = @course.lessons.create!(title: "Primera práctica", duration_seconds: 600)
+    lesson.video.attach(io: StringIO.new("bytes"), filename: "clase.mp4", content_type: "video/mp4")
+    lesson.save!
+    lesson.reload.video.blob.update!(metadata: { analyzed: true, duration: 92.6 })
+
+    perform_enqueued_jobs { OrganiseAttachmentsJob.perform_now(lesson) }
+
+    assert_equal 600, lesson.reload.duration_seconds
+  end
+
+  test "a video with no duration in its metadata leaves the field alone" do
+    lesson = @course.lessons.create!(title: "Primera práctica")
+    lesson.video.attach(io: StringIO.new("bytes"), filename: "clase.mp4", content_type: "video/mp4")
+    lesson.save!
+    lesson.reload.video.blob.update!(metadata: { analyzed: true })
+
+    perform_enqueued_jobs { OrganiseAttachmentsJob.perform_now(lesson) }
+
+    assert_nil lesson.reload.duration_seconds
+  end
+
   test "saving a record with no files enqueues nothing" do
     lesson = @course.lessons.create!(title: "Sin archivos")
 

@@ -173,6 +173,12 @@ Hay dos formas de entregar, y la diferencia es plata:
   ($0,04/GB desde São Paulo)** y ocupa la máquina. Se activa con
   `fly secrets set VIDEO_DELIVERY=proxy`.
 
+**La duración se completa sola.** El contenedor trae `ffmpeg`, así que al subir
+un video Active Storage lee su duración y la carga en la clase. Un valor puesto
+a mano nunca se pisa: puede querer anunciar el tiempo de práctica y no el largo
+del archivo. Sin `ffmpeg` esto no funciona y el campo queda manual — es lo único
+que ese paquete aporta, y son ~125 MB de imagen.
+
 **Subida directa.** El campo del video usa `direct_upload: true`: el archivo
 viaja del navegador a R2 sin pasar por la aplicación. Sin eso, un video de
 cientos de megas se bufferearía por el proxy de Fly y por Puma.

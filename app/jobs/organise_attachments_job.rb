@@ -27,5 +27,7 @@ class OrganiseAttachmentsJob < ApplicationJob
     end
 
     blobs.each { |blob| AttachmentRelocation.new(blob, folder: folder).call }
+
+    record.absorb_video_duration if record.respond_to?(:absorb_video_duration)
   end
 end

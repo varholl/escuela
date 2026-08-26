@@ -280,6 +280,7 @@ en:
       upload_done: "Video uploaded. Save to confirm."
       upload_error: "Upload failed:"
       remove_video: "Remove this video"
+      duration_hint: "Filled in automatically when the video is uploaded. Set it by hand only to show a different number."
       video_file_hint: "The file goes straight to storage without passing through the site. Wait for the bar to finish before closing this tab."
       video_hint: "Choose where the video lives and paste the link or the identifier. A YouTube or Vimeo URL works as-is."
       visibility_notice: "A published session is only visible to someone enrolled in the course. While it is unpublished nobody but you can see it."

@@ -22,6 +22,18 @@ class Lesson < ApplicationRecord
 
   scope :ordered, -> { order(:position, :id) }
 
+  # Active Storage records the duration while analysing the upload, but only
+  # where ffprobe exists. A value typed by hand always wins: she may want to
+  # advertise the practice time rather than the file's length.
+  def absorb_video_duration
+    return unless duration_seconds.blank? && video.attached?
+
+    seconds = video.blob.metadata[:duration]
+    return if seconds.blank?
+
+    update_column(:duration_seconds, seconds.round)
+  end
+
   def storage_folder
     return nil if slug.blank? || course&.slug.blank?
 

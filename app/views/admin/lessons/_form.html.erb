@@ -31,6 +31,7 @@
       <div>
         <%= form.label :duration_seconds, class: "field-label" %>
         <%= form.number_field :duration_seconds, min: 1, step: 1, class: "field-input" %>
+        <p class="field-hint"><%= t("admin.lessons.duration_hint") %></p>
       </div>
 
       <div>

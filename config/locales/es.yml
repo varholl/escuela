@@ -284,6 +284,7 @@ es:
       upload_done: "Video subido. Guardá para confirmar."
       upload_error: "No se pudo subir:"
       remove_video: "Quitar este video"
+      duration_hint: "Se completa sola al subir el video. Ponela a mano sólo si querés otro número."
       video_file_hint: "El archivo se sube directo al almacenamiento, sin pasar por el sitio. Podés cerrar esta pestaña recién cuando la barra llegue al final."
       video_hint: "Elegí dónde vive el video y pegá el enlace o el identificador. Sirve pegar la URL de YouTube o Vimeo tal cual."
       visibility_notice: "Una clase publicada se ve únicamente con inscripción al curso. Mientras esté sin publicar no la ve nadie más que vos."
