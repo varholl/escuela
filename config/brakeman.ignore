@@ -1,0 +1,14 @@
+{
+  "ignored_warnings": [
+    {
+      "warning_type": "Redirect",
+      "warning_code": 18,
+      "fingerprint": "7235bd56a8a0361126f52e3c9cbee95f0a25c80668d2dc630a23130269b3578d",
+      "check_name": "Redirect",
+      "message": "Possible unprotected redirect",
+      "file": "app/controllers/lesson_videos_controller.rb",
+      "note": "Reviewed and safe. The redirect target is built by Active Storage from the storage service configured in config/storage.yml, never from request data: params only choose which lesson, and the action refuses anyone without an enrollment before reaching this line. Redirecting rather than proxying is deliberate -- Fly bills egress from Sao Paulo at $0.04/GB while egress from R2 is free -- and the link is signed and expires. Set VIDEO_DELIVERY=proxy to stream through the app instead."
+    }
+  ],
+  "brakeman_version": "8.0.6"
+}

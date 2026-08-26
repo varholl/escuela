@@ -29,14 +29,37 @@ class LessonVideosControllerTest < ActionDispatch::IntegrationTest
     assert_response :forbidden
   end
 
-  test "an enrolled student gets the video" do
+  test "an enrolled student is handed a signed link to the file" do
     @course.join!(@student)
     sign_in_as @student
 
     get video_course_lesson_path(course_id: @course, id: @lesson)
 
+    # Redirecting keeps the bytes off this machine; Fly bills egress, R2 does not.
+    assert_response :redirect
+    assert_match "practica.mp4", response.location
+  end
+
+  test "proxy delivery streams the bytes instead of redirecting" do
+    @course.join!(@student)
+    sign_in_as @student
+
+    with_video_delivery("proxy") do
+      get video_course_lesson_path(course_id: @course, id: @lesson)
+    end
+
     assert_response :success
     assert_equal "video/mp4", response.media_type
+  end
+
+  test "proxy delivery is refused to someone who is not enrolled" do
+    sign_in_as @student
+
+    with_video_delivery("proxy") do
+      get video_course_lesson_path(course_id: @course, id: @lesson)
+    end
+
+    assert_response :forbidden
   end
 
   test "an unpublished lesson stays closed even to an enrolled student" do
@@ -72,4 +95,13 @@ class LessonVideosControllerTest < ActionDispatch::IntegrationTest
         "the raw Active Storage URL must never reach the page"
     end
   end
+
+  private
+    def with_video_delivery(mode)
+      previous = ENV["VIDEO_DELIVERY"]
+      ENV["VIDEO_DELIVERY"] = mode
+      yield
+    ensure
+      ENV["VIDEO_DELIVERY"] = previous
+    end
 end

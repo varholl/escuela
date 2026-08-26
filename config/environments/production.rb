@@ -21,8 +21,9 @@ Rails.application.configure do
   # Enable serving of images, stylesheets, and JavaScripts from an asset server.
   # config.asset_host = "http://assets.example.com"
 
-  # Store uploaded files on the local file system (see config/storage.yml for options).
-  config.active_storage.service = :local
+  # Cloudflare R2 once it is configured, the Fly volume otherwise. Uploads that
+  # predate the switch keep working: Active Storage records the service per blob.
+  config.active_storage.service = ENV["R2_BUCKET"].present? ? :cloudflare : :local
 
   # Fly terminates TLS at its proxy and forwards over the private network.
   config.assume_ssl = true

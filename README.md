@@ -143,7 +143,7 @@ público, su URL sigue siendo pública aunque el sitio esté cerrado con llave.
 
 | Hosting | ¿Queda realmente privado? |
 |---|---|
-| **Subido al sitio** (Active Storage) | **Sí.** Los bytes salen por `LessonVideosController`, que aplica la misma verificación que la página. Ocupa lugar en el volumen de Fly. |
+| **Subido al sitio** → Cloudflare R2 | **Sí.** Ver abajo. Es lo que está configurado. |
 | **Vimeo** | **Sí, si lo configurás**: privacidad «sólo en sitios que elija» y agregás el dominio. Es la opción recomendada para lo pago. |
 | **Mux** | **Sí**, con URLs firmadas. Lo más sólido, y lo que conviene si esto crece. |
 | **YouTube «no listado»** | **No.** Cualquiera con el enlace lo mira en YouTube. Sirve para material gratuito o de difusión, no para un curso cerrado. |
@@ -151,6 +151,36 @@ público, su URL sigue siendo pública aunque el sitio esté cerrado con llave.
 Los embeds de YouTube van en modo `nocookie`, así que ver una clase no entrega a
 quien mira al perfil publicitario de Google — pero eso es privacidad de datos,
 no control de acceso.
+
+### Cloudflare R2
+
+Los archivos subidos van a R2 (bucket `videos`), configurado en
+`config/storage.yml` como servicio `cloudflare`. Las credenciales viven en los
+secrets de Fly, nunca en el repo.
+
+`LessonVideosController` decide **primero** si esa persona está inscripta, y
+recién entonces entrega el archivo. Nunca se enlaza la URL de Active Storage
+directamente, porque su identificador firmado se puede reenviar.
+
+Hay dos formas de entregar, y la diferencia es plata:
+
+- **`redirect`** (por defecto) — devuelve una URL firmada a R2 y el navegador
+  baja el archivo directo de Cloudflare. **Egreso desde R2: gratis.** La URL vive
+  `VIDEO_LINK_MINUTES` (120 por defecto); tiene que durar más que la clase,
+  porque adelantar el video vuelve a pedir la misma URL.
+- **`proxy`** — todo pasa por la aplicación, así que ninguna URL usable sale del
+  servidor. Es más estricto, pero **cada GB visto se factura como egreso de Fly
+  ($0,04/GB desde São Paulo)** y ocupa la máquina. Se activa con
+  `fly secrets set VIDEO_DELIVERY=proxy`.
+
+> **Dos ajustes de `storage.yml` que no son opcionales:**
+> `request_checksum_calculation` y `response_checksum_validation` en
+> `when_required`. Las versiones recientes de `aws-sdk-s3` mandan varios
+> checksums a la vez y R2 responde *"You can only specify one checksum at a
+> time"*, lo que hace fallar todas las subidas.
+
+Lo que se subió **antes** de conectar R2 sigue en el volumen de Fly y funciona
+igual: Active Storage guarda el servicio archivo por archivo.
 
 ## Trabajo diario de ella
 
