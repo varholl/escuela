@@ -1,4 +1,4 @@
-# Maflor
+# Volver al alma
 
 Escuela de bienestar: sitio público, notas y cursos, con un panel de
 administración propio.
@@ -365,19 +365,27 @@ fly secrets set --app maflor-escuela ALLOW_INDEXING=true
 `robots.txt` lo sirve la aplicación (no `public/`) justamente para que siga ese
 interruptor.
 
-## Cambiar el nombre
+## El nombre y la marca
 
-*Maflor* es provisorio y aparece en pocos lugares:
+La escuela se llama **Volver al alma** desde el 2026-08-26. Antes de eso el
+proyecto usó *Maflor* como provisorio, y quedan dos rastros que **no se pueden
+cambiar**: la app en Fly se llama `maflor-escuela` y su volumen `maflor_storage`.
+Fly no permite renombrar una app. No se ven desde afuera, porque todo lo que
+llegue a `maflor-escuela.fly.dev` redirige al dominio.
 
-1. `config/locales/es.yml` y `en.yml` → clave `site.name`.
-2. `fly.toml` → `app` y el nombre del volumen.
-3. El módulo Ruby `Maflor` en `config/application.rb` y `config.ru` — cambiarlo
-   es opcional; no se ve en ningún lado.
+El nombre visible sale de `site.name` en los locales. Si volviera a cambiar,
+además de esa clave hay que:
 
-Fly no permite renombrar una app, así que `maflor-escuela.fly.dev` queda fijo.
-En cuanto haya dominio propio deja de importar: ver `DEPLOY.md`.
+1. Regenerar `app/assets/images/og-image.png`, que lo lleva dibujado.
+2. Revisar el espaciado del wordmark en `app/views/shared/_wordmark.html.erb`:
+   está en `0.05em`, ajustado a un nombre de tres palabras.
+3. Renombrar el módulo Ruby en `config/application.rb`. Define el prefijo de los
+   GlobalID (`gid://volver-al-alma/...`), así que conviene hacerlo con la cola
+   de trabajos vacía o los pendientes no se pueden deserializar.
 
-Los logos están en `app/assets/images/` (`logo-mark.png` para fondo claro,
+El logo es el monograma **MFD** — las iniciales de ella, no de la escuela. Sigue
+funcionando junto al nombre nuevo, pero es una decisión de marca, no técnica.
+Está en `app/assets/images/` (`logo-mark.png` para fondo claro,
 `logo-mark-light.png` para fondo oscuro) y los favicons en `public/`.
 
 ---

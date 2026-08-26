@@ -21,7 +21,7 @@ puts "\n  Seeding #{Rails.env} (sample content: #{seed_samples ? "yes" : "no"})"
 if ENV["ADMIN_EMAIL"].blank? && User.admin.exists?
   puts "  Administrator already present: #{User.admin.pick(:email_address)}"
 else
-  admin_email = ENV.fetch("ADMIN_EMAIL", "admin@maflor.local")
+  admin_email = ENV.fetch("ADMIN_EMAIL", "admin@volveralalma.local")
   admin = User.find_or_initialize_by(email_address: admin_email)
 
   if admin.new_record?
