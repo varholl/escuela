@@ -26,9 +26,19 @@
   <div class="absolute inset-0 grid place-items-center">
     <div class="h-[82%] w-[94%] -rotate-[14deg] overflow-hidden rounded-[50%]">
       <% if image&.attached? %>
-        <%= image_tag image.variant(resize_to_fill: [ 900, 900 ]),
+        <%#
+          crop: :attention lets libvips pick the crop around the most salient
+          part of the photo, which on a portrait is the face -- a centred crop
+          cuts the top of the head on anything shot vertically.
+
+          The image is upright in screen space while its container is tilted, so
+          it only has to cover the tilted ellipse's bounding box: 93.3% x 82.7%
+          of the square against the 94% x 82% it already has. scale-105 covers
+          that with room to spare; anything more is zoom for no reason.
+        %>
+        <%= image_tag image.variant(resize_to_fill: [ 900, 900, { crop: :attention } ]),
               alt: local_assigns.fetch(:alt, ""),
-              class: "h-full w-full rotate-[14deg] scale-125 object-cover" %>
+              class: "h-full w-full rotate-[14deg] scale-105 object-cover" %>
       <% else %>
         <div class="breathe h-full w-full rounded-[50%]"
              style="background: radial-gradient(circle at 42% 36%,
