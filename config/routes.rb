@@ -13,6 +13,10 @@ Rails.application.routes.draw do
   # Authentication and the admin panel live outside the locale scope: they are
   # back-office screens for the owner, always rendered in the default locale.
   resource :session, only: %i[ new create destroy ]
+
+  # OmniAuth mounts /auth/google_oauth2 itself; this is only the way back.
+  get "auth/google_oauth2/callback" => "omniauth_callbacks#google_oauth2", as: :google_callback
+  get "auth/failure" => "omniauth_callbacks#failure"
   resources :passwords, param: :token, only: %i[ new create edit update ]
 
   namespace :admin do

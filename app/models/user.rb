@@ -19,6 +19,38 @@ class User < ApplicationRecord
   validates :name, length: { maximum: 120 }
   validates :password, length: { minimum: 8 }, allow_nil: true
 
+  # Finding or making the account behind a Google sign-in.
+  #
+  # Linking by email is what stops someone who signed up with a password from
+  # ending up with a second, empty account when they later use the Google
+  # button -- they would lose their courses without understanding why. It is
+  # only safe because Google says whether it has verified the address; an
+  # unverified one would let anyone claim an existing account by creating a
+  # Google profile with someone else's email.
+  def self.from_google(auth)
+    return nil unless auth.info.email_verified
+
+    email = auth.info.email.to_s.strip.downcase
+    return nil if email.blank?
+
+    user = find_by(provider: "google_oauth2", uid: auth.uid) || find_by(email_address: email)
+    user ||= new(email_address: email, role: :student, password: SecureRandom.base58(32))
+
+    user.provider = "google_oauth2"
+    user.uid = auth.uid
+    # Only fill a name in, never overwrite one she has chosen here.
+    user.name = auth.info.name if user.name.blank?
+    user.save!
+
+    user
+  end
+
+  # Someone who has only ever used Google has a password nobody knows, including
+  # them. They can still set one through the reset flow.
+  def google?
+    provider == "google_oauth2"
+  end
+
   def enrolled_courses
     Course.joins(:enrollments).merge(enrollments.granting_access).distinct
   end

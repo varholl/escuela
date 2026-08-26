@@ -45,6 +45,11 @@ gem "image_processing", "~> 1.2"
 # Active Storage talks to Cloudflare R2 through the S3-compatible API
 gem "aws-sdk-s3", require: false
 
+# Sign in with Google. omniauth-rails_csrf_protection is not optional: without
+# it the request phase answers to GET and the app is open to login CSRF.
+gem "omniauth-google-oauth2"
+gem "omniauth-rails_csrf_protection"
+
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"

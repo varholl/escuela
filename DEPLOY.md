@@ -112,6 +112,37 @@ Sin dominio propio nada de esto era posible: DMARC exige que el dominio del
 "De:" coincida con el que firma, y mandar desde una dirección `@gmail.com` a
 través de otro servidor no alinea nunca.
 
+## Entrar con Google
+
+En [console.cloud.google.com](https://console.cloud.google.com):
+
+1. Crear un proyecto (o usar uno existente)
+2. **APIs & Services → OAuth consent screen**: tipo **External**, nombre de la
+   app *Volver al alma*, correo de soporte, y en *Authorized domains* agregar
+   `volveralalma.com.ar`
+3. **Credentials → Create credentials → OAuth client ID**, tipo **Web application**
+4. **Authorized redirect URIs** — exactamente estas dos:
+
+```
+https://volveralalma.com.ar/auth/google_oauth2/callback
+http://localhost:3000/auth/google_oauth2/callback
+```
+
+5. Copiar el **Client ID** y el **Client secret**:
+
+```bash
+fly secrets set --app maflor-escuela \
+  GOOGLE_CLIENT_ID="..." GOOGLE_CLIENT_SECRET="..."
+```
+
+Sin esas dos variables la estrategia no se registra y el botón no se muestra, así
+que el sitio funciona igual mientras tanto.
+
+> Mientras la pantalla de consentimiento esté en modo *Testing*, sólo entran las
+> cuentas que agregues como probadoras. Para abrirla a cualquiera hay que
+> publicarla — con los alcances `email` y `profile` no hace falta verificación de
+> Google.
+
 ## Dominio propio
 
 Hecho el 2026-08-26 con `volveralalma.com.ar`, registrado en nic.ar y con el DNS

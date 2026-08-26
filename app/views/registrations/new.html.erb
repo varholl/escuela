@@ -9,7 +9,11 @@
   </p>
 <% end %>
 
-<%= form_with model: @user, url: registration_path(course: params[:course]), class: "mt-7 space-y-5" do |form| %>
+<div class="mt-7">
+  <%= render "shared/google_button", course: params[:course] %>
+</div>
+
+<%= form_with model: @user, url: registration_path(course: params[:course]), class: "space-y-5" do |form| %>
   <%= render "shared/form_errors", record: @user %>
 
   <div>

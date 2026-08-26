@@ -171,6 +171,28 @@ Para encenderlo: configurar SMTP como indica [`DEPLOY.md`](DEPLOY.md) y
 comprobar con `bin/rails mail:test`, que entrega en el momento y falla ruidosa
 si algo está mal.
 
+## Entrar con Google
+
+Opcional: la estrategia sólo se registra si existen `GOOGLE_CLIENT_ID` y
+`GOOGLE_CLIENT_SECRET`, y sin ellas el botón no aparece. Así un clon fresco o el
+entorno de desarrollo no muestran una puerta que no lleva a ningún lado.
+
+**Vincula por correo verificado.** Alguien que se registró con contraseña y
+después usa el botón de Google entra a la *misma* cuenta, con sus cursos. Sin
+eso terminaría con una segunda cuenta vacía sin entender por qué. Sólo es seguro
+porque Google informa si verificó la dirección: una sin verificar dejaría que
+cualquiera reclamara la cuenta ajena creando un perfil con ese correo. Una
+dirección no verificada se rechaza.
+
+Quien entra sólo con Google tiene una contraseña aleatoria que nadie conoce
+—tampoco ella— pero puede fijarse una por el flujo de recuperación.
+
+> El inicio de sesión es un **POST**, nunca un enlace. `omniauth-rails_csrf_protection`
+> rechaza el GET justamente para que una página ajena no pueda iniciar una sesión
+> en nombre de alguien. Hay un test que lo fija.
+
+Para configurarlo, ver [`DEPLOY.md`](DEPLOY.md).
+
 ## Cursos y estudiantes
 
 A los cursos **sin costo** cada quien se suma por su cuenta: se registra eligiendo su

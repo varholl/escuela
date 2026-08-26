@@ -194,6 +194,11 @@ es:
       forgot_password: "Olvidé mi contraseña"
     invalid_credentials: "El correo o la contraseña no coinciden."
     throttled: "Demasiados intentos. Probá de nuevo en unos minutos."
+    google: "Continuar con Google"
+    or: "o"
+    welcome_back: "Hola, %{name}."
+    google_unverified: "Google no confirmó esa dirección de correo, así que no podemos usarla para identificarte."
+    google_failed: "No pudimos completar el ingreso con Google. Probá de nuevo o usá tu contraseña."
     signed_out: "Cerraste la sesión."
 
   passwords:

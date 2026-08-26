@@ -190,6 +190,11 @@ en:
       forgot_password: "I forgot my password"
     invalid_credentials: "That email and password do not match."
     throttled: "Too many attempts. Try again in a few minutes."
+    google: "Continue with Google"
+    or: "or"
+    welcome_back: "Hello, %{name}."
+    google_unverified: "Google did not confirm that email address, so we cannot use it to identify you."
+    google_failed: "We could not finish signing you in with Google. Try again or use your password."
     signed_out: "You have signed out."
 
   passwords:

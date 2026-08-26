@@ -39,6 +39,12 @@ module VolverAlAlma
     # and a single one for search engines to index.
     config.x.canonical_host = ENV["APP_HOST"].presence
 
+    # Declared here, not only in the initializer that turns it on: an unset
+    # config.x key returns an empty OrderedOptions, which is truthy, so a plain
+    # `if config.x.google_sign_in` would show the button with no Google behind
+    # it. The default has to be a real false.
+    config.x.google_sign_in = false
+
     # Whether the app sends mail at all. False until SMTP is configured, which
     # needs a domain of its own: mail sent "from" a gmail.com address through
     # someone else's server fails DMARC alignment and lands in spam.
