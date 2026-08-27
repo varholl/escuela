@@ -20,10 +20,12 @@ class LessonTest < ActiveSupport::TestCase
     assert_equal "practica-2", duplicate.slug
   end
 
-  test "rejects an unknown video provider" do
-    lesson = @course.lessons.build(title: "Clase", video_provider: "dailymotion")
+  test "rejects a provider the site cannot play" do
+    %w[ dailymotion mux ].each do |provider|
+      lesson = @course.lessons.build(title: "Clase", video_provider: provider)
 
-    assert_not lesson.valid?
+      assert_not lesson.valid?, "#{provider} should not be accepted"
+    end
   end
 
   test "formats duration as minutes and seconds" do

@@ -38,6 +38,17 @@ class LessonsHelperTest < ActionView::TestCase
     assert_nil lesson_embed_url(lesson(provider: nil, reference: "dQw4w9WgXcQ"))
   end
 
+  test "names the providers the way the admin sees them" do
+    assert_equal "Video propio", lesson_provider_label("active_storage")
+    assert_equal "YouTube", lesson_provider_label("youtube")
+    assert_nil lesson_provider_label(nil)
+  end
+
+  test "offers every provider as an option, labelled" do
+    assert_equal [ [ "Video propio", "active_storage" ], [ "YouTube", "youtube" ], [ "Vimeo", "vimeo" ] ],
+      lesson_provider_options
+  end
+
   test "reports whether a lesson has anything to play" do
     assert lesson_has_player?(lesson(provider: "vimeo", reference: "123456789"))
     assert_not lesson_has_player?(lesson(provider: "vimeo", reference: ""))

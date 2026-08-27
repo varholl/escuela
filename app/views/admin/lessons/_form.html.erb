@@ -1,6 +1,6 @@
 <%= form_with model: [ :admin, course, lesson ], class: "space-y-6",
       data: {
-        controller: "upload-progress",
+        controller: "upload-progress video-source",
         action: "direct-upload:start->upload-progress#start " \
                 "direct-upload:progress->upload-progress#progress " \
                 "direct-upload:error->upload-progress#error " \
@@ -40,46 +40,52 @@
       </div>
     </div>
 
-    <div class="grid gap-6 sm:grid-cols-2">
-      <div>
+    <%# One question at a time: the choice decides whether she uploads a file or
+        pastes a link, and the controller hides the half that does not apply. %>
+    <div class="border-t border-line pt-6 space-y-6">
+      <div class="sm:max-w-sm">
         <%= form.label :video_provider, class: "field-label" %>
-        <%= form.select :video_provider, Lesson::VIDEO_PROVIDERS,
-              { include_blank: true }, class: "field-input" %>
+        <%= form.select :video_provider, lesson_provider_options,
+              { include_blank: t("admin.lessons.video_none") },
+              class: "field-input",
+              data: { video_source_target: "select", action: "video-source#update" } %>
         <p class="field-hint"><%= t("admin.lessons.video_hint") %></p>
       </div>
 
-      <div>
+      <div class="<%= "hidden" unless lesson.video_provider.in?(%w[ youtube vimeo ]) %>"
+           data-video-source-target="reference">
         <%= form.label :video_reference, class: "field-label" %>
         <%= form.text_field :video_reference, class: "field-input" %>
+        <p class="field-hint"><%= t("admin.lessons.reference_hint") %></p>
       </div>
-    </div>
 
-    <%# Only relevant when the video lives here rather than on YouTube or Vimeo. %>
-    <div class="border-t border-line pt-6">
-      <%= form.label :video, class: "field-label" %>
+      <div class="<%= "hidden" unless lesson.video_provider == "active_storage" %>"
+           data-video-source-target="upload">
+        <%= form.label :video, class: "field-label" %>
 
-      <% if lesson.video.attached? %>
-        <div class="mb-4 flex flex-wrap items-center gap-3 rounded-lg bg-haze px-4 py-3 text-sm">
-          <span class="font-medium"><%= lesson.video.filename %></span>
-          <span class="text-ink-mute"><%= number_to_human_size(lesson.video.byte_size) %></span>
-          <label class="ml-auto flex items-center gap-2 text-rose">
-            <%= form.check_box :remove_video, { class: "size-4 rounded border-line" }, "1", "0" %>
-            <span><%= t("admin.lessons.remove_video") %></span>
-          </label>
+        <% if lesson.video.attached? %>
+          <div class="mb-4 flex flex-wrap items-center gap-3 rounded-lg bg-haze px-4 py-3 text-sm">
+            <span class="font-medium"><%= lesson.video.filename %></span>
+            <span class="text-ink-mute"><%= number_to_human_size(lesson.video.byte_size) %></span>
+            <label class="ml-auto flex items-center gap-2 text-rose">
+              <%= form.check_box :remove_video, { class: "size-4 rounded border-line" }, "1", "0" %>
+              <span><%= t("admin.lessons.remove_video") %></span>
+            </label>
+          </div>
+        <% end %>
+
+        <%# direct_upload sends the file from the browser straight to R2; without
+            it a large video would be buffered through the app and the proxy. %>
+        <%= form.file_field :video, accept: "video/*", direct_upload: true, class: "field-input" %>
+        <p class="field-hint"><%= t("admin.lessons.video_file_hint") %></p>
+
+        <div class="mt-4 hidden" data-upload-progress-target="wrapper">
+          <div class="h-1.5 w-full overflow-hidden rounded-full bg-line">
+            <div class="h-full w-0 rounded-full bg-iris transition-[width] duration-200"
+                 data-upload-progress-target="bar"></div>
+          </div>
+          <p class="field-hint" data-upload-progress-target="status"></p>
         </div>
-      <% end %>
-
-      <%# direct_upload sends the file from the browser straight to R2; without
-          it a large video would be buffered through the app and the proxy. %>
-      <%= form.file_field :video, accept: "video/*", direct_upload: true, class: "field-input" %>
-      <p class="field-hint"><%= t("admin.lessons.video_file_hint") %></p>
-
-      <div class="mt-4 hidden" data-upload-progress-target="wrapper">
-        <div class="h-1.5 w-full overflow-hidden rounded-full bg-line">
-          <div class="h-full w-0 rounded-full bg-iris transition-[width] duration-200"
-               data-upload-progress-target="bar"></div>
-        </div>
-        <p class="field-hint" data-upload-progress-target="status"></p>
       </div>
     </div>
   </div>

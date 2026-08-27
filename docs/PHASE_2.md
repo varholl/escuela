@@ -35,9 +35,11 @@ end
 | Control de acceso: `Lesson#viewable_by?` / `Course#enrolled?` | hecho |
 
 `video_provider` / `video_reference` es a propósito un par genérico: el primero
-dice dónde vive el video (`active_storage`, `vimeo`, `mux`, `youtube`) y el
-segundo guarda el identificador que ese proveedor necesita. Cambiar de hosting
-no requiere migración.
+dice dónde vive el video (`active_storage`, `youtube`, `vimeo`) y el segundo
+guarda el identificador que ese proveedor necesita. Cambiar de hosting no
+requiere migración: sumar un proveedor es agregarlo a `Lesson::VIDEO_PROVIDERS`,
+darle una etiqueta en `admin.lessons.providers` y enseñarle a `LessonsHelper`
+cómo armar la URL del reproductor.
 
 ## Lo que falta
 

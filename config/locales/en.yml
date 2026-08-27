@@ -297,7 +297,13 @@ en:
       remove_video: "Remove this video"
       duration_hint: "Filled in automatically when the video is uploaded. Set it by hand only to show a different number."
       video_file_hint: "The file goes straight to storage without passing through the site. Wait for the bar to finish before closing this tab."
-      video_hint: "Choose where the video lives and paste the link or the identifier. A YouTube or Vimeo URL works as-is."
+      video_hint: "Only our own video is private: it plays for enrolled students and nobody else. A YouTube or Vimeo video can be watched by anyone holding the link, even when it is listed as unlisted."
+      video_none: "No video yet"
+      providers:
+        active_storage: "Our own video"
+        youtube: "YouTube"
+        vimeo: "Vimeo"
+      reference_hint: "Paste the link exactly as YouTube or Vimeo gives it to you."
       visibility_notice: "A published session is only visible to someone enrolled in the course. While it is unpublished nobody but you can see it."
     enrollments:
       title: "Enrolments in %{course}"

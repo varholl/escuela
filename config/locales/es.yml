@@ -303,7 +303,13 @@ es:
       remove_video: "Quitar este video"
       duration_hint: "Se completa sola al subir el video. Ponela a mano sólo si querés otro número."
       video_file_hint: "El archivo se sube directo al almacenamiento, sin pasar por el sitio. Podés cerrar esta pestaña recién cuando la barra llegue al final."
-      video_hint: "Elegí dónde vive el video y pegá el enlace o el identificador. Sirve pegar la URL de YouTube o Vimeo tal cual."
+      video_hint: "Sólo el video propio es privado: se ve nada más que con inscripción al curso. Un video de YouTube o Vimeo lo puede ver cualquiera que tenga el enlace, aunque esté «oculto»."
+      video_none: "Todavía no hay video"
+      providers:
+        active_storage: "Video propio"
+        youtube: "YouTube"
+        vimeo: "Vimeo"
+      reference_hint: "Pegá el enlace tal cual te lo da YouTube o Vimeo."
       visibility_notice: "Una clase publicada se ve únicamente con inscripción al curso. Mientras esté sin publicar no la ve nadie más que vos."
     enrollments:
       title: "Inscripciones a %{course}"

@@ -1,6 +1,6 @@
 # Lessons carry the video content sold in phase two. The video itself is kept
 # provider-agnostic: `video_provider` names the backend ("active_storage",
-# "vimeo", "mux", ...) and `video_reference` holds whatever identifier that
+# "youtube", "vimeo") and `video_reference` holds whatever identifier that
 # backend needs, so switching hosts never requires a schema change.
 class CreateLessons < ActiveRecord::Migration[8.1]
   def change

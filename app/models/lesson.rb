@@ -1,12 +1,15 @@
-# A single video unit inside a course. Phase one only stores the metadata; the
-# gated player arrives with the paid tier. `video_provider` / `video_reference`
-# keep us free to host on Active Storage now and move to Mux or Vimeo later.
+# A single video unit inside a course. `video_provider` says where the file
+# actually lives and `video_reference` holds the identifier that provider uses;
+# together they let one lesson play from our own bucket and the next from
+# YouTube, without the views having to care which.
 class Lesson < ApplicationRecord
   include Sluggable
   include Publishable
   include OrganisedAttachments
 
-  VIDEO_PROVIDERS = %w[ active_storage vimeo mux youtube ].freeze
+  # Our own bucket is the only private option -- an unlisted YouTube or Vimeo
+  # link is reachable by anyone who has it. Kept in the order she chooses from.
+  VIDEO_PROVIDERS = %w[ active_storage youtube vimeo ].freeze
 
   belongs_to :course, inverse_of: :lessons
 
