@@ -1,6 +1,6 @@
 <footer class="<%= "mt-32" unless local_assigns[:flush] %> bg-ink text-white/70">
   <div class="mx-auto max-w-6xl px-6 py-20">
-    <div class="grid grid-cols-1 gap-12 md:grid-cols-[1.5fr_1fr_1fr]">
+    <div class="grid grid-cols-1 gap-12 sm:grid-cols-2 md:grid-cols-[1.4fr_1fr_1fr_1fr]">
       <div>
         <%= render "shared/wordmark", on_ink: true %>
         <p class="mt-5 max-w-xs font-display text-lg font-light leading-snug text-white/80">
@@ -18,6 +18,22 @@
                [ t("nav.articles"), articles_path ],
                [ t("nav.contact"), new_contact_path ] ].each do |label, path| %>
             <li><%= link_to label, path, class: "link-quiet text-white/70 hover:text-white" %></li>
+          <% end %>
+        </ul>
+      </nav>
+
+      <nav aria-label="<%= t("footer.follow") %>">
+        <h2 class="eyebrow eyebrow-on-ink"><%= t("footer.follow") %></h2>
+        <ul class="mt-5 space-y-3 text-[0.9375rem]">
+          <% social_links.each do |link| %>
+            <li>
+              <%# rel="me" is how these profiles and the site vouch for each other. %>
+              <%= link_to link[:url], rel: "me noopener", target: "_blank",
+                    class: "link-quiet inline-flex items-center gap-2.5 text-white/70 hover:text-white" do %>
+                <%= render "shared/social_icon", icon: link[:icon] %>
+                <span><%= link[:label] %></span>
+              <% end %>
+            </li>
           <% end %>
         </ul>
       </nav>

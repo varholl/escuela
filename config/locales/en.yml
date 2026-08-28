@@ -30,6 +30,8 @@ en:
     written_by: "Written and tended by"
     sections: "Sections"
     language: "Language"
+    follow: "Follow"
+    facebook_personal: "Personal Facebook"
 
   locales:
     es: "Español"

@@ -36,6 +36,8 @@ es:
     written_by: "Escrito y sostenido por"
     sections: "Secciones"
     language: "Idioma"
+    follow: "Seguir"
+    facebook_personal: "Facebook personal"
 
   locales:
     es: "Español"
