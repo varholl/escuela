@@ -24,18 +24,8 @@
 
       <nav aria-label="<%= t("footer.follow") %>">
         <h2 class="eyebrow eyebrow-on-ink"><%= t("footer.follow") %></h2>
-        <ul class="mt-5 space-y-3 text-[0.9375rem]">
-          <% social_links.each do |link| %>
-            <li>
-              <%# rel="me" is how these profiles and the site vouch for each other. %>
-              <%= link_to link[:url], rel: "me noopener", target: "_blank",
-                    class: "link-quiet inline-flex items-center gap-2.5 text-white/70 hover:text-white" do %>
-                <%= render "shared/social_icon", icon: link[:icon] %>
-                <span><%= link[:label] %></span>
-              <% end %>
-            </li>
-          <% end %>
-        </ul>
+        <%= render "shared/social_links", list_class: "mt-5 space-y-3",
+              link_class: "text-white/70 hover:text-white" %>
       </nav>
 
       <div>

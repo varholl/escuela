@@ -7,7 +7,14 @@
       <p class="eyebrow"><%= t("inquiries.new.eyebrow") %></p>
       <h1 class="mt-5 text-[clamp(2.4rem,5.5vw,4rem)]"><%= t("inquiries.new.title") %></h1>
       <p class="mt-6 max-w-md text-lg leading-relaxed text-ink-soft"><%= t("inquiries.new.body") %></p>
-      <p class="eyebrow mt-10"><%= t("site.coherence") %></p>
+      <%# Someone who wants to follow her rather than write looks here first. %>
+      <div class="mt-12 border-t border-line pt-8">
+        <h2 class="eyebrow"><%= t("inquiries.new.elsewhere") %></h2>
+        <%= render "shared/social_links", list_class: "mt-5 grid gap-3 sm:grid-cols-2",
+              link_class: "text-ink-soft hover:text-iris" %>
+      </div>
+
+      <p class="eyebrow mt-12"><%= t("site.coherence") %></p>
     </div>
 
     <div>
