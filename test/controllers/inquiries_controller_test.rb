@@ -33,9 +33,9 @@ class InquiriesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "create records the locale the visitor was reading in" do
-    post contact_path(locale: "en"), params: valid_params
+    post contact_path, params: valid_params
 
-    assert_equal "en", Inquiry.last.locale
+    assert_equal "es", Inquiry.last.locale
   end
 
   test "create re-renders the form when the email is missing" do

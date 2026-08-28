@@ -27,11 +27,6 @@
     </nav>
 
     <div class="hidden items-center gap-5 lg:flex">
-      <% alternate_locales.each do |locale| %>
-        <%= link_to t("locales.#{locale}"), locale_switch_url(locale),
-              class: "text-xs font-semibold uppercase tracking-[0.14em] text-ink-mute hover:text-iris",
-              lang: locale %>
-      <% end %>
       <% if current_user %>
         <%= button_to t("nav.sign_out"), session_path, method: :delete,
               class: "link-quiet cursor-pointer text-sm text-ink-mute hover:text-iris" %>
@@ -63,14 +58,6 @@
         <% else %>
           <%= link_to t("nav.sign_in"), new_session_path,
                 class: "block rounded-xl px-4 py-2.5 text-[0.9375rem] text-ink-soft hover:bg-haze" %>
-        <% end %>
-
-        <hr class="my-2 border-line">
-
-        <% alternate_locales.each do |locale| %>
-          <%= link_to t("locales.#{locale}"), locale_switch_url(locale),
-                class: "block rounded-xl px-4 py-2.5 text-xs font-semibold uppercase tracking-[0.14em] text-ink-mute hover:bg-haze",
-                lang: locale %>
         <% end %>
       </nav>
     </details>

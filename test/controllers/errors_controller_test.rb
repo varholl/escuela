@@ -30,14 +30,6 @@ class ErrorsControllerTest < ActionDispatch::IntegrationTest
     assert_select "h1", text: I18n.t("errors.not_found.title", locale: :es)
   end
 
-  test "the error page keeps the language the visitor was reading in" do
-    get "/en/notas/no-existe"
-
-    assert_response :not_found
-    assert_select "html[lang=en]"
-    assert_select "h1", text: I18n.t("errors.not_found.title", locale: :en)
-  end
-
   test "a draft note reaches the 404 rather than an exception" do
     draft = Article.create!(title: "Borrador")
 

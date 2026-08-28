@@ -2,7 +2,7 @@
 
 <%= render "admin/shared/header",
       title: t("admin.pages.keys.#{@page.key}"),
-      eyebrow: "#{t("admin.pages.title")} · #{@page.locale.upcase}",
+      eyebrow: t("admin.pages.title"),
       actions: capture {
         link_to t("admin.shared.back"), admin_pages_path, class: "link-quiet text-sm text-ink-mute"
       } %>

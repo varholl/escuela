@@ -13,25 +13,6 @@ module ApplicationHelper
     (text.presence || t("site.meta_description")).to_s.squish.truncate(160)
   end
 
-  def alternate_locales
-    I18n.available_locales.reject { |locale| locale == I18n.locale }
-  end
-
-  # Spanish lives at the bare path, so switching to it means dropping :locale.
-  def locale_switch_url(locale)
-    url_for(locale: locale_segment(locale))
-  rescue ActionController::UrlGenerationError
-    root_path(locale: locale_segment(locale))
-  end
-
-  # hreflang is ignored unless the URL is absolute, so the head needs its own
-  # variant rather than the relative one the navigation uses.
-  def locale_alternate_url(locale)
-    url_for(locale: locale_segment(locale), only_path: false)
-  rescue ActionController::UrlGenerationError
-    root_url(locale: locale_segment(locale))
-  end
-
   def arc_dasharray
     third = ARC_CIRCUMFERENCE / 3
     "#{third.round(2)} #{(ARC_CIRCUMFERENCE - third).round(2)}"
@@ -48,11 +29,11 @@ module ApplicationHelper
   # Where a standing page shows up on the public site.
   def admin_page_preview_path(page)
     case page.key
-    when "home" then root_path(locale: page.locale)
-    when "about" then about_path(locale: page.locale)
-    when "privacy" then privacy_path(locale: page.locale)
-    when "terms" then terms_path(locale: page.locale)
-    else philosophy_path(locale: page.locale)
+    when "home" then root_path
+    when "about" then about_path
+    when "privacy" then privacy_path
+    when "terms" then terms_path
+    else philosophy_path
     end
   end
 
@@ -68,9 +49,4 @@ module ApplicationHelper
 
     l(date.to_date, format: format)
   end
-
-  private
-    def locale_segment(locale)
-      locale.to_s == I18n.default_locale.to_s ? nil : locale.to_s
-    end
 end

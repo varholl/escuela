@@ -49,12 +49,13 @@ class ArticleTest < ActiveSupport::TestCase
     assert scheduled.scheduled?
   end
 
-  test "in_locale keeps the languages apart" do
+  # El sitio sirve un solo idioma hoy, pero el scope tiene que seguir filtrando
+  # para el día que vuelva a haber dos.
+  test "in_locale narrows to one language" do
     spanish = Article.create!(title: "Respirar", locale: "es")
-    english = Article.create!(title: "Breathing", locale: "en")
 
     assert_includes Article.in_locale(:es), spanish
-    assert_not_includes Article.in_locale(:es), english
+    assert_not_includes Article.in_locale(:en), spanish
   end
 
   test "rejects a locale the site does not serve" do

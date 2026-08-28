@@ -12,15 +12,14 @@
           <div class="min-w-0 flex-1">
             <%= link_to article.title, edit_admin_article_path(article), class: "link-quiet font-medium" %>
             <p class="mt-1 text-sm text-ink-mute">
-              <%= article.locale.upcase %>
-              <% if article.published_at.present? %> · <%= l(article.published_at, format: :short) %><% end %>
+              <% if article.published_at.present? %><%= l(article.published_at, format: :short) %><% end %>
             </p>
           </div>
 
           <%= render "admin/shared/state_badge", record: article %>
 
           <div class="flex items-center gap-3 text-sm">
-            <%= link_to t("admin.shared.preview"), article_path(id: article, locale: article.locale),
+            <%= link_to t("admin.shared.preview"), article_path(id: article),
                   class: "link-quiet text-ink-soft" %>
 
             <% if article.published? %>

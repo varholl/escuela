@@ -8,7 +8,7 @@ administración propio.
 > «Un espacio de desarrollo del ser, en la coherencia cuerpo-mente-espíritu.»
 
 El código, los nombres de clases, variables y ramas están en inglés. Los textos
-de cara al público viven en `config/locales/` (español e inglés).
+de cara al público viven en `config/locales/`, en español.
 
 ---
 
@@ -62,9 +62,10 @@ Tres concerns transversales en `app/models/concerns/`:
   para que un enlace ya compartido siga funcionando aunque se edite el título.
 - **`Publishable`** — `published_at` vacío es borrador; una fecha futura deja la
   publicación programada.
-- **`Localizable`** — cada contenido se escribe una vez por idioma. Una nota en
-  español y su versión en inglés son dos registros distintos, no una traducción
-  campo por campo. El sitio sólo lista los que coinciden con el idioma activo.
+- **`Localizable`** — cada contenido se escribe una vez por idioma: dos
+  versiones de una misma nota serían dos registros distintos, no una traducción
+  campo por campo. Hoy el sitio sirve sólo español, pero el andamiaje queda en
+  pie (ver «Idiomas y URLs»).
 
 ### Una sola dirección
 
@@ -79,8 +80,17 @@ de Fly siguen funcionando.
 
 ### Idiomas y URLs
 
-El español se sirve desde la raíz (`/notas`) y el inglés bajo `/en` (`/en/notas`).
-Los segmentos de las rutas quedan en español en los dos idiomas: es la audiencia
+Hoy el sitio sirve **sólo español**, desde la raíz (`/notas`). No hay selector
+de idioma, ni `hreflang`, ni prefijo `/en`: esa URL devuelve 404.
+
+El andamiaje bilingüe sigue en pie a propósito —la columna `locale`,
+`Localizable`, y el `scope "(:locale)"` en las rutas— así que sumar un idioma es
+listarlo en `config.i18n.available_locales`, ampliar la restricción de la ruta y
+traducir. No hay que rehacer el ruteo ni migrar la base. La estructura que se
+sirvió en inglés hasta agosto de 2026 está en el historial de git, en el commit
+que la retiró.
+
+Los segmentos de las rutas quedan en español pase lo que pase: es la audiencia
 principal y evita duplicar los nombres de las rutas.
 
 > **Cuidado al agregar enlaces.** Como `:locale` es un segmento opcional

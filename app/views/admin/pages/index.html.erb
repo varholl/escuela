@@ -9,7 +9,7 @@
         <div class="min-w-0 flex-1">
           <%= link_to page.title.presence || t("admin.pages.keys.#{page.key}"),
                 edit_admin_page_path(page), class: "link-quiet font-medium" %>
-          <p class="mt-1 text-sm text-ink-mute"><%= t("admin.pages.keys.#{page.key}") %> · <%= page.locale.upcase %></p>
+          <p class="mt-1 text-sm text-ink-mute"><%= t("admin.pages.keys.#{page.key}") %></p>
         </div>
 
         <%= link_to t("admin.shared.preview"), admin_page_preview_path(page), class: "link-quiet text-sm text-ink-soft" %>

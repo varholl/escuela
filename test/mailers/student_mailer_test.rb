@@ -29,15 +29,6 @@ class StudentMailerTest < ActionMailer::TestCase
     assert mail.html_part.present?
   end
 
-  test "mail is written in the reader's language" do
-    spanish = StudentMailer.welcome(users(:student)).subject
-    english = I18n.with_locale(:en) { StudentMailer.welcome(users(:student)).subject }
-
-    assert_not_equal spanish, english
-    assert_match "bienvenida", spanish
-    assert_match "Welcome", english
-  end
-
   test "nothing is delivered while email is switched off" do
     Rails.configuration.x.email_enabled = false
 

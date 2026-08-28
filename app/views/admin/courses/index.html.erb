@@ -12,7 +12,7 @@
           <div class="min-w-0 flex-1">
             <%= link_to course.title, edit_admin_course_path(course), class: "link-quiet font-medium" %>
             <p class="mt-1 text-sm text-ink-mute">
-              <%= course.locale.upcase %> · <%= course_modality(course) %> · <%= formatted_price(course) %>
+              <%= course_modality(course) %> · <%= formatted_price(course) %>
             </p>
           </div>
 
@@ -21,7 +21,7 @@
           <div class="flex items-center gap-3 text-sm">
             <%= link_to t("admin.courses.lessons"), admin_course_lessons_path(course), class: "link-quiet text-ink-soft" %>
             <%= link_to t("admin.courses.enrollments"), admin_course_enrollments_path(course), class: "link-quiet text-ink-soft" %>
-            <%= link_to t("admin.shared.preview"), course_path(id: course, locale: course.locale), class: "link-quiet text-ink-soft" %>
+            <%= link_to t("admin.shared.preview"), course_path(id: course), class: "link-quiet text-ink-soft" %>
             <%= button_to t("admin.shared.delete"), admin_course_path(course), method: :delete,
                   form: { data: { turbo_confirm: t("admin.shared.confirm") } },
                   class: "link-quiet cursor-pointer text-rose" %>

@@ -56,12 +56,12 @@ class MailEnabledTest < ActionDispatch::IntegrationTest
   end
 
   test "the welcome mail is queued in the language the visitor was reading" do
-    post registration_path(locale: "en"), params: { user: {
-      name: "Ann", email_address: "ann@example.com",
+    post registration_path, params: { user: {
+      name: "Ana", email_address: "ana@example.com",
       password: "una-clave-larga", password_confirmation: "una-clave-larga"
     } }
 
-    assert_equal "en", enqueued_jobs.last["locale"]
+    assert_equal "es", enqueued_jobs.last["locale"]
   end
 
   test "granting access by hand tells the student" do

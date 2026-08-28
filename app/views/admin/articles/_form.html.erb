@@ -13,13 +13,6 @@
         <%= form.text_field :slug, class: "field-input" %>
         <p class="field-hint"><%= t("admin.shared.slug_hint") %></p>
       </div>
-
-      <div>
-        <%= form.label :locale, t("admin.shared.locale"), class: "field-label" %>
-        <%= form.select :locale,
-              I18n.available_locales.map { |locale| [ t("locales.#{locale}"), locale ] },
-              {}, class: "field-input" %>
-      </div>
     </div>
 
     <div>

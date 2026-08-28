@@ -46,13 +46,9 @@ es:
     rights: "Todos los derechos reservados."
     written_by: "Escrito y sostenido por"
     sections: "Secciones"
-    language: "Idioma"
     follow: "Seguir"
     facebook_personal: "Facebook personal"
 
-  locales:
-    es: "Español"
-    en: "English"
 
   home:
     hero:
@@ -285,7 +281,6 @@ es:
       scheduled: "Programada"
       published_at_hint: "Vacío = borrador. Una fecha futura la deja programada."
       slug_hint: "Se genera solo a partir del título. Cambiarlo rompe los enlaces ya compartidos."
-      locale: "Idioma"
       optional: "opcional"
     articles:
       title: "Notas"

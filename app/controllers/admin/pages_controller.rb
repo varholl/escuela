@@ -44,7 +44,9 @@ module Admin
           Page.find_or_create_by!(key: key, locale: locale)
         end
 
-        Page.order(:key, :locale)
+        # Rows in a locale that is no longer served stay in the table but out
+        # of the panel: she has no way to publish them and no reason to see them.
+        Page.where(locale: I18n.available_locales.map(&:to_s)).order(:key, :locale)
       end
   end
 end

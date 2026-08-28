@@ -6,7 +6,7 @@
       actions: capture {
         safe_join([
           render("admin/shared/state_badge", record: @article),
-          link_to(t("admin.shared.preview"), article_path(id: @article, locale: @article.locale),
+          link_to(t("admin.shared.preview"), article_path(id: @article),
                   class: "link-quiet text-sm text-ink-soft"),
           link_to(t("admin.shared.back"), admin_articles_path, class: "link-quiet text-sm text-ink-mute")
         ], " ")

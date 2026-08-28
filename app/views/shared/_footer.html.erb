@@ -1,6 +1,6 @@
 <footer class="<%= "mt-32" unless local_assigns[:flush] %> bg-ink text-white/70">
   <div class="mx-auto max-w-6xl px-6 py-20">
-    <div class="grid grid-cols-1 gap-12 sm:grid-cols-2 md:grid-cols-[1.4fr_1fr_1fr_1fr]">
+    <div class="grid grid-cols-1 gap-12 sm:grid-cols-2 md:grid-cols-[1.5fr_1fr_1fr]">
       <div>
         <%= render "shared/wordmark", on_ink: true %>
         <p class="mt-5 max-w-xs font-display text-lg font-light leading-snug text-white/80">
@@ -27,22 +27,6 @@
         <%= render "shared/social_links", list_class: "mt-5 space-y-3",
               link_class: "text-white/70 hover:text-white" %>
       </nav>
-
-      <div>
-        <h2 class="eyebrow eyebrow-on-ink"><%= t("footer.language") %></h2>
-        <ul class="mt-5 space-y-3 text-[0.9375rem]">
-          <% I18n.available_locales.each do |locale| %>
-            <li>
-              <% if locale == I18n.locale %>
-                <span class="text-white"><%= t("locales.#{locale}") %></span>
-              <% else %>
-                <%= link_to t("locales.#{locale}"), locale_switch_url(locale),
-                      class: "link-quiet text-white/70 hover:text-white", lang: locale %>
-              <% end %>
-            </li>
-          <% end %>
-        </ul>
-      </div>
     </div>
 
     <hr class="rule-gradient my-12">

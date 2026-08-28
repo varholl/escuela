@@ -11,13 +11,6 @@ class LegalPagesTest < ActionDispatch::IntegrationTest
     end
   end
 
-  test "both pages are public in English" do
-    [ privacy_path(locale: "en"), terms_path(locale: "en") ].each do |path|
-      get path
-      assert_response :success
-    end
-  end
-
   test "the footer links to both from every page" do
     get root_path
 
@@ -33,18 +26,6 @@ class LegalPagesTest < ActionDispatch::IntegrationTest
     get privacy_path
 
     assert_select ".prose-note", text: /Guardamos tu correo/
-  end
-
-  test "an English visitor falls back rather than seeing an empty page" do
-    Page.create!(key: "terms", locale: "es", title: "Términos").tap do |p|
-      p.body = "<p>Condiciones.</p>"
-      p.save!
-    end
-
-    get terms_path(locale: "en")
-
-    assert_response :success
-    assert_select ".prose-note", text: /Condiciones/
   end
 
   test "she can edit them from the panel like any other page" do

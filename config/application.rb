@@ -21,7 +21,10 @@ module VolverAlAlma
 
     # Spanish is the site's mother tongue; English is offered under an /en
     # prefix. Locale files are split into subdirectories, hence the glob.
-    config.i18n.available_locales = %i[ es en ]
+    # Sólo español. El andamiaje bilingüe queda en pie -- la columna `locale`,
+    # Localizable, el scope (:locale) en las rutas -- así que sumar un idioma
+    # es volver a listarlo acá y traducir, no rehacer el ruteo.
+    config.i18n.available_locales = %i[ es ]
     config.i18n.default_locale = :es
     config.i18n.fallbacks = [ :es ]
     config.i18n.load_path += Dir[Rails.root.join("config/locales/**/*.{rb,yml}")]

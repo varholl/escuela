@@ -41,7 +41,7 @@ Rails.application.routes.draw do
   # Because :locale is an optional leading segment, a single positional argument
   # binds to it rather than to :id. Always name the key on these helpers:
   #   article_path(id: article)   NOT   article_path(article)
-  scope "(:locale)", locale: /es|en/ do
+  scope "(:locale)", locale: /es/ do
     get "sobre-mi"  => "pages#about",      as: :about
     get "filosofia" => "pages#philosophy", as: :philosophy
     get "privacidad" => "pages#privacy", as: :privacy
