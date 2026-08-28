@@ -34,7 +34,7 @@ class StudentMailerTest < ActionMailer::TestCase
     english = I18n.with_locale(:en) { StudentMailer.welcome(users(:student)).subject }
 
     assert_not_equal spanish, english
-    assert_match "Bienvenida", spanish
+    assert_match "bienvenida", spanish
     assert_match "Welcome", english
   end
 

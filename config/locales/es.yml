@@ -1,7 +1,18 @@
-# Los textos dirigidos a quien estudia se escriben en neutro: no sabemos su
-# género y no hay motivo para preguntarlo. Cuando hace falta un sustantivo,
-# "estudiante" sirve para cualquiera. Lo que habla de ella (la psiquiatra) sí va
-# en femenino, porque ahí sí sabemos de quién hablamos.
+# Dos reglas para todo lo que se lee en el sitio.
+#
+# Género: los textos dirigidos a quien estudia se escriben en neutro. No sabemos
+# su género y no hay motivo para preguntarlo, así que la frase se reformula
+# hasta que el género no aparece ("¿Empezamos a conversar?" en lugar de "¿Estás
+# listo?"). Cuando hace falta un sustantivo, "estudiante" sirve para cualquiera.
+# Lo que habla de ella (la psiquiatra) sí va en femenino: ahí sabemos de quién
+# hablamos.
+#
+# Voz: la escuela es una persona. Le habla al visitante en primera persona del
+# singular ("Escribime", "Te mando un enlace"), nunca en plural institucional
+# ("Escribinos", "Te enviamos"), porque detrás no hay un equipo. El plural sólo
+# queda en las páginas legales, donde es convención, y el "nosotros" que la
+# incluye a ella con quien lee ("¿Empezamos?", "lo vemos") no es ese plural y
+# se mantiene. El panel de administración es una herramienta, no su voz.
 es:
   date:
     formats:
@@ -115,7 +126,7 @@ es:
     index:
       eyebrow: "Formación"
       title: "Cursos y encuentros"
-      body: "Programas para recorrer solo o acompañado, con la práctica en el centro."
+      body: "Programas para recorrer por tu cuenta o en grupo, con la práctica en el centro."
       empty: "Todavía no hay cursos publicados en este idioma."
     show:
       back: "Volver a los cursos"
@@ -150,10 +161,10 @@ es:
       submit: "Enviar mensaje"
       general_interest: "Consulta general"
       course_label: "Me interesa"
-      elsewhere: "Redes donde puedes encontrarme"
+      elsewhere: "Redes donde podés encontrarme"
     create:
       success: "Gracias por escribir. Te respondo apenas pueda."
-    throttled: "Recibimos varios mensajes tuyos hace poco. Probá de nuevo en un rato."
+    throttled: "Me llegaron varios mensajes tuyos hace poco. Probá de nuevo en un rato."
     honeypot_label: "Dejá este campo vacío"
 
   registrations:
@@ -210,20 +221,20 @@ es:
     google: "Continuar con Google"
     or: "o"
     welcome_back: "Hola, %{name}."
-    google_unverified: "Google no confirmó esa dirección de correo, así que no podemos usarla para identificarte."
-    google_failed: "No pudimos completar el ingreso con Google. Probá de nuevo o usá tu contraseña."
+    google_unverified: "Google no confirmó esa dirección de correo, así que no puedo usarla para identificarte."
+    google_failed: "No se pudo completar el ingreso con Google. Probá de nuevo o usá tu contraseña."
     signed_out: "Cerraste la sesión."
 
   passwords:
     new:
       title: "Restablecer contraseña"
-      body: "Te enviamos un enlace para elegir una nueva."
+      body: "Te mando un enlace para elegir una nueva."
       submit: "Enviar enlace"
     edit:
       title: "Elegí una nueva contraseña"
       submit: "Guardar contraseña"
-    unavailable: "La recuperación de contraseña todavía no está disponible. Escribinos y te ayudamos."
-    reset_sent: "Si existe una cuenta con ese correo, te enviamos las instrucciones."
+    unavailable: "La recuperación de contraseña todavía no está disponible. Escribime y te ayudo."
+    reset_sent: "Si existe una cuenta con ese correo, te mandé las instrucciones."
     invalid_token: "El enlace no es válido o ya venció. Pedí uno nuevo."
     updated: "Tu contraseña quedó actualizada. Ya podés ingresar."
     mismatch: "Las contraseñas no coinciden."
@@ -233,7 +244,7 @@ es:
     title: "Panel"
     account:
       title: "Mi cuenta"
-      updated: "Listo, guardamos los cambios."
+      updated: "Listo, cambios guardados."
       password_heading: "Cambiar la contraseña"
       password_hint: "Dejalo vacío si no querés cambiarla."
       new_password: "Contraseña nueva"
@@ -361,7 +372,7 @@ es:
 
   student_mailer:
     welcome:
-      subject: "Bienvenida a %{site}"
+      subject: "Te doy la bienvenida a %{site}"
       heading: "Hola, %{name}"
       body: "Ya tenés tu cuenta. Desde «Mis cursos» vas a ver todo lo que tengas disponible."
       action: "Ir a mis cursos"
@@ -369,7 +380,7 @@ es:
     enrolled:
       subject: "Ya tenés acceso a %{course}"
       heading: "Se abrió %{course}"
-      body: "Te dimos acceso a %{course}. Podés empezar cuando quieras, a tu ritmo."
+      body: "Te di acceso a %{course}. Podés empezar cuando quieras, a tu ritmo."
       action: "Entrar al curso"
 
   inquiry_mailer:
@@ -381,13 +392,13 @@ es:
 
   errors:
     not_found:
-      title: "No encontramos esta página"
+      title: "No encuentro esta página"
       body: "Puede que el enlace haya cambiado o que el contenido ya no esté publicado."
       cta: "Volver al inicio"
     unprocessable:
-      title: "No pudimos procesar eso"
-      body: "Algo en el formulario no llegó como esperábamos. Probá de nuevo, y si sigue pasando escribime."
+      title: "No pude procesar eso"
+      body: "Algo en el formulario no llegó como esperaba. Probá de nuevo, y si sigue pasando escribime."
     server_error:
-      title: "Algo se rompió de nuestro lado"
+      title: "Algo se rompió de este lado"
       body: "No es culpa tuya. Ya quedó registrado; probá de nuevo en un rato."
     form: "Revisá lo siguiente:"

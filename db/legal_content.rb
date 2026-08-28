@@ -20,7 +20,7 @@ LEGAL_CONTENT = {
       <p><strong>Si te inscribís a un curso:</strong> a cuál y desde cuándo.</p>
 
       <h2>Cookies</h2>
-      <p>Una sola, firmada, que mantiene tu sesión abierta. Sin ella no podrías seguir conectada de una página a otra. No hay cookies de analítica ni de publicidad, propias ni de terceros.</p>
+      <p>Una sola, firmada, que mantiene tu sesión abierta. Sin ella no podrías mantener la sesión de una página a otra. No hay cookies de analítica ni de publicidad, propias ni de terceros.</p>
 
       <h2>Con quién se comparte</h2>
       <p>Con nadie, en el sentido de vender o ceder. Sí usamos servicios que procesan datos por cuenta nuestra:</p>
@@ -59,14 +59,14 @@ LEGAL_CONTENT = {
       <p>Es personal. Sos responsable de lo que pase con ella y de mantener la contraseña a resguardo. Si creés que alguien más entró, avisanos.</p>
 
       <h2>Los cursos</h2>
-      <p>A los cursos sin costo te sumás sola desde el sitio. Los cursos pagos se coordinan por el formulario de contacto.</p>
+      <p>A los cursos sin costo te sumás por tu cuenta desde el sitio. Los cursos pagos se coordinan por el formulario de contacto.</p>
       <p>El material de los cursos —videos, textos, prácticas— es para vos. No se puede compartir, descargar para redistribuir, ni publicar en otro lado.</p>
 
       <h2>Cancelaciones y devoluciones</h2>
       <p>Se acuerdan caso por caso: escribinos y lo resolvemos. Cuando haya cursos pagos con inscripción abierta, las condiciones concretas van a estar en cada curso.</p>
 
       <h2>Cambios</h2>
-      <p>Si estas condiciones cambian, cambia esta página. Si el cambio te afecta como alumna de un curso en marcha, te lo avisamos.</p>
+      <p>Si estas condiciones cambian, cambia esta página. Si el cambio te afecta en un curso que ya empezaste, te lo avisamos.</p>
 
       <h2>Dónde se resuelve un conflicto</h2>
       <p>Estos términos se rigen por la ley argentina.</p>
