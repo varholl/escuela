@@ -150,7 +150,7 @@ es:
       submit: "Enviar mensaje"
       general_interest: "Consulta general"
       course_label: "Me interesa"
-      elsewhere: "Dónde más me encontrás"
+      elsewhere: "Redes donde puedes encontrarme"
     create:
       success: "Gracias por escribir. Te respondo apenas pueda."
     throttled: "Recibimos varios mensajes tuyos hace poco. Probá de nuevo en un rato."
