@@ -1,6 +1,14 @@
 <% content_for :title, page_title(@article.title) %>
 <% content_for :description, meta_description(@article.summary) %>
 
+<%# The picture WhatsApp draws when the link is pasted. Its own cover if it has
+    one, the school's card if it does not; see ArticleCoversController for why
+    the address is one of ours and not Active Storage's. %>
+<% if @article.cover_image.attached? %>
+  <% content_for :social_image, cover_article_url(id: @article) %>
+  <% content_for :social_image_alt, @article.title %>
+<% end %>
+
 <article>
   <header class="mx-auto max-w-2xl px-6 pt-16 md:pt-24">
     <%= link_to t("articles.show.back"), articles_path, class: "link-quiet text-sm text-ink-mute" %>
@@ -33,6 +41,11 @@
 
   <div class="mx-auto mt-12 max-w-2xl px-6">
     <div class="prose-note"><%= @article.body %></div>
+
+    <%# A draft is being proof-read, not passed around. %>
+    <% if @article.published? %>
+      <%= render "articles/share", article: @article %>
+    <% end %>
   </div>
 </article>
 

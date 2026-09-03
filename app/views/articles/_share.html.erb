@@ -1,0 +1,42 @@
+<%#
+  Passing a note on. The WhatsApp link is an ordinary href, so it works with no
+  JavaScript at all and on every device; the other two appear only once the
+  Stimulus controller has confirmed the browser has the API behind them.
+%>
+<%
+  url = article_url(id: article)
+  title = article.title
+%>
+<div class="mt-16 border-t border-line pt-8"
+     data-controller="share"
+     data-share-url-value="<%= url %>"
+     data-share-title-value="<%= title %>">
+  <h2 class="eyebrow"><%= t("articles.share.heading") %></h2>
+
+  <div class="mt-5 flex flex-wrap items-center gap-3">
+    <%= link_to whatsapp_share_url(title, url), target: "_blank", rel: "noopener",
+          class: "btn btn-ghost px-5 py-2.5 text-sm" do %>
+      <%= render "shared/social_icon", icon: :whatsapp %>
+      <span>WhatsApp</span>
+    <% end %>
+
+    <button type="button" hidden class="btn btn-ghost cursor-pointer px-5 py-2.5 text-sm"
+            data-share-target="copy" data-action="share#copy">
+      <span class="inline-flex items-center gap-2" data-share-target="copyIdle">
+        <%= render "shared/social_icon", icon: :link %>
+        <%= t("articles.share.copy") %>
+      </span>
+      <span class="inline-flex items-center gap-2 text-iris" role="status" hidden
+            data-share-target="copyDone">
+        <%= render "shared/social_icon", icon: :check %>
+        <%= t("articles.share.copied") %>
+      </span>
+    </button>
+
+    <button type="button" hidden class="btn btn-ghost cursor-pointer px-5 py-2.5 text-sm"
+            data-share-target="native" data-action="share#native">
+      <%= render "shared/social_icon", icon: :share %>
+      <span><%= t("articles.share.native") %></span>
+    </button>
+  </div>
+</div>

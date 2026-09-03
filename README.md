@@ -151,6 +151,40 @@ página deja de describir la escuela y empieza a describirla a ella.
 
 Si el video es vertical se ve como un teléfono; si es apaisado ocupa el ancho.
 
+## Compartir una nota
+
+Al pie de cada nota publicada hay tres formas de pasarla: WhatsApp, copiar el
+enlace y el menú nativo del teléfono. Un borrador no las muestra — se está
+corrigiendo, no repartiendo.
+
+**Sólo WhatsApp funciona sin JavaScript**, porque es un `href` común. Los otros
+dos arrancan con `hidden` y `share_controller.js` los revela únicamente si el
+navegador tiene la API detrás: `navigator.clipboard` y `navigator.share`. En
+escritorio el menú nativo no existe, así que ese botón no aparece en lugar de
+fallar al tocarlo.
+
+### Por qué la portada tiene ruta propia
+
+Lo que va en `og:image` es lo que dibuja WhatsApp al pegar el link, y **se vuelve
+a pedir cada vez que alguien lo reenvía** — días después, no minutos. Las URLs de
+Active Storage acá **vencen a los 5 minutos** (`config.active_storage.urls_expire_in`,
+puesto así porque el material de los cursos es privado), así que enlazar una
+habría dado una vista previa ya muerta.
+
+Por eso existe `ArticleCoversController`: la dirección `/notas/:slug/portada` no
+vence nunca y firma un enlace nuevo en cada pedido, igual que el video
+institucional. El bucket sigue siendo privado. Devuelve la portada recortada a
+1200×630 con `crop: :attention`, y una nota sin portada cae en la tarjeta de la
+escuela.
+
+> Este recorte necesita **libvips**. Está en el Dockerfile y en CI; en una
+> máquina sin él, `/notas/:slug/portada` da 500 y el test correspondiente se
+> saltea con un mensaje que lo dice. `brew install vips`.
+
+> Mientras el sitio esté cerrado (ver «La puerta cerrada») el link compartido
+> rebota a la portada de espera para quien no tenga cuenta. Los botones quedan
+> listos y empiezan a servir el día que abras.
+
 ## Privacidad y términos
 
 `/privacidad` y `/terminos`, en los dos idiomas, editables desde el panel como

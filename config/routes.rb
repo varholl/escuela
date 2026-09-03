@@ -54,7 +54,11 @@ Rails.application.routes.draw do
     resource :registration, path: "registro", only: %i[ new create ]
     get "mis-cursos" => "library#show", as: :library
 
-    resources :articles, path: "notas", only: %i[ index show ]
+    resources :articles, path: "notas", only: %i[ index show ] do
+      # The picture a link preview shows. Served through the app so its address
+      # can outlive Active Storage's five-minute URLs.
+      get :portada, on: :member, to: "article_covers#show", as: :cover
+    end
 
     resources :courses, path: "cursos", only: %i[ index show ] do
       resource :enrollment, only: :create

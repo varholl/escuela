@@ -125,6 +125,11 @@ es:
       back: "Volver a las notas"
       related: "Seguir leyendo"
       draft_notice: "Estás viendo un borrador. Nadie más puede acceder a esta nota todavía."
+    share:
+      heading: "Compartir esta nota"
+      copy: "Copiar enlace"
+      copied: "¡Copiado!"
+      native: "Compartir"
     reading_time:
       one: "1 minuto de lectura"
       other: "%{count} minutos de lectura"
