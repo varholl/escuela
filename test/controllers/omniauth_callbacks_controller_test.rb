@@ -73,6 +73,31 @@ class OmniauthCallbacksControllerTest < ActionDispatch::IntegrationTest
     assert_nil cookies[:session_id].presence
   end
 
+  test "with the doors shut the button signs people in but does not sign them up" do
+    Rails.configuration.x.gated = true
+
+    assert_no_difference -> { User.count } do
+      get google_callback_path
+    end
+
+    assert_redirected_to new_session_path
+    assert_nil cookies[:session_id].presence
+  ensure
+    Rails.configuration.x.gated = false
+  end
+
+  test "with the doors shut an account she already opened still gets in" do
+    Rails.configuration.x.gated = true
+    Rails.application.env_config["omniauth.auth"] = google_auth(email: users(:student).email_address)
+
+    get google_callback_path
+
+    assert_redirected_to library_path
+    assert cookies[:session_id].present?
+  ensure
+    Rails.configuration.x.gated = false
+  end
+
   test "a failure from Google says so instead of showing a stack trace" do
     get "/auth/failure"
 

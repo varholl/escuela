@@ -28,12 +28,10 @@ class User < ApplicationRecord
   # unverified one would let anyone claim an existing account by creating a
   # Google profile with someone else's email.
   def self.from_google(auth)
-    return nil unless auth.info.email_verified
-
-    email = auth.info.email.to_s.strip.downcase
+    email = google_email(auth)
     return nil if email.blank?
 
-    user = find_by(provider: "google_oauth2", uid: auth.uid) || find_by(email_address: email)
+    user = find_google(auth, email)
     user ||= new(email_address: email, role: :student, password: SecureRandom.base58(32))
 
     user.provider = "google_oauth2"
@@ -44,6 +42,29 @@ class User < ApplicationRecord
 
     user
   end
+
+  # Whether this Google identity already belongs to someone here.
+  #
+  # While the school is closed that is the whole difference between signing in
+  # and being turned away: the button opens the door for the accounts she
+  # created, not for anyone who happens to have a Google profile.
+  def self.google_account?(auth)
+    email = google_email(auth)
+    email.present? && find_google(auth, email).present?
+  end
+
+  # The address Google is willing to vouch for, or nothing when it is not.
+  def self.google_email(auth)
+    return nil unless auth.info.email_verified
+
+    auth.info.email.to_s.strip.downcase.presence
+  end
+  private_class_method :google_email
+
+  def self.find_google(auth, email)
+    find_by(provider: "google_oauth2", uid: auth.uid) || find_by(email_address: email)
+  end
+  private_class_method :find_google
 
   # Someone who has only ever used Google has a password nobody knows, including
   # them. They can still set one through the reset flow.

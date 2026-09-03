@@ -1,6 +1,10 @@
 # Reached through config.exceptions_app, never by an ordinary link, so the
 # actions render a status rather than a happy page.
 class ErrorsController < ApplicationController
+  # A stale link should land on the error page it asked for. Bouncing it to the
+  # holding page would answer 303 where the browser needs a 404.
+  allow_gated_access
+
   def not_found
     render_error :not_found
   end

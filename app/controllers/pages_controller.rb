@@ -1,8 +1,16 @@
 class PagesController < ApplicationController
+  # The root is the one page that answers with the doors shut, because it is
+  # the holding page.
+  allow_gated_access only: :home
+
   def home
+    # Her face is the one piece of the site that is already hers, so it is the
+    # one piece the holding page keeps.
+    @portrait = Page.for(:about)&.cover_image
+    return render "pages/gate", layout: "gate" if gated?
+
     @courses = published_courses.ordered.limit(3)
     @articles = published_articles.recent_first.limit(3)
-    @portrait = Page.for(:about)&.cover_image
     @feature = Page.for(:home)
   end
 

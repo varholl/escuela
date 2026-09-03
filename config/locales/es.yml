@@ -49,6 +49,17 @@ es:
     follow: "Seguir"
     facebook_personal: "Facebook personal"
 
+  # La portada que ve quien no tiene cuenta mientras el sitio se escribe. Se
+  # borra entera junto con el concern Gate el día que la escuela abra.
+  gate:
+    eyebrow: "Escuela de bienestar"
+    title: "Estoy preparando este espacio"
+    body: "Todavía estoy escribiendo lo que va a vivir acá: los cursos, las notas, mi propio recorrido. Prefiero que lo primero que leas sea de verdad mío, así que hasta entonces la puerta queda cerrada."
+    invitation: "Mientras tanto el acceso es por invitación: escribime y abrimos tu cuenta."
+    contact_cta: "Escribime"
+    have_account: "¿Ya tenés cuenta?"
+    sign_in: "Entrar"
+    elsewhere: "Mientras tanto"
 
   home:
     hero:
@@ -212,12 +223,15 @@ es:
       forgot_password: "Olvidé mi contraseña"
       no_account: "¿Todavía no tenés cuenta?"
       create_account: "Crear una"
+      by_invitation_html: "Mientras preparo el sitio, las cuentas las abro yo. %{contact} y la creamos."
+      ask_for_one: "Escribime"
     invalid_credentials: "El correo o la contraseña no coinciden."
     throttled: "Demasiados intentos. Probá de nuevo en unos minutos."
     google: "Continuar con Google"
     or: "o"
     welcome_back: "Hola, %{name}."
     google_unverified: "Google no confirmó esa dirección de correo, así que no puedo usarla para identificarte."
+    google_not_invited: "Todavía no hay una cuenta con esa dirección. Mientras preparo el sitio el acceso es por invitación: escribime y la creamos."
     google_failed: "No se pudo completar el ingreso con Google. Probá de nuevo o usá tu contraseña."
     signed_out: "Cerraste la sesión."
 

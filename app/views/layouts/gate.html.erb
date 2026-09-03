@@ -1,0 +1,67 @@
+<%#
+  The chrome of a school that has not opened yet: the mark, a way in, and
+  nothing to browse. The full layout's header and footer are a directory of
+  pages a visitor at the door is not allowed to follow, which is why this
+  exists rather than a set of conditionals inside them.
+%>
+<!DOCTYPE html>
+<html lang="<%= I18n.locale %>">
+  <head>
+    <title><%= content_for(:title) || page_title(t("gate.title")) %></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="description" content="<%= content_for(:description) || meta_description(t("gate.body")) %>">
+    <meta name="theme-color" content="#fbf9fc">
+    <%# Nothing here is worth indexing, and the site behind it is not hers yet. %>
+    <meta name="robots" content="noindex, nofollow">
+
+    <meta property="og:site_name" content="<%= t("site.name") %>">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="<%= I18n.locale %>">
+    <meta property="og:title" content="<%= content_for(:title) || page_title(t("gate.title")) %>">
+    <meta property="og:description" content="<%= content_for(:description) || meta_description(t("gate.body")) %>">
+    <meta property="og:url" content="<%= request.original_url %>">
+    <meta property="og:image" content="<%= image_url("og-image.png") %>">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="<%= t("site.name") %> — <%= t("site.tagline") %>">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="<%= image_url("og-image.png") %>">
+
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <link rel="icon" href="/favicon.png" type="image/png">
+    <link rel="apple-touch-icon" href="/icon.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..600;1,6..72,200..500&family=Karla:ital,wght@0,300..700;1,300..600&display=swap">
+
+    <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+  </head>
+
+  <body class="flex min-h-screen flex-col">
+    <header class="border-b border-line/70">
+      <div class="mx-auto flex max-w-6xl items-center justify-between gap-6 px-6 py-5">
+        <%= link_to root_path, class: "shrink-0", aria: { label: t("site.name") } do %>
+          <%= render "shared/wordmark" %>
+        <% end %>
+
+        <%= link_to t("gate.sign_in"), new_session_path,
+              class: "link-quiet text-[0.9375rem] text-ink-mute hover:text-iris" %>
+      </div>
+    </header>
+
+    <%= render "shared/flash" %>
+
+    <main class="flex-1"><%= yield %></main>
+
+    <footer class="border-t border-line/70">
+      <div class="mx-auto flex max-w-6xl flex-col gap-3 px-6 py-10 text-sm text-ink-mute sm:flex-row sm:items-center sm:justify-between">
+        <p>&copy; <%= Date.current.year %> <%= t("site.name") %>. <%= t("footer.rights") %></p>
+        <p class="eyebrow"><%= t("site.coherence") %></p>
+      </div>
+    </footer>
+  </body>
+</html>

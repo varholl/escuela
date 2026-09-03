@@ -1,9 +1,16 @@
 class InquiriesController < ApplicationController
+  # Writing to her is the one thing someone at the door can still do, so the
+  # form stays up -- in the plainer chrome of the holding page, since the usual
+  # header is all links they are not allowed to follow.
+  allow_gated_access
+  layout -> { "gate" if gated? }
+
   rate_limit to: 5, within: 10.minutes, only: :create,
     with: -> { redirect_to new_contact_path, alert: t("inquiries.throttled") }
 
   def new
     @inquiry = Inquiry.new(course: requested_course)
+    @courses = offerable_courses
   end
 
   def create
@@ -17,6 +24,7 @@ class InquiriesController < ApplicationController
       notify_owner
       redirect_to new_contact_path, notice: t("inquiries.create.success")
     else
+      @courses = offerable_courses
       render :new, status: :unprocessable_content
     end
   end
@@ -39,6 +47,14 @@ class InquiriesController < ApplicationController
     end
 
     def requested_course
+      return nil if gated?
+
       Course.in_locale(I18n.locale).published.find_by(slug: params[:course])
+    end
+
+    # The list of courses the form offers to ask about is the one thing on this
+    # page that would show sample copy to someone at the door.
+    def offerable_courses
+      gated? ? Course.none : Course.in_locale(I18n.locale).published.ordered
     end
 end

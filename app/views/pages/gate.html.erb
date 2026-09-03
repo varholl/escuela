@@ -1,0 +1,38 @@
+<%#
+  What someone without an account sees. Her face and her voice, because those
+  are already hers; none of the sample courses, notes or biographies, because
+  those are not. The two ways forward are writing to her and, for whoever she
+  has already let in, signing in.
+%>
+<% content_for :title, page_title(t("gate.title")) %>
+
+<div class="mx-auto grid max-w-5xl grid-cols-1 items-center gap-14 px-6 py-20 md:py-28 lg:grid-cols-[1.05fr_0.95fr] lg:gap-20">
+  <div>
+    <p class="eyebrow"><%= t("gate.eyebrow") %></p>
+
+    <h1 class="mt-6 text-[clamp(2.4rem,5.5vw,4rem)]"><%= t("gate.title") %></h1>
+
+    <p class="mt-7 max-w-md text-lg leading-relaxed text-ink-soft"><%= t("gate.body") %></p>
+
+    <p class="mt-10">
+      <%= link_to t("gate.contact_cta"), new_contact_path, class: "btn btn-primary" %>
+    </p>
+
+    <p class="mt-6 max-w-md text-sm text-ink-mute"><%= t("gate.invitation") %></p>
+
+    <p class="mt-3 text-sm text-ink-mute">
+      <%= t("gate.have_account") %>
+      <%= link_to t("gate.sign_in"), new_session_path, class: "link-quiet font-semibold text-iris" %>
+    </p>
+
+    <div class="mt-12 border-t border-line pt-8">
+      <h2 class="eyebrow"><%= t("gate.elsewhere") %></h2>
+      <%= render "shared/social_links", list_class: "mt-5 grid gap-3 sm:grid-cols-2",
+            link_class: "text-ink-soft hover:text-iris" %>
+    </div>
+  </div>
+
+  <div class="mx-auto w-full max-w-sm lg:max-w-none">
+    <%= render "shared/aperture", image: @portrait, alt: "" %>
+  </div>
+</div>

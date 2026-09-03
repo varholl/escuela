@@ -41,11 +41,10 @@
           </div>
         </div>
 
-        <% courses = Course.in_locale(I18n.locale).published.ordered %>
-        <% if courses.any? %>
+        <% if @courses.any? %>
           <div>
             <%= form.label :course_id, t("inquiries.new.course_label"), class: "field-label" %>
-            <%= form.collection_select :course_id, courses, :id, :title,
+            <%= form.collection_select :course_id, @courses, :id, :title,
                   { include_blank: t("inquiries.new.general_interest") }, class: "field-input" %>
           </div>
         <% end %>

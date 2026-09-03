@@ -1,5 +1,9 @@
 class PasswordsController < ApplicationController
   layout "auth"
+
+  # Someone who cannot get in is exactly who needs this.
+  allow_gated_access
+
   before_action :require_email_delivery
   before_action :set_user_by_token, only: %i[ edit update ]
   rate_limit to: 10, within: 3.minutes, only: :create, with: -> { redirect_to new_password_path, alert: t("sessions.throttled") }

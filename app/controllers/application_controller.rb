@@ -1,5 +1,8 @@
 class ApplicationController < ActionController::Base
   include Authentication
+  # Included after Authentication on purpose: the gate asks whether there is a
+  # session before deciding to turn anyone away.
+  include Gate
 
   # The site is public by default; Admin::BaseController opts back in to
   # authentication. Keeping the concern included here means views everywhere can

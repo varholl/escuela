@@ -37,6 +37,13 @@ module VolverAlAlma
     # ALLOW_INDEXING=true; see robots.txt and the layout's robots meta tag.
     config.x.allow_indexing = ENV.fetch("ALLOW_INDEXING", "false") == "true"
 
+    # And so is everyone else. While the site still carries sample copy, the
+    # root is a holding page and the rest of the public site answers only to
+    # someone with an account; signing up is by invitation, which means she
+    # creates the account from the panel. Flip with OPEN_TO_VISITORS=true; see
+    # the Gate concern.
+    config.x.gated = ENV.fetch("OPEN_TO_VISITORS", "false") != "true"
+
     # The one host the site answers on. Everything else -- www, the fly.dev
     # name, an old domain -- redirects here, so there is a single URL to share
     # and a single one for search engines to index.

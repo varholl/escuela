@@ -50,4 +50,9 @@ Rails.application.configure do
 
   # Raise error when a before_action's only/except options reference missing actions.
   config.action_controller.raise_on_missing_callback_actions = true
+
+  # The doors are open here, because the suite describes the site she is going
+  # to have, not the one behind the holding page. The gate itself is tested by
+  # closing it explicitly; see test/controllers/gate_test.rb.
+  config.x.gated = false
 end

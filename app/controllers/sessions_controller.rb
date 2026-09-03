@@ -1,6 +1,9 @@
 class SessionsController < ApplicationController
   layout "auth"
 
+  # The way in has to answer even with the doors shut.
+  allow_gated_access
+
   # ApplicationController opens the app up, which leaves Current.session unset.
   # Signing out needs it resolved, so this action opts back in.
   before_action :require_authentication, only: :destroy

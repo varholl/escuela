@@ -1,8 +1,14 @@
 # Coming back from Google.
 class OmniauthCallbacksController < ApplicationController
+  # The way back in has to answer even with the doors shut -- though while they
+  # are, only for someone who already has an account here.
+  allow_gated_access
+
   # The request phase is a POST protected by OmniAuth's CSRF middleware; the
   # callback is a GET from Google and carries no CSRF token of ours.
   skip_forgery_protection only: :google_oauth2
+
+  before_action :require_invitation, only: :google_oauth2
 
   def google_oauth2
     user = User.from_google(request.env["omniauth.auth"])
@@ -45,5 +51,16 @@ class OmniauthCallbacksController < ApplicationController
       return course_path(id: @pending_course) if @pending_course
 
       after_authentication_url(user)
+    end
+
+    # `gated?` is about the visitor and is always false here -- they are on
+    # their way to having a session. What matters is whether the site itself is
+    # still closed, because that is what makes the Google button a way back in
+    # rather than a way to sign up.
+    def require_invitation
+      return unless Rails.configuration.x.gated
+      return if User.google_account?(request.env["omniauth.auth"])
+
+      redirect_to new_session_path, alert: t("sessions.google_not_invited")
     end
 end

@@ -1,6 +1,8 @@
 # Joining a free course. Paid courses still go through the contact form until
 # there is a way to take money; `joinable_by?` is what keeps that honest.
 class EnrollmentsController < ApplicationController
+  # Authentication already answers this one, and its redirect is the useful one.
+  allow_gated_access
   before_action :require_authentication
   before_action :set_course
 

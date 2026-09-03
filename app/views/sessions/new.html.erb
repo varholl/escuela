@@ -32,7 +32,14 @@
   </p>
 <% end %>
 
+<%# While the site is closed, signing up is closed with it: she opens the
+    accounts herself, so the honest offer here is a way to ask her for one. %>
 <p class="mt-4 text-center text-sm text-ink-mute">
-  <%= t("sessions.new.no_account") %>
-  <%= link_to t("sessions.new.create_account"), new_registration_path, class: "link-quiet text-iris" %>
+  <% if gated? %>
+    <%= t("sessions.new.by_invitation_html",
+          contact: link_to(t("sessions.new.ask_for_one"), new_contact_path, class: "link-quiet text-iris")).html_safe %>
+  <% else %>
+    <%= t("sessions.new.no_account") %>
+    <%= link_to t("sessions.new.create_account"), new_registration_path, class: "link-quiet text-iris" %>
+  <% end %>
 </p>

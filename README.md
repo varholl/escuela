@@ -30,6 +30,10 @@ bin/dev                  # servidor + compilación de Tailwind en modo watch
 > leyendo las clases que aparecen en las vistas, así que sin el watcher los
 > estilos nuevos no aparecen.
 
+> El sitio arranca **cerrado**: sin sesión vas a ver la portada de espera y
+> nada más. Para trabajar sobre el sitio público sin loguearte,
+> `OPEN_TO_VISITORS=true bin/dev`. Ver [La puerta cerrada](#la-puerta-cerrada).
+
 ### Usuario administrador
 
 `db:seed` crea uno y muestra la contraseña generada por única vez. Para fijarla:
@@ -412,6 +416,44 @@ fly ssh console --app maflor-escuela --user rails \
 `db:seed` sólo carga contenido de muestra fuera de producción; para forzarlo,
 `SEED_SAMPLE_CONTENT=1`.
 
+### La puerta cerrada
+
+Mientras ese texto siga siendo inventado, tampoco se puede entrar a leerlo. Sin
+cuenta hay una sola página: la portada de espera en `/`, con la marca, el
+retrato, un enlace para escribirle y otro para entrar. Todo el resto del sitio
+público — sobre mí, filosofía, cursos, notas, legales, el video institucional —
+responde con un 303 de vuelta ahí.
+
+Queda abierto sólo lo que necesita alguien que está del lado de afuera: entrar,
+recuperar la contraseña, el formulario de contacto (en el mismo marco sobrio de
+la portada, y sin el selector de cursos, que sería contenido de muestra),
+`robots.txt` y las páginas de error. El panel y la biblioteca también quedan
+fuera del escudo, pero porque piden sesión por su cuenta: así ella puede llegar
+a `/admin` desde un navegador deslogueado y recibir la pantalla de ingreso en
+lugar de un rebote a la portada.
+
+**El registro está cerrado, no sólo escondido.** `/registro` rebota como
+cualquier otra página, y el botón de Google deja pasar sólo a direcciones que ya
+tienen cuenta: alguien con un perfil de Google nuevo recibe una invitación a
+escribirle, no una cuenta. Las cuentas las abre ella desde
+**Admin → curso → inscripciones**, que ya crea el usuario si no existe.
+
+Todo eso es un solo interruptor. Para abrir las puertas:
+
+```bash
+fly secrets set --app maflor-escuela OPEN_TO_VISITORS=true
+```
+
+Y en local, `OPEN_TO_VISITORS=true bin/dev`. En tests el sitio está abierto por
+defecto (`config/environments/test.rb`), porque la suite describe el sitio que
+va a haber; el escudo se prueba cerrándolo a mano en
+`test/controllers/gate_test.rb`.
+
+Vive en `app/controllers/concerns/gate.rb`. El día que la escuela abra de
+verdad, sacarlo es borrar ese archivo, los `allow_gated_access` que lo saltean,
+`app/views/layouts/gate.html.erb`, `app/views/pages/gate.html.erb` y la clave
+`gate:` de los locales.
+
 ### Buscadores
 
 Mientras el texto sea inventado, el sitio está cerrado a los buscadores: el
@@ -424,6 +466,11 @@ fly secrets set --app maflor-escuela ALLOW_INDEXING=true
 
 `robots.txt` lo sirve la aplicación (no `public/`) justamente para que siga ese
 interruptor.
+
+Son dos interruptores separados a propósito — puede querer abrir la puerta antes
+de invitar a Google —, pero no se contradicen: mientras el sitio esté cerrado,
+`robots.txt` prohíbe todo aunque `ALLOW_INDEXING` esté en `true`, porque detrás
+no hay nada que indexar.
 
 ## El nombre y la marca
 
