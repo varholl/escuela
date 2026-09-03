@@ -6,9 +6,11 @@
 %>
 <% content_for :title, page_title(t("gate.title")) %>
 
-<div class="mx-auto grid max-w-5xl grid-cols-1 items-center gap-14 px-6 py-20 md:py-28 lg:grid-cols-[1.05fr_0.95fr] lg:gap-20">
+<div class="mx-auto grid max-w-5xl grid-cols-1 items-center gap-14 px-6 py-10 md:py-14 lg:grid-cols-[1.05fr_0.95fr] lg:gap-20">
   <div>
-    <p class="eyebrow"><%= t("gate.eyebrow") %></p>
+    <%# A step larger than every other eyebrow on the site: this one does not
+        label a section, it stands over the page's only headline. %>
+    <p class="eyebrow text-[0.8125rem]"><%= t("gate.eyebrow") %></p>
 
     <h1 class="mt-6 text-[clamp(2.4rem,5.5vw,4rem)]"><%= t("gate.title") %></h1>
 
