@@ -26,7 +26,7 @@
       <ul class="mt-5 divide-y divide-line">
         <% @articles.each do |article| %>
           <li class="flex items-center justify-between gap-4 py-3">
-            <%= link_to article.title, edit_admin_article_path(article), class: "link-quiet min-w-0 truncate text-[0.9375rem]" %>
+            <%= link_to article.title, edit_admin_article_path(article), class: "link-quiet min-w-0 truncate text-[1rem]" %>
             <%= render "admin/shared/state_badge", record: article %>
           </li>
         <% end %>
@@ -47,7 +47,7 @@
         <% @inquiries.each do |inquiry| %>
           <li class="py-3">
             <%= link_to admin_inquiry_path(inquiry), class: "group block" do %>
-              <p class="text-[0.9375rem] group-hover:text-iris"><%= inquiry.name %></p>
+              <p class="text-[1rem] group-hover:text-iris"><%= inquiry.name %></p>
               <p class="mt-1 truncate text-sm text-ink-mute"><%= inquiry.message %></p>
             <% end %>
           </li>

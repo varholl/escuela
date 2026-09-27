@@ -13,7 +13,7 @@
     <% active = request.path == root || (root != admin_root_path && request.path.start_with?(root)) %>
     <%= link_to path,
           class: class_names(
-            "flex shrink-0 items-center justify-between gap-3 rounded-lg px-3.5 py-2.5 text-[0.9375rem] transition-colors",
+            "flex shrink-0 items-center justify-between gap-3 rounded-lg px-3.5 py-2.5 text-[1rem] transition-colors",
             "bg-iris text-white" => active,
             "text-ink-soft hover:bg-haze" => !active
           ),

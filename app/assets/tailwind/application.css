@@ -33,6 +33,13 @@
   --font-display: "Newsreader", ui-serif, Georgia, "Times New Roman", serif;
   --font-sans: "Karla", ui-sans-serif, system-ui, -apple-system, sans-serif;
 
+  /* One step above Tailwind's defaults: Karla sets small for its size, and the
+     secondary text (meta, cards, forms) was reading as too small. */
+  --text-xs: 0.8125rem;
+  --text-xs--line-height: calc(1.125 / 0.8125);
+  --text-sm: 0.9375rem;
+  --text-sm--line-height: calc(1.375 / 0.9375);
+
   --breath-duration: 7.5s;
 }
 
@@ -52,7 +59,7 @@
     background-color: var(--color-paper);
     color: var(--color-ink);
     font-family: var(--font-sans);
-    font-size: 1.0625rem;
+    font-size: 1.125rem;
     line-height: 1.65;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
@@ -99,7 +106,7 @@
 @layer components {
   /* The eyebrow is the only uppercase type on the site: it labels, never shouts. */
   .eyebrow {
-    font-size: 0.6875rem;
+    font-size: 0.75rem;
     font-weight: 600;
     letter-spacing: 0.22em;
     text-transform: uppercase;
@@ -131,7 +138,7 @@
     gap: 0.5rem;
     padding: 0.9rem 1.75rem;
     border-radius: 999px;
-    font-size: 0.9375rem;
+    font-size: 1rem;
     font-weight: 600;
     letter-spacing: 0.01em;
     transition: transform 180ms ease, background-color 180ms ease, color 180ms ease, border-color 180ms ease;
@@ -195,7 +202,7 @@
   .field-label {
     display: block;
     margin-bottom: 0.35rem;
-    font-size: 0.8125rem;
+    font-size: 0.875rem;
     font-weight: 600;
     letter-spacing: 0.04em;
     color: var(--color-ink-soft);
@@ -210,7 +217,7 @@
     background-color: #fff;
     color: var(--color-ink);
     font-family: var(--font-sans);
-    font-size: 0.9375rem;
+    font-size: 1rem;
     transition: border-color 150ms ease, box-shadow 150ms ease;
   }
 
@@ -222,13 +229,13 @@
 
   .field-hint {
     margin-top: 0.35rem;
-    font-size: 0.8125rem;
+    font-size: 0.875rem;
     color: var(--color-ink-mute);
   }
 
   .field-error {
     margin-top: 0.35rem;
-    font-size: 0.8125rem;
+    font-size: 0.875rem;
     color: #b3261e;
   }
 
@@ -247,7 +254,7 @@
    spacing has to match one level deeper as well as at the top level.
 --------------------------------------------------------------------------- */
 .prose-note {
-  font-size: 1.125rem;
+  font-size: 1.1875rem;
   line-height: 1.75;
   color: var(--color-ink-soft);
 }
@@ -310,7 +317,7 @@
 
 .prose-note figcaption {
   margin-top: 0.6rem;
-  font-size: 0.875rem;
+  font-size: 0.9375rem;
   color: var(--color-ink-mute);
 }
 
@@ -338,7 +345,7 @@ trix-editor {
   background-color: #fff;
   color: var(--color-ink);
   font-family: var(--font-sans);
-  font-size: 1rem;
+  font-size: 1.0625rem;
   line-height: 1.65;
 }
 

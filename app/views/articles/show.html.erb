@@ -14,7 +14,7 @@
     <%= link_to t("articles.show.back"), articles_path, class: "link-quiet text-sm text-ink-mute" %>
 
     <% unless @article.published? %>
-      <p class="mt-6 rounded-xl border-l-2 border-rose bg-rose/10 px-5 py-3.5 text-[0.9375rem]">
+      <p class="mt-6 rounded-xl border-l-2 border-rose bg-rose/10 px-5 py-3.5 text-[1rem]">
         <%= t("articles.show.draft_notice") %>
       </p>
     <% end %>

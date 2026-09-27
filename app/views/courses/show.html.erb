@@ -6,7 +6,7 @@
     <%= link_to t("courses.show.back"), courses_path, class: "link-quiet text-sm text-ink-mute" %>
 
     <% unless @course.published? %>
-      <p class="mt-6 rounded-xl border-l-2 border-rose bg-rose/10 px-5 py-3.5 text-[0.9375rem]">
+      <p class="mt-6 rounded-xl border-l-2 border-rose bg-rose/10 px-5 py-3.5 text-[1rem]">
         <%= t("courses.show.draft_notice") %>
       </p>
     <% end %>
@@ -59,26 +59,26 @@
         <dl class="<%= "mt-8" if @course.cover_image.attached? %> divide-y divide-line border-y border-line">
           <div class="flex items-baseline justify-between gap-4 py-3.5">
             <dt class="text-sm text-ink-mute"><%= Course.human_attribute_name(:modality) %></dt>
-            <dd class="text-right text-[0.9375rem]"><%= course_modality(@course) %></dd>
+            <dd class="text-right text-[1rem]"><%= course_modality(@course) %></dd>
           </div>
 
           <% if @course.starts_on.present? %>
             <div class="flex items-baseline justify-between gap-4 py-3.5">
               <dt class="text-sm text-ink-mute"><%= Course.human_attribute_name(:starts_on) %></dt>
-              <dd class="text-right text-[0.9375rem]"><%= localized_date(@course.starts_on) %></dd>
+              <dd class="text-right text-[1rem]"><%= localized_date(@course.starts_on) %></dd>
             </div>
           <% end %>
 
           <% if @course.duration_label.present? %>
             <div class="flex items-baseline justify-between gap-4 py-3.5">
               <dt class="text-sm text-ink-mute"><%= t("courses.duration") %></dt>
-              <dd class="text-right text-[0.9375rem]"><%= @course.duration_label %></dd>
+              <dd class="text-right text-[1rem]"><%= @course.duration_label %></dd>
             </div>
           <% end %>
 
           <div class="flex items-baseline justify-between gap-4 py-3.5">
             <dt class="text-sm text-ink-mute"><%= t("courses.price") %></dt>
-            <dd class="text-right text-[0.9375rem] font-semibold"><%= formatted_price(@course) %></dd>
+            <dd class="text-right text-[1rem] font-semibold"><%= formatted_price(@course) %></dd>
           </div>
         </dl>
       </div>
@@ -105,9 +105,9 @@
             <div class="flex-1">
               <% if lesson.viewable_by?(current_user) %>
                 <%= link_to lesson.title, course_lesson_path(course_id: @course, id: lesson),
-                      class: "link-quiet text-[0.9375rem] text-ink" %>
+                      class: "link-quiet text-[1rem] text-ink" %>
               <% else %>
-                <p class="text-[0.9375rem] text-ink-mute" title="<%= t("lessons.locked_hint") %>"><%= lesson.title %></p>
+                <p class="text-[1rem] text-ink-mute" title="<%= t("lessons.locked_hint") %>"><%= lesson.title %></p>
               <% end %>
               <% if lesson.summary.present? %>
                 <p class="mt-1 text-sm text-ink-mute"><%= lesson.summary %></p>
