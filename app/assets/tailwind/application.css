@@ -47,7 +47,11 @@
    Base
 --------------------------------------------------------------------------- */
 @layer base {
+  /* Every size on the site is in rem, so this one value scales the whole page
+     -- type, spacing and measure together -- the way browser zoom would. A
+     percentage rather than px keeps the reader's own browser setting in play. */
   html {
+    font-size: 112.5%;
     scroll-behavior: smooth;
     -webkit-text-size-adjust: 100%;
   }
