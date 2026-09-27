@@ -110,9 +110,9 @@
 @layer components {
   /* The eyebrow is the only uppercase type on the site: it labels, never shouts. */
   .eyebrow {
-    font-size: 0.75rem;
+    font-size: 0.875rem;
     font-weight: 600;
-    letter-spacing: 0.22em;
+    letter-spacing: 0.18em;
     text-transform: uppercase;
     color: var(--color-iris);
   }
