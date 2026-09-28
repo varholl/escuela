@@ -3,7 +3,7 @@ module ApplicationHelper
   # drawn at r = 26 inside a 64-unit box.
   ARC_RADIUS = 26
   ARC_CIRCUMFERENCE = 2 * Math::PI * ARC_RADIUS
-  ARC_COLORS = %w[ var(--color-iris) var(--color-rose) var(--color-gold) ].freeze
+  ARC_COLORS = %w[ var(--color-iris) var(--color-sky) var(--color-sage) ].freeze
 
   def page_title(*parts)
     [ *parts, t("site.name") ].compact_blank.join(" · ")

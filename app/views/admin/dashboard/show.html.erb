@@ -18,7 +18,7 @@
 <div class="mt-8 grid gap-6 lg:grid-cols-2">
   <section class="rounded-xl border border-line bg-white p-6">
     <div class="flex items-center justify-between gap-4">
-      <h2 class="font-display text-xl font-light"><%= t("admin.dashboard.recent_articles") %></h2>
+      <h2 class="font-display text-xl"><%= t("admin.dashboard.recent_articles") %></h2>
       <%= link_to t("admin.articles.new"), new_admin_article_path, class: "link-quiet text-sm font-semibold text-iris" %>
     </div>
 
@@ -38,7 +38,7 @@
 
   <section class="rounded-xl border border-line bg-white p-6">
     <div class="flex items-center justify-between gap-4">
-      <h2 class="font-display text-xl font-light"><%= t("admin.dashboard.recent_inquiries") %></h2>
+      <h2 class="font-display text-xl"><%= t("admin.dashboard.recent_inquiries") %></h2>
       <%= link_to t("admin.nav.inquiries"), admin_inquiries_path, class: "link-quiet text-sm font-semibold text-iris" %>
     </div>
 

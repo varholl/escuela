@@ -9,13 +9,14 @@
   gradient_id = "aperture-stroke-#{local_assigns.fetch(:id, "hero")}"
 %>
 <div class="relative aspect-square w-full">
-  <div class="absolute inset-[-8%] rounded-full bg-iris-pale/40 blur-3xl" aria-hidden="true"></div>
+  <div class="absolute inset-[-8%] rounded-full bg-sky-pale/60 blur-3xl" aria-hidden="true"></div>
 
   <svg class="absolute inset-0 h-full w-full" viewBox="0 0 100 100" aria-hidden="true" focusable="false">
     <defs>
       <linearGradient id="<%= gradient_id %>" x1="0" y1="1" x2="1" y2="0">
         <stop offset="0%"   stop-color="var(--color-iris)" />
-        <stop offset="48%"  stop-color="var(--color-rose)" />
+        <stop offset="35%"  stop-color="var(--color-sky)" />
+        <stop offset="65%"  stop-color="var(--color-sage)" />
         <stop offset="100%" stop-color="var(--color-gold-bright)" />
       </linearGradient>
     </defs>
@@ -43,8 +44,9 @@
         <div class="breathe h-full w-full rounded-[50%]"
              style="background: radial-gradient(circle at 42% 36%,
                        rgba(249, 198, 9, 0.42) 0%,
-                       rgba(176, 99, 106, 0.34) 34%,
-                       rgba(119, 23, 181, 0.24) 62%,
+                       rgba(147, 191, 166, 0.34) 30%,
+                       rgba(143, 179, 212, 0.30) 50%,
+                       rgba(119, 23, 181, 0.22) 68%,
                        rgba(119, 23, 181, 0) 84%);
                     filter: blur(10px);"></div>
       <% end %>

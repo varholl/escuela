@@ -44,7 +44,7 @@
     <% %w[ body mind spirit ].each_with_index do |pillar, index| %>
       <div>
         <%= render "shared/arc", index: index %>
-        <h3 class="mt-6 font-display text-2xl font-light"><%= t("home.pillars.#{pillar}_title") %></h3>
+        <h3 class="mt-6 font-display text-2xl"><%= t("home.pillars.#{pillar}_title") %></h3>
         <p class="mt-4 leading-relaxed text-ink-soft"><%= t("home.pillars.#{pillar}_text") %></p>
       </div>
     <% end %>
@@ -52,7 +52,7 @@
 </section>
 
 <%# ---- The frame -------------------------------------------------------- %>
-<section class="bg-haze">
+<section class="bg-gradient-to-br from-sky-pale to-sage-pale">
   <div class="mx-auto grid max-w-6xl grid-cols-1 items-center gap-12 px-6 py-20 md:py-28
               <%= @feature&.feature_video? ? "lg:grid-cols-[1.1fr_0.9fr]" : "md:grid-cols-[0.9fr_1.1fr]" %>">
     <div>
