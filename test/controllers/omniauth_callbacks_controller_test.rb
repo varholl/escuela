@@ -32,6 +32,20 @@ class OmniauthCallbacksControllerTest < ActionDispatch::IntegrationTest
     assert cookies[:session_id].present?
   end
 
+  test "a new account gets the welcome mail" do
+    assert_enqueued_email_with StudentMailer, :welcome, args: ->(args) { args.first.email_address == "nueva@example.com" } do
+      get google_callback_path
+    end
+  end
+
+  test "an existing account signing in with Google is not welcomed again" do
+    Rails.application.env_config["omniauth.auth"] = google_auth(email: users(:student).email_address)
+
+    assert_no_enqueued_emails do
+      get google_callback_path
+    end
+  end
+
   test "an administrator lands in the panel" do
     Rails.application.env_config["omniauth.auth"] = google_auth(email: users(:owner).email_address)
 

@@ -16,6 +16,9 @@ class OmniauthCallbacksController < ApplicationController
     if user
       start_new_session_for user
       join_pending_course(user)
+      # Only an account Google just created; someone linking Google to the one
+      # she already had was welcomed when she opened it.
+      StudentMailer.welcome(user).deliver_later if user.previously_new_record? && ApplicationMailer.enabled?
       redirect_to destination(user), notice: t("sessions.welcome_back", name: user.display_name)
     else
       # Google says the address is not verified, so it cannot be trusted to
