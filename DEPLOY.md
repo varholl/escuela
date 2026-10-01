@@ -168,6 +168,33 @@ En Cloudflare, tres registros **sin proxear** (nube gris):
 
 `fly ips list` da los valores actuales.
 
+## Libro de regalo
+
+El mail de bienvenida trae un enlace a *Poesía urbana y romance*. El PDF se
+sirve desde un bucket R2 **público y aparte** — nunca el de Active Storage
+(`R2_BUCKET`), que tiene que seguir privado porque guarda los videos de los
+cursos.
+
+En Cloudflare, una sola vez:
+
+1. **R2 → Create bucket**: `volveralalma-publico`.
+2. En el bucket, **Settings → Custom Domains → Connect Domain**:
+   `archivos.volveralalma.com.ar`. Cloudflare crea el registro DNS solo.
+3. **Objects → Upload**: `poesia-urbana-y-romance.pdf`.
+4. Probar que abre `https://archivos.volveralalma.com.ar/poesia-urbana-y-romance.pdf`
+   y después:
+
+```bash
+fly secrets set --app maflor-escuela EBOOK_URL="https://archivos.volveralalma.com.ar/poesia-urbana-y-romance.pdf"
+```
+
+Para cambiar el libro alcanza con subir otro archivo **con el mismo nombre**; no
+hace falta desplegar. Mientras `EBOOK_URL` no esté puesto, el enlace apunta a la
+copia en `public/`.
+
+> Cloudflare guarda el PDF en caché. Si un reemplazo no aparece enseguida:
+> **Caching → Configuration → Custom Purge** con la URL del libro.
+
 ## Día a día
 
 ```bash

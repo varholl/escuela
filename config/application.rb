@@ -63,6 +63,12 @@ module VolverAlAlma
     # message, and students choose their own password when they sign up.
     config.x.email_enabled = true
 
+    # Where the welcome mail sends people for the free ebook. It lives in a
+    # public R2 bucket of its own -- never the Active Storage one, which has to
+    # stay private because the course videos are in it. Unset, the mail falls
+    # back to the copy in public/.
+    config.x.ebook_url = ENV["EBOOK_URL"].presence
+
     # Render error pages through the app so a stale link lands somewhere that
     # still looks like the site. public/*.html remains the fallback for the
     # case where the app itself cannot render.

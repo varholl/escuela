@@ -390,6 +390,8 @@ es:
       heading: "Hola, %{name}"
       body: "Ya tenés tu cuenta. Desde «Mis cursos» vas a ver todo lo que tengas disponible."
       action: "Ir a mis cursos"
+      gift: "Te regalo mi libro «Poesía urbana y romance». Podés descargarlo cuando quieras."
+      gift_action: "Descargar el libro (PDF)"
       footer: "Si alguna vez olvidás la contraseña, se puede recuperar desde la pantalla de ingreso."
     enrolled:
       subject: "Ya tenés acceso a %{course}"

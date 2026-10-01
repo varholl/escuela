@@ -4,6 +4,7 @@
 class StudentMailer < ApplicationMailer
   def welcome(user)
     @user = user
+    @ebook_url = Rails.configuration.x.ebook_url || "#{root_url}poesia-urbana-y-romance.pdf"
 
     mail to: user.email_address, subject: t("student_mailer.welcome.subject", site: t("site.name"))
   end

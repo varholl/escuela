@@ -12,6 +12,24 @@ class StudentMailerTest < ActionMailer::TestCase
     assert_match "mis-cursos", mail.html_part.body.to_s
   end
 
+  test "the welcome mail links to the free ebook in both parts" do
+    mail = StudentMailer.welcome(users(:student))
+
+    assert_match "poesia-urbana-y-romance.pdf", mail.html_part.body.to_s
+    assert_match "poesia-urbana-y-romance.pdf", mail.text_part.body.to_s
+  end
+
+  test "the ebook link follows EBOOK_URL once it is set" do
+    Rails.configuration.x.ebook_url = "https://archivos.example.com/libro.pdf"
+
+    mail = StudentMailer.welcome(users(:student))
+
+    assert_match "https://archivos.example.com/libro.pdf", mail.html_part.body.to_s
+    assert_match "https://archivos.example.com/libro.pdf", mail.text_part.body.to_s
+  ensure
+    Rails.configuration.x.ebook_url = nil
+  end
+
   test "the enrolment mail names the course and links to it" do
     enrollment = @course.join!(users(:student))
 
