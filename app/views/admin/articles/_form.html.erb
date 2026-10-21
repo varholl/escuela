@@ -1,5 +1,7 @@
 <%= form_with model: [ :admin, article ], class: "space-y-6" do |form| %>
   <%= render "shared/form_errors", record: article %>
+  <%# The section is the one the piece was started from, and it stays there. %>
+  <%= form.hidden_field :kind if article.new_record? %>
 
   <div class="rounded-xl border border-line bg-white p-6 space-y-6">
     <div>
@@ -7,13 +9,9 @@
       <%= form.text_field :title, required: true, autofocus: article.new_record?, class: "field-input" %>
     </div>
 
-    <div class="grid gap-6 sm:grid-cols-2">
-      <div>
-        <%= form.label :slug, class: "field-label" %>
-        <%= form.text_field :slug, class: "field-input" %>
-        <p class="field-hint"><%= t("admin.shared.slug_hint") %></p>
-      </div>
-    </div>
+    <% if article.persisted? %>
+      <%= render "admin/shared/public_link", url: article_url_for(article), record: article %>
+    <% end %>
 
     <div>
       <%= form.label :excerpt, class: "field-label" %>
@@ -42,7 +40,8 @@
   </div>
 
   <div class="flex flex-wrap items-center gap-4">
-    <%= form.submit class: "btn btn-primary cursor-pointer" %>
-    <%= link_to t("admin.shared.cancel"), admin_articles_path, class: "link-quiet text-sm text-ink-mute" %>
+    <%= form.submit article.new_record? ? t("admin.articles.sections.#{article.kind}.create") : t("admin.shared.save"),
+          class: "btn btn-primary cursor-pointer" %>
+    <%= link_to t("admin.shared.cancel"), admin_articles_path(kind: article.kind), class: "link-quiet text-sm text-ink-mute" %>
   </div>
 <% end %>

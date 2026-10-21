@@ -9,11 +9,21 @@ class PagesControllerTest < ActionDispatch::IntegrationTest
     assert_select "h1", text: I18n.t("home.hero.title", locale: :es)
   end
 
+  test "home shows the latest reflections but not the notes" do
+    reflection = Article.create!(title: "Respirar no es relajarse", published_at: 1.day.ago)
+    note = Article.create!(title: "La alianza terapéutica", kind: :note, published_at: 1.day.ago)
+
+    get root_path
+
+    assert_select "h3", text: reflection.title
+    assert_select "h3", text: note.title, count: 0
+  end
+
   test "the /en prefix is gone, not silently translated" do
     get "/en"
     assert_response :not_found
 
-    get "/en/notas"
+    get "/en/reflexiones"
     assert_response :not_found
   end
 
@@ -25,7 +35,7 @@ class PagesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "an unsupported locale falls back to Spanish rather than 404ing" do
-    get "/notas?locale=fr"
+    get "/reflexiones?locale=fr"
 
     assert_response :success
     assert_select "html[lang=es]"

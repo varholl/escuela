@@ -1,7 +1,8 @@
-<% content_for :title, page_title(t("admin.articles.title")) %>
+<% section = "admin.articles.sections.#{@kind}" %>
+<% content_for :title, page_title(t("#{section}.title")) %>
 
-<%= render "admin/shared/header", title: t("admin.articles.title"), actions: capture {
-      link_to t("admin.articles.new"), new_admin_article_path, class: "btn btn-primary py-2.5 px-5 text-sm"
+<%= render "admin/shared/header", title: t("#{section}.title"), actions: capture {
+      link_to t("#{section}.new"), new_admin_article_path(kind: @kind), class: "btn btn-primary py-2.5 px-5 text-sm"
     } %>
 
 <% if @articles.any? %>
@@ -19,7 +20,7 @@
           <%= render "admin/shared/state_badge", record: article %>
 
           <div class="flex items-center gap-3 text-sm">
-            <%= link_to t("admin.shared.preview"), article_path(id: article),
+            <%= link_to t("admin.shared.preview"), article_path_for(article),
                   class: "link-quiet text-ink-soft" %>
 
             <% if article.published? %>
@@ -42,7 +43,7 @@
   </div>
 <% else %>
   <div class="rounded-xl border border-dashed border-line bg-white p-12 text-center">
-    <p class="text-ink-mute"><%= t("admin.articles.empty") %></p>
-    <p class="mt-5"><%= link_to t("admin.articles.new"), new_admin_article_path, class: "btn btn-primary" %></p>
+    <p class="text-ink-mute"><%= t("#{section}.empty") %></p>
+    <p class="mt-5"><%= link_to t("#{section}.new"), new_admin_article_path(kind: @kind), class: "btn btn-primary" %></p>
   </div>
 <% end %>

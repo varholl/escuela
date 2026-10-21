@@ -18,7 +18,7 @@
 
       <div class="mt-10 flex flex-wrap items-center gap-4">
         <%= link_to t("home.hero.primary_cta"), courses_path, class: "btn btn-primary" %>
-        <%= link_to t("home.hero.secondary_cta"), articles_path, class: "btn btn-ghost" %>
+        <%= link_to t("home.hero.secondary_cta"), reflections_path, class: "btn btn-ghost" %>
       </div>
     </div>
 
@@ -108,7 +108,7 @@
           body: t("home.articles.body") %>
 
     <% if @articles.any? %>
-      <%= link_to t("home.articles.cta"), articles_path, class: "link-quiet font-semibold text-iris" %>
+      <%= link_to t("home.articles.cta"), reflections_path, class: "link-quiet font-semibold text-iris" %>
     <% end %>
   </div>
 

@@ -5,13 +5,13 @@
     one, the school's card if it does not; see ArticleCoversController for why
     the address is one of ours and not Active Storage's. %>
 <% if @article.cover_image.attached? %>
-  <% content_for :social_image, cover_article_url(id: @article) %>
+  <% content_for :social_image, article_cover_url_for(@article) %>
   <% content_for :social_image_alt, @article.title %>
 <% end %>
 
 <article>
   <header class="mx-auto max-w-2xl px-6 pt-16 md:pt-24">
-    <%= link_to t("articles.show.back"), articles_path, class: "link-quiet text-sm text-ink-mute" %>
+    <%= link_to t("articles.sections.#{@article.kind}.back"), articles_path_for(@article.kind), class: "link-quiet text-sm text-ink-mute" %>
 
     <% unless @article.published? %>
       <p class="mt-6 rounded-xl border-l-2 border-rose bg-rose/10 px-5 py-3.5 text-[1rem]">

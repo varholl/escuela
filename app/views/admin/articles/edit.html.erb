@@ -2,13 +2,13 @@
 
 <%= render "admin/shared/header",
       title: @article.title,
-      eyebrow: t("admin.articles.title"),
+      eyebrow: t("admin.articles.sections.#{@article.kind}.title"),
       actions: capture {
         safe_join([
           render("admin/shared/state_badge", record: @article),
-          link_to(t("admin.shared.preview"), article_path(id: @article),
+          link_to(t("admin.shared.preview"), article_path_for(@article),
                   class: "link-quiet text-sm text-ink-soft"),
-          link_to(t("admin.shared.back"), admin_articles_path, class: "link-quiet text-sm text-ink-mute")
+          link_to(t("admin.shared.back"), admin_articles_path(kind: @article.kind), class: "link-quiet text-sm text-ink-mute")
         ], " ")
       } %>
 

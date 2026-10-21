@@ -5,7 +5,7 @@
       eyebrow: t("admin.dashboard.title") %>
 
 <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-  <% [ :published_articles, :published_courses, :articles, :unhandled_inquiries ].each do |key| %>
+  <% [ :published_reflections, :published_notes, :published_courses, :unhandled_inquiries ].each do |key| %>
     <div class="rounded-xl border border-line bg-white p-5">
       <p class="text-sm text-ink-mute"><%= t("admin.dashboard.#{key}") %></p>
       <p class="mt-2 font-display text-4xl font-light <%= "text-iris" if key == :unhandled_inquiries && @counts[key].to_i.positive? %>">
@@ -19,7 +19,7 @@
   <section class="rounded-xl border border-line bg-white p-6">
     <div class="flex items-center justify-between gap-4">
       <h2 class="font-display text-xl"><%= t("admin.dashboard.recent_articles") %></h2>
-      <%= link_to t("admin.articles.new"), new_admin_article_path, class: "link-quiet text-sm font-semibold text-iris" %>
+      <%= link_to t("admin.dashboard.new_article"), new_admin_article_path, class: "link-quiet text-sm font-semibold text-iris" %>
     </div>
 
     <% if @articles.any? %>
@@ -27,12 +27,15 @@
         <% @articles.each do |article| %>
           <li class="flex items-center justify-between gap-4 py-3">
             <%= link_to article.title, edit_admin_article_path(article), class: "link-quiet min-w-0 truncate text-[1rem]" %>
-            <%= render "admin/shared/state_badge", record: article %>
+            <span class="flex shrink-0 items-center gap-3">
+              <span class="text-sm text-ink-mute"><%= t("admin.articles.sections.#{article.kind}.one") %></span>
+              <%= render "admin/shared/state_badge", record: article %>
+            </span>
           </li>
         <% end %>
       </ul>
     <% else %>
-      <p class="mt-5 text-sm text-ink-mute"><%= t("admin.articles.empty") %></p>
+      <p class="mt-5 text-sm text-ink-mute"><%= t("admin.dashboard.no_articles") %></p>
     <% end %>
   </section>
 

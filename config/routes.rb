@@ -35,12 +35,12 @@ Rails.application.routes.draw do
     end
   end
 
-  # The public site. Spanish is served from the bare path (/notas) and English
-  # from an /en prefix (/en/notas); see ApplicationController#default_url_options.
+  # The public site. Spanish is served from the bare path (/cursos) and English
+  # from an /en prefix (/en/cursos); see ApplicationController#default_url_options.
   #
   # Because :locale is an optional leading segment, a single positional argument
   # binds to it rather than to :id. Always name the key on these helpers:
-  #   article_path(id: article)   NOT   article_path(article)
+  #   course_path(id: course)   NOT   course_path(course)
   scope "(:locale)", locale: /es/ do
     get "sobre-mi"  => "pages#about",      as: :about
     get "filosofia" => "pages#philosophy", as: :philosophy
@@ -54,11 +54,20 @@ Rails.application.routes.draw do
     resource :registration, path: "registro", only: %i[ new create ]
     get "mis-cursos" => "library#show", as: :library
 
-    resources :articles, path: "notas", only: %i[ index show ] do
-      # The picture a link preview shows. Served through the app so its address
-      # can outlive Active Storage's five-minute URLs.
-      get :portada, on: :member, to: "article_covers#show", as: :cover
+    # One controller, two sections; `kind` tells it which. Link to a single
+    # piece through ArticlesHelper#article_path_for, which picks the right one.
+    { reflections: [ "reflexiones", "reflection" ], notes: [ "apuntes", "note" ] }.each do |name, (path, kind)|
+      resources name, path: path, controller: "articles", only: %i[ index show ], defaults: { kind: kind } do
+        # The picture a link preview shows. Served through the app so its address
+        # can outlive Active Storage's five-minute URLs.
+        get :portada, on: :member, to: "article_covers#show", as: :cover
+      end
     end
+
+    # The reflections were called "notas" until 2026-10, and those links are
+    # out there in WhatsApp chats. Anything under the old path, the cover
+    # included, moves to the same place under the new one.
+    get "notas(/*rest)", to: redirect { |_, request| request.path.sub(%r{/notas(?=/|\z)}, "/reflexiones") }
 
     resources :courses, path: "cursos", only: %i[ index show ] do
       resource :enrollment, only: :create

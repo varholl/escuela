@@ -10,7 +10,9 @@ class PagesController < ApplicationController
     return render "pages/gate", layout: "gate" if gated?
 
     @courses = published_courses.ordered.limit(3)
-    @articles = published_articles.recent_first.limit(3)
+    # Notes are for colleagues and have their own section; the home page is
+    # for everyone else.
+    @articles = published_articles.reflection.recent_first.limit(3)
     @feature = Page.for(:home)
   end
 

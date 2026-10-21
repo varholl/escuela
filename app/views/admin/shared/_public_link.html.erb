@@ -1,0 +1,32 @@
+<%#
+  Where a piece lives on the site, ready to paste somewhere. The address comes
+  from the title when the piece is created and never changes after that, so it
+  is shown rather than edited. Copying borrows the share controller; the button
+  stays hidden where the browser has no clipboard, and the link itself can
+  still be selected by hand.
+%>
+<div data-controller="share" data-share-url-value="<%= url %>">
+  <p class="field-label"><%= t("admin.shared.public_link") %></p>
+
+  <div class="flex flex-wrap items-center gap-x-4 gap-y-2">
+    <%= link_to url, url, target: "_blank", rel: "noopener",
+          class: "link-quiet min-w-0 break-all text-[1rem] text-iris" %>
+
+    <button type="button" hidden class="btn btn-ghost cursor-pointer px-4 py-2 text-sm"
+            data-share-target="copy" data-action="share#copy">
+      <span class="inline-flex items-center gap-2" data-share-target="copyIdle">
+        <%= render "shared/social_icon", icon: :link %>
+        <%= t("articles.share.copy") %>
+      </span>
+      <span class="inline-flex items-center gap-2 text-iris" role="status" hidden
+            data-share-target="copyDone">
+        <%= render "shared/social_icon", icon: :check %>
+        <%= t("articles.share.copied") %>
+      </span>
+    </button>
+  </div>
+
+  <% unless record.published? %>
+    <p class="field-hint"><%= t("admin.shared.public_link_draft_hint") %></p>
+  <% end %>
+</div>

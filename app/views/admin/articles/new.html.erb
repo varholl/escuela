@@ -1,3 +1,4 @@
-<% content_for :title, page_title(t("admin.articles.new")) %>
-<%= render "admin/shared/header", title: t("admin.articles.new"), eyebrow: t("admin.articles.title") %>
+<% section = "admin.articles.sections.#{@article.kind}" %>
+<% content_for :title, page_title(t("#{section}.new")) %>
+<%= render "admin/shared/header", title: t("#{section}.new"), eyebrow: t("#{section}.title") %>
 <%= render "form", article: @article %>

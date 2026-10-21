@@ -1,10 +1,11 @@
-<% content_for :title, page_title(t("articles.index.title")) %>
-<% content_for :description, meta_description(t("articles.index.body")) %>
+<% section = "articles.sections.#{@kind}" %>
+<% content_for :title, page_title(t("#{section}.title")) %>
+<% content_for :description, meta_description(t("#{section}.body")) %>
 
 <%= render "shared/page_header",
-      eyebrow: t("articles.index.eyebrow"),
-      title: t("articles.index.title"),
-      body: t("articles.index.body") %>
+      eyebrow: t("#{section}.eyebrow"),
+      title: t("#{section}.title"),
+      body: t("#{section}.body") %>
 
 <div class="mx-auto max-w-6xl px-6 pb-8">
   <% if @articles.any? %>
@@ -12,6 +13,6 @@
       <%= render partial: "articles/article_card", collection: @articles, as: :article %>
     </div>
   <% else %>
-    <p class="text-lg text-ink-mute"><%= t("articles.index.empty") %></p>
+    <p class="text-lg text-ink-mute"><%= t("#{section}.empty") %></p>
   <% end %>
 </div>

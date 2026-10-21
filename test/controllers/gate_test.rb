@@ -38,7 +38,7 @@ class GateTest < ActionDispatch::IntegrationTest
 
     [ about_path, philosophy_path, privacy_path, terms_path,
       courses_path, course_path(id: course),
-      articles_path, article_path(id: article),
+      reflections_path, reflection_path(id: article), notes_path,
       new_registration_path ].each do |path|
       get path
       assert_redirected_to root_path, "#{path} should not answer with the doors shut"

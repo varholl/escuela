@@ -2,8 +2,8 @@ es:
   activerecord:
     models:
       article:
-        one: "Nota"
-        other: "Notas"
+        one: "Escrito"
+        other: "Escritos"
       course:
         one: "Curso"
         other: "Cursos"

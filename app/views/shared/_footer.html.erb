@@ -15,7 +15,8 @@
           <% [ [ t("nav.about"), about_path ],
                [ t("nav.philosophy"), philosophy_path ],
                [ t("nav.courses"), courses_path ],
-               [ t("nav.articles"), articles_path ],
+               [ t("nav.reflections"), reflections_path ],
+               [ t("nav.notes"), notes_path ],
                [ t("nav.contact"), new_contact_path ] ].each do |label, path| %>
             <li><%= link_to label, path, class: "link-quiet text-white/70 hover:text-white" %></li>
           <% end %>

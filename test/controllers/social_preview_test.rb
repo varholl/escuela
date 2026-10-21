@@ -19,7 +19,7 @@ class SocialPreviewTest < ActionDispatch::IntegrationTest
                               excerpt: "Volver es otra cosa.",
                               published_at: 1.day.ago)
 
-    get article_path(id: article)
+    get reflection_path(id: article)
 
     assert_select "meta[property='og:title'][content=?]", "Respirar no es relajarse · #{I18n.t("site.name")}"
     assert_select "meta[property='og:description'][content=?]", "Volver es otra cosa."

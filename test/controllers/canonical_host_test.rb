@@ -15,9 +15,9 @@ class CanonicalHostTest < ActionDispatch::IntegrationTest
   end
 
   test "the fly.dev name is sent to the domain" do
-    get "https://maflor-escuela.fly.dev/notas"
+    get "https://maflor-escuela.fly.dev/reflexiones"
 
-    assert_redirected_to "https://volveralalma.com.ar/notas"
+    assert_redirected_to "https://volveralalma.com.ar/reflexiones"
   end
 
   test "the path and query survive the redirect" do

@@ -1,16 +1,22 @@
 <%
+  # Reflections and notes share one set of admin screens, so the path alone
+  # cannot tell which of the two is open; the piece being edited, or the list
+  # being shown, can.
+  writing = controller_name == "articles" && (@article&.kind || @kind)
+  in_section = ->(root) { request.path == root || (root != admin_root_path && request.path.start_with?(root)) }
+
   items = [
-    [ t("admin.nav.dashboard"), admin_root_path,      admin_root_path ],
-    [ t("admin.nav.articles"),  admin_articles_path,  admin_articles_path ],
-    [ t("admin.nav.courses"),   admin_courses_path,   admin_courses_path ],
-    [ t("admin.nav.pages"),     admin_pages_path,     admin_pages_path ],
-    [ t("admin.nav.inquiries"), admin_inquiries_path, admin_inquiries_path ]
+    [ t("admin.nav.dashboard"),   admin_root_path,                   in_section.(admin_root_path) ],
+    [ t("admin.nav.reflections"), admin_articles_path,               writing == "reflection" ],
+    [ t("admin.nav.notes"),       admin_articles_path(kind: "note"), writing == "note" ],
+    [ t("admin.nav.courses"),     admin_courses_path,                in_section.(admin_courses_path) ],
+    [ t("admin.nav.pages"),       admin_pages_path,                  in_section.(admin_pages_path) ],
+    [ t("admin.nav.inquiries"),   admin_inquiries_path,              in_section.(admin_inquiries_path) ]
   ]
   pending = Inquiry.unhandled.count
 %>
 <nav class="flex gap-1 overflow-x-auto md:flex-col md:overflow-visible" aria-label="<%= t("admin.title") %>">
-  <% items.each do |label, path, root| %>
-    <% active = request.path == root || (root != admin_root_path && request.path.start_with?(root)) %>
+  <% items.each do |label, path, active| %>
     <%= link_to path,
           class: class_names(
             "flex shrink-0 items-center justify-between gap-3 rounded-lg px-3.5 py-2.5 text-[1rem] transition-colors",

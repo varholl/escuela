@@ -16,7 +16,7 @@ class ErrorsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "a missing note renders the site's own 404" do
-    get "/notas/no-existe"
+    get "/reflexiones/no-existe"
 
     assert_response :not_found
     assert_select "h1", text: I18n.t("errors.not_found.title", locale: :es)
@@ -33,14 +33,14 @@ class ErrorsControllerTest < ActionDispatch::IntegrationTest
   test "a draft note reaches the 404 rather than an exception" do
     draft = Article.create!(title: "Borrador")
 
-    get article_path(id: draft)
+    get reflection_path(id: draft)
 
     assert_response :not_found
     assert_select "h1", text: I18n.t("errors.not_found.title", locale: :es)
   end
 
   test "the error page still carries the site chrome" do
-    get "/notas/no-existe"
+    get "/reflexiones/no-existe"
 
     assert_select "header a[href=?]", root_path
     assert_select "footer"

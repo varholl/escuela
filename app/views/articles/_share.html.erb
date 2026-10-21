@@ -1,17 +1,17 @@
 <%#
-  Passing a note on. The WhatsApp link is an ordinary href, so it works with no
+  Passing a piece on. The WhatsApp link is an ordinary href, so it works with no
   JavaScript at all and on every device; the other two appear only once the
   Stimulus controller has confirmed the browser has the API behind them.
 %>
 <%
-  url = article_url(id: article)
+  url = article_url_for(article)
   title = article.title
 %>
 <div class="mt-16 border-t border-line pt-8"
      data-controller="share"
      data-share-url-value="<%= url %>"
      data-share-title-value="<%= title %>">
-  <h2 class="eyebrow"><%= t("articles.share.heading") %></h2>
+  <h2 class="eyebrow"><%= t("articles.sections.#{article.kind}.share") %></h2>
 
   <div class="mt-5 flex flex-wrap items-center gap-3">
     <%= link_to whatsapp_share_url(title, url), target: "_blank", rel: "noopener",

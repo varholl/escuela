@@ -1,15 +1,26 @@
+# Reflections and notes alike; the route says which section this is.
 class ArticlesController < ApplicationController
   def index
-    @articles = visible_articles.recent_first
+    @kind = section
+    @articles = visible_articles.where(kind: @kind).recent_first
   end
 
   def show
     @article = visible_articles.find_by!(slug: params[:id])
-    @related = visible_articles.recent_first.where.not(id: @article.id).limit(2)
+
+    # A piece lives in one section only; asked for under the other, it is sent
+    # to its own address rather than shown twice.
+    return redirect_to helpers.article_path_for(@article), status: :moved_permanently unless @article.kind == section
+
+    @related = visible_articles.where(kind: @article.kind).recent_first.where.not(id: @article.id).limit(2)
   end
 
   private
-    # Signed-in admins can follow a link to an unpublished note to proof it
+    def section
+      Article.kinds.key?(params[:kind]) ? params[:kind] : "reflection"
+    end
+
+    # Signed-in admins can follow a link to an unpublished piece to proof it
     # before it goes live; everyone else only ever sees published ones.
     def visible_articles
       scope = Article.in_locale(I18n.locale).with_rich_text_body_and_embeds

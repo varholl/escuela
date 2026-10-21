@@ -3,7 +3,8 @@
     [ t("nav.about"),      about_path ],
     [ t("nav.philosophy"), philosophy_path ],
     [ t("nav.courses"),    courses_path ],
-    [ t("nav.articles"),   articles_path ]
+    [ t("nav.reflections"), reflections_path ],
+    [ t("nav.notes"),      notes_path ]
   ]
   # A student who is signed in gets her shelf in the main navigation.
   links << [ t("nav.library"), library_path ] if current_user
@@ -14,7 +15,7 @@
       <%= render "shared/wordmark" %>
     <% end %>
 
-    <nav class="hidden items-center gap-8 lg:flex" aria-label="<%= t("nav.menu") %>">
+    <nav class="hidden items-center gap-8 xl:flex" aria-label="<%= t("nav.menu") %>">
       <% links.each do |label, path| %>
         <%= link_to label, path,
               class: class_names(
@@ -26,7 +27,7 @@
       <% end %>
     </nav>
 
-    <div class="hidden items-center gap-5 lg:flex">
+    <div class="hidden items-center gap-5 xl:flex">
       <% if current_user %>
         <%= button_to t("nav.sign_out"), session_path, method: :delete,
               class: "link-quiet cursor-pointer text-sm text-ink-mute hover:text-iris" %>
@@ -35,7 +36,7 @@
     </div>
 
     <%# A disclosure element keeps the mobile menu working without any JavaScript. %>
-    <details class="group relative lg:hidden">
+    <details class="group relative xl:hidden">
       <summary class="flex cursor-pointer list-none items-center gap-2 rounded-full border border-line px-4 py-2 text-sm font-semibold text-ink-soft [&::-webkit-details-marker]:hidden">
         <span class="group-open:hidden"><%= t("nav.menu") %></span>
         <span class="hidden group-open:inline"><%= t("nav.close") %></span>

@@ -6,6 +6,12 @@ class Article < ApplicationRecord
 
   WORDS_PER_MINUTE = 200
 
+  # Two sections of the same kind of writing. Reflections are for anyone; notes
+  # ("apuntes") are working material for other professionals. Each has its own
+  # address on the site -- /reflexiones and /apuntes -- but they share
+  # everything else.
+  enum :kind, { reflection: 0, note: 1 }, default: :reflection, validate: true
+
   slugged_from :title
 
   has_rich_text :body
@@ -14,6 +20,8 @@ class Article < ApplicationRecord
   validates :title, presence: true, length: { maximum: 160 }
   validates :excerpt, length: { maximum: 400 }
 
+  # "notas" is what the section was called when the first covers were filed.
+  # Changing it would mean moving every one of them, for no visible gain.
   def storage_folder
     slug.presence && "notas/#{slug}"
   end

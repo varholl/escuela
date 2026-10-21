@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_08_26_200001) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_21_224316) do
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.text "body"
     t.datetime "created_at", null: false
@@ -52,11 +52,13 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_26_200001) do
   create_table "articles", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.text "excerpt"
+    t.integer "kind", default: 0, null: false
     t.string "locale", default: "es", null: false
     t.datetime "published_at"
     t.string "slug", null: false
     t.string "title", null: false
     t.datetime "updated_at", null: false
+    t.index ["kind", "locale", "published_at"], name: "index_articles_on_kind_and_locale_and_published_at"
     t.index ["locale", "published_at"], name: "index_articles_on_locale_and_published_at"
     t.index ["slug"], name: "index_articles_on_slug", unique: true
   end
