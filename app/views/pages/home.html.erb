@@ -10,8 +10,9 @@
 %>
 <section class="hero-sky relative isolate overflow-hidden"
          style="--hero-image: url('<%= image_path("hero-sierras.jpg") %>'); --hero-image-small: url('<%= image_path("hero-sierras-small.jpg") %>')">
-  <div class="mx-auto grid min-h-[min(88vh,56rem)] max-w-6xl grid-cols-1 items-start gap-14 px-6 pt-16 pb-48 sm:pb-56 lg:grid-cols-[1.05fr_0.95fr] lg:gap-20 lg:pt-24">
-    <div>
+  <div class="mx-auto min-h-[min(88vh,56rem)] max-w-6xl px-6 pt-16 pb-48 sm:pb-56 lg:pt-24">
+    <%# Kept to the veiled half, so the sun has the other to itself. %>
+    <div class="max-w-xl">
       <p class="eyebrow"><%= t("home.hero.eyebrow") %></p>
 
       <h1 class="mt-6 text-[clamp(2.6rem,6.5vw,4.75rem)]">
@@ -27,13 +28,6 @@
         <%= link_to t("home.hero.secondary_cta"), reflections_path, class: "btn btn-ghost bg-paper/80 backdrop-blur-sm" %>
       </div>
     </div>
-
-    <%# The sky is the image now; only her portrait earns a place over it. %>
-    <% if @portrait&.attached? %>
-      <div class="mx-auto w-full max-w-md lg:max-w-none">
-        <%= render "shared/aperture", image: @portrait, alt: "" %>
-      </div>
-    <% end %>
   </div>
 </section>
 
