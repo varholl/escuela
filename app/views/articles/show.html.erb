@@ -24,7 +24,7 @@
     <p class="mt-6 text-sm text-ink-mute"><%= article_meta(@article).join(" · ") %></p>
 
     <% if @article.excerpt.present? %>
-      <p class="mt-7 font-display text-xl font-light italic leading-snug text-ink-mute">
+      <p class="mt-7 font-quote text-xl font-light italic leading-snug text-ink-mute">
         <%= @article.excerpt %>
       </p>
     <% end %>
