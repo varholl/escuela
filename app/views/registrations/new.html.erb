@@ -37,6 +37,10 @@
     <%= form.password_field :password_confirmation, required: true, autocomplete: "new-password", class: "field-input" %>
   </div>
 
+  <div class="space-y-3">
+    <%= render "preferences/consents", form: form %>
+  </div>
+
   <%= form.submit t("registrations.new.submit"), class: "btn btn-primary w-full cursor-pointer" %>
 <% end %>
 

@@ -208,6 +208,20 @@ es:
     throttled: "Me llegaron varios mensajes tuyos hace poco. Probá de nuevo en un rato."
     honeypot_label: "Dejá este campo vacío"
 
+  preferences:
+    title: "Preferencias"
+    body: "Qué te parece bien que recuerde de tu paso por el sitio, y si querés que te escriba."
+    back: "Volver a mis cursos"
+    save: "Guardar preferencias"
+    updated: "Listo, guardé tus preferencias."
+    privacy_html: "Todo lo que el sitio guarda está detallado en %{link}."
+    remember_reading:
+      label: "Recordar qué temas leo, para sugerirme cursos"
+      hint: "Se anota qué reflexiones y apuntes abrís con la sesión iniciada. Como acá escribo sobre salud mental, eso puede decir algo personal de vos: no se comparte con nadie, y si lo destildás se borra todo lo anotado."
+    wants_news:
+      label: "Quiero recibir novedades de cursos y talleres por correo"
+      hint: "Sólo cuando abra un curso o un taller nuevo. Lo podés destildar cuando quieras."
+
   registrations:
     new:
       eyebrow: "Crear cuenta"
@@ -321,6 +335,9 @@ es:
       recent_inquiries: "Mensajes sin responder"
       all_handled: "No hay mensajes pendientes."
     shared:
+      tags: "Temas"
+      tags_placeholder: "ansiedad, insomnio, respiración"
+      tags_hint: "Separados por coma. No se muestran en el sitio: sirven para saber a quién le puede interesar un curso."
       video_hint: "Para mostrar un video de YouTube o Vimeo, pegá su link solo en un renglón (o el código de \"Insertar\" que da YouTube). En el sitio se ve como reproductor."
       new: "Nueva"
       edit: "Editar"

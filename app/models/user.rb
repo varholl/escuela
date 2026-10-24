@@ -7,6 +7,7 @@ class User < ApplicationRecord
   has_many :sessions, dependent: :destroy
   has_many :enrollments, dependent: :destroy
   has_many :courses, through: :enrollments
+  has_many :readings, dependent: :delete_all
 
   enum :role, { student: 0, admin: 1 }, default: :student, validate: true
 
@@ -21,6 +22,11 @@ class User < ApplicationRecord
 
   scope :active, -> { where(deactivated_at: nil) }
   scope :deactivated, -> { where.not(deactivated_at: nil) }
+
+  # Taking back the permission takes back what it allowed: what they read is
+  # forgotten the moment they untick it, not left behind unused.
+  # Same transaction as the change itself, so one can never land without the other.
+  after_update -> { readings.delete_all }, if: -> { saved_change_to_reading_history_consent_at? && !remembers_reading? }
 
   # Finding or making the account behind a Google sign-in.
   #
@@ -87,6 +93,27 @@ class User < ApplicationRecord
   # already open, a reset link -- but keeps their record, so they can be let
   # back in with their courses intact. An administrator cannot be turned away
   # from the panel: with one owner, that would lock the school.
+  # Two permissions, both off until given. Each is kept as the moment it was
+  # given, and the form sees it as a tick box: ticking an already-given one
+  # keeps the original date.
+  def remembers_reading?
+    reading_history_consent_at.present?
+  end
+  alias_method :remember_reading, :remembers_reading?
+
+  def remember_reading=(value)
+    self.reading_history_consent_at = consent_from(value, reading_history_consent_at)
+  end
+
+  def wants_news?
+    news_consent_at.present?
+  end
+  alias_method :wants_news, :wants_news?
+
+  def wants_news=(value)
+    self.news_consent_at = consent_from(value, news_consent_at)
+  end
+
   def deactivated?
     deactivated_at.present?
   end
@@ -107,4 +134,9 @@ class User < ApplicationRecord
   def reactivate!
     update!(deactivated_at: nil)
   end
+
+  private
+    def consent_from(value, given_at)
+      ActiveModel::Type::Boolean.new.cast(value) ? (given_at || Time.current) : nil
+    end
 end

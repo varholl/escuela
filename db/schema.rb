@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_24_165427) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_24_181039) do
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.text "body"
     t.datetime "created_at", null: false
@@ -140,6 +140,17 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_24_165427) do
     t.index ["key", "locale"], name: "index_pages_on_key_and_locale", unique: true
   end
 
+  create_table "readings", force: :cascade do |t|
+    t.integer "article_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "last_read_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "user_id", null: false
+    t.index ["article_id"], name: "index_readings_on_article_id"
+    t.index ["user_id", "article_id"], name: "index_readings_on_user_id_and_article_id", unique: true
+    t.index ["user_id"], name: "index_readings_on_user_id"
+  end
+
   create_table "sessions", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.string "ip_address"
@@ -149,14 +160,34 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_24_165427) do
     t.index ["user_id"], name: "index_sessions_on_user_id"
   end
 
+  create_table "taggings", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.integer "tag_id", null: false
+    t.integer "taggable_id", null: false
+    t.string "taggable_type", null: false
+    t.datetime "updated_at", null: false
+    t.index ["tag_id"], name: "index_taggings_on_tag_id"
+    t.index ["taggable_type", "taggable_id", "tag_id"], name: "index_taggings_on_taggable_type_and_taggable_id_and_tag_id", unique: true
+    t.index ["taggable_type", "taggable_id"], name: "index_taggings_on_taggable"
+  end
+
+  create_table "tags", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.string "name", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_tags_on_name", unique: true
+  end
+
   create_table "users", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "deactivated_at"
     t.string "email_address", null: false
     t.datetime "last_signed_in_at"
     t.string "name"
+    t.datetime "news_consent_at"
     t.string "password_digest", null: false
     t.string "provider"
+    t.datetime "reading_history_consent_at"
     t.integer "role", default: 0, null: false
     t.string "uid"
     t.datetime "updated_at", null: false
@@ -172,5 +203,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_24_165427) do
   add_foreign_key "enrollments", "users"
   add_foreign_key "inquiries", "courses"
   add_foreign_key "lessons", "courses"
+  add_foreign_key "readings", "articles"
+  add_foreign_key "readings", "users"
   add_foreign_key "sessions", "users"
+  add_foreign_key "taggings", "tags"
 end

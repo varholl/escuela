@@ -117,5 +117,18 @@ module Admin
 
       assert_redirected_to admin_articles_path(kind: "reflection")
     end
+
+    test "a piece carries internal tags, offering the ones already in use" do
+      Tag.create!(name: "insomnio")
+
+      get edit_admin_article_path(@article)
+
+      assert_select "input[name=?]", "article[tag_list]"
+      assert_select "button[data-tag-list-name-param=insomnio]"
+
+      patch admin_article_path(@article), params: { article: { tag_list: "Insomnio, duelo" } }
+
+      assert_equal %w[ duelo insomnio ], @article.reload.tags.map(&:name)
+    end
   end
 end

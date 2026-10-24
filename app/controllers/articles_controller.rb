@@ -13,9 +13,18 @@ class ArticlesController < ApplicationController
     return redirect_to helpers.article_path_for(@article), status: :moved_permanently unless @article.kind == section
 
     @related = visible_articles.where(kind: @article.kind).recent_first.where.not(id: @article.id).limit(2)
+    remember_reading
   end
 
   private
+    # Only for someone who asked for it, and only for what is really out: an
+    # administrator proofing a draft is not a reader.
+    def remember_reading
+      return unless current_user&.remembers_reading? && @article.published?
+
+      Reading.record(current_user, @article)
+    end
+
     def section
       Article.kinds.key?(params[:kind]) ? params[:kind] : "reflection"
     end

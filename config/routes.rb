@@ -57,6 +57,7 @@ Rails.application.routes.draw do
 
     resource :registration, path: "registro", only: %i[ new create ]
     get "mis-cursos" => "library#show", as: :library
+    resource :preferences, path: "mis-preferencias", only: %i[ edit update ]
 
     # One controller, two sections; `kind` tells it which. Link to a single
     # piece through ArticlesHelper#article_path_for, which picks the right one.

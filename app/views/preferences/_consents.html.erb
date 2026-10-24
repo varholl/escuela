@@ -1,0 +1,14 @@
+<%#
+  The two permissions, as plain tick boxes that start empty. Shared by sign-up
+  and the preferences page, so what she agrees to is worded the same in both.
+  The second sentence of each says exactly what it costs her.
+%>
+<% [ :remember_reading, :wants_news ].each do |consent| %>
+  <label class="flex cursor-pointer items-start gap-3 rounded-xl border border-line bg-white p-4 hover:border-iris">
+    <%= form.check_box consent, class: "mt-1 size-5 shrink-0 rounded border-line accent-iris" %>
+    <span>
+      <span class="block font-semibold text-ink"><%= t("preferences.#{consent}.label") %></span>
+      <span class="mt-1 block text-sm leading-relaxed text-ink-mute"><%= t("preferences.#{consent}.hint") %></span>
+    </span>
+  </label>
+<% end %>

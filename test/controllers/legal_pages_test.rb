@@ -28,6 +28,18 @@ class LegalPagesTest < ActionDispatch::IntegrationTest
     assert_select ".prose-note", text: /Guardamos tu correo/
   end
 
+  # The text is maintained in db/legal_content.rb and must keep describing
+  # what the code does; these are the parts most likely to drift.
+  test "the privacy text names what is remembered, and that it is optional" do
+    require Rails.root.join("db/legal_content")
+    privacy = LEGAL_CONTENT.fetch([ "privacy", "es" ])[:body]
+
+    assert_includes privacy, "Recordar qué temas leo"
+    assert_includes privacy, "se borra en el momento"
+    assert_includes privacy, "recibir novedades"
+    assert_includes privacy, "último ingreso"
+  end
+
   test "she can edit them from the panel like any other page" do
     sign_in_as users(:owner)
     page = Page.create!(key: "terms", locale: "es")

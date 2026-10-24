@@ -2,6 +2,7 @@ class Course < ApplicationRecord
   include Sluggable
   include Localizable
   include OrganisedAttachments
+  include Taggable
 
   slugged_from :title
 

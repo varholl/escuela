@@ -60,7 +60,7 @@ module Admin
         permitted = params.expect(course: [
           :title, :subtitle, :summary, :locale, :status, :modality,
           :price_cents, :currency, :duration_label, :starts_on, :position,
-          :published_at, :description, :cover_image,
+          :published_at, :description, :cover_image, :tag_list,
           recording_attributes: [ :video_provider, :video_reference, :video, :remove_video ]
         ])
         # Only a workshop has a recording; a course's lessons have their own form.

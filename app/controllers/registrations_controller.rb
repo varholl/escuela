@@ -26,7 +26,7 @@ class RegistrationsController < ApplicationController
 
   private
     def registration_params
-      params.expect(user: [ :name, :email_address, :password, :password_confirmation ])
+      params.expect(user: [ :name, :email_address, :password, :password_confirmation, :remember_reading, :wants_news ])
     end
 
     # Someone who arrived from a course page should land inside it, already

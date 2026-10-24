@@ -198,7 +198,14 @@ está en `db/legal_content.rb`.
 
 Lo que hoy declara, y conviene tener presente al tocar el sistema:
 
-- Se guarda **IP y navegador** en cada sesión (tabla `sessions`).
+- Se guarda **IP y navegador** en cada sesión (tabla `sessions`), y la fecha
+  del último ingreso en la cuenta (`users.last_signed_in_at`).
+- **Qué notas lee cada persona** (tabla `readings`), sólo si tildó «Recordar
+  qué temas leo» (`users.reading_history_consent_at`). Al destildarlo se borra
+  todo. Es información sensible en un sitio de salud mental: no agregar nada
+  que se registre sin ese permiso, ni mostrarlo fuera del panel.
+- **Permiso para mandar novedades** (`users.news_consent_at`). Tener cuenta no
+  alcanza para recibir mails de cursos nuevos.
 - **Google Fonts recibe la IP de cada visitante** en todas las páginas, porque
   las tipografías se cargan desde sus servidores. Se puede evitar alojándolas.
 - Los datos viven **en Brasil** (Fly, región `gru`): es una transferencia

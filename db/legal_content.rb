@@ -11,13 +11,15 @@ LEGAL_CONTENT = {
     title: "Privacidad",
     subtitle: "Qué datos guardamos, por qué, y qué podés pedirnos.",
     body: <<~HTML
-      <p>Esta es una escuela chica. No vendemos datos, no hacemos publicidad y no usamos herramientas de seguimiento. Lo que sigue es la lista completa de lo que el sitio guarda.</p>
+      <p>Esta es una escuela chica. No vendemos datos, no hacemos publicidad y no usamos herramientas de analítica ni de seguimiento de terceros. Lo único que el sitio puede anotar sobre lo que leés es opcional, viene apagado, y está explicado abajo. Lo que sigue es la lista completa de lo que el sitio guarda.</p>
 
       <h2>Qué guardamos</h2>
       <p><strong>Si escribís por el formulario de contacto:</strong> tu nombre, tu correo, tu teléfono si lo dejás, el mensaje, el curso por el que consultás y el idioma en que estabas leyendo. Lo guardamos para poder responderte.</p>
       <p><strong>Si te creás una cuenta:</strong> tu nombre y tu correo. La contraseña no se guarda: se guarda un resumen criptográfico del que no se puede recuperar el original. Si entrás con Google, guardamos tu correo, tu nombre y el identificador que Google nos da; nunca vemos tu contraseña de Google.</p>
-      <p><strong>Cada vez que iniciás sesión:</strong> tu dirección IP y qué navegador usaste. Sirve para que puedas ver dónde hay sesiones abiertas y para detectar accesos que no reconozcas.</p>
-      <p><strong>Si te inscribís a un curso:</strong> a cuál y desde cuándo.</p>
+      <p><strong>Cada vez que iniciás sesión:</strong> tu dirección IP, qué navegador usaste y la fecha. La IP y el navegador sirven para ver dónde hay sesiones abiertas y detectar accesos que no reconozcas; la fecha del último ingreso queda en tu cuenta.</p>
+      <p><strong>Si te inscribís a un curso o un taller:</strong> a cuál y desde cuándo.</p>
+      <p><strong>Sólo si elegís «Recordar qué temas leo»</strong>, al registrarte o en tus preferencias: qué reflexiones y apuntes abriste con la sesión iniciada, y la última vez que abriste cada uno. Nada más: ni cuánto tiempo te quedaste, ni qué hiciste después. Lo usamos para saber qué temas te interesan y poder sugerirte cursos sobre ellos. Como acá se escribe sobre salud mental, sabemos que eso puede decir algo personal de vos: no se comparte con nadie, sólo lo ve quien administra la escuela, y si destildás la opción se borra en el momento todo lo anotado.</p>
+      <p><strong>Sólo si elegís recibir novedades:</strong> la fecha en que lo elegiste. Te escribimos únicamente cuando abre un curso o un taller nuevo, y lo podés destildar cuando quieras en tus preferencias.</p>
 
       <h2>Cookies</h2>
       <p>Una sola, firmada, que mantiene tu sesión abierta. Sin ella no podrías mantener la sesión de una página a otra. No hay cookies de analítica ni de publicidad, propias ni de terceros.</p>
@@ -33,7 +35,7 @@ LEGAL_CONTENT = {
       </ul>
 
       <h2>Cuánto tiempo</h2>
-      <p>Los mensajes de contacto y las cuentas se conservan mientras la escuela funcione o hasta que pidas que los borremos. Las sesiones se borran cuando cerrás sesión o cambiás tu contraseña.</p>
+      <p>Los mensajes de contacto y las cuentas se conservan mientras la escuela funcione o hasta que pidas que los borremos. Las sesiones se borran cuando cerrás sesión o cambiás tu contraseña. Lo anotado sobre lo que leés se borra apenas destildás la opción. Si una cuenta se desactiva, sus datos se conservan para poder reactivarla; si preferís que se borren, pedilo.</p>
 
       <h2>Tus derechos</h2>
       <p>Podés pedirnos en cualquier momento que te digamos qué datos tuyos tenemos, que los corrijamos o que los borremos. Alcanza con escribir a <a href="mailto:hola@volveralalma.com.ar">hola@volveralalma.com.ar</a>.</p>

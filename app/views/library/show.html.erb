@@ -5,6 +5,10 @@
       title: t("library.title"),
       body: t("library.body") %>
 
+<div class="mx-auto -mt-6 max-w-6xl px-6 pb-12">
+  <%= link_to t("preferences.title"), edit_preferences_path, class: "link-quiet text-sm text-ink-soft" %>
+</div>
+
 <div class="mx-auto max-w-6xl px-6 pb-8">
   <% if @courses.any? %>
     <div class="grid gap-12 md:grid-cols-2 lg:grid-cols-3">

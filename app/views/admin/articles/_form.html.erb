@@ -18,6 +18,8 @@
       <%= form.text_area :excerpt, rows: 2, class: "field-input resize-y" %>
     </div>
 
+    <%= render "admin/shared/tag_field", form: form %>
+
     <div>
       <%= form.label :cover_image, class: "field-label" %>
       <% if article.cover_image.attached? %>

@@ -3,6 +3,7 @@ class Article < ApplicationRecord
   include Localizable
   include OrganisedAttachments
   include Publishable
+  include Taggable
 
   WORDS_PER_MINUTE = 200
 
@@ -16,6 +17,7 @@ class Article < ApplicationRecord
 
   has_rich_text :body
   has_one_attached :cover_image
+  has_many :readings, dependent: :delete_all
 
   validates :title, presence: true, length: { maximum: 160 }
   validates :excerpt, length: { maximum: 400 }
