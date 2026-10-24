@@ -9,10 +9,19 @@ class Course < ApplicationRecord
   enum :modality, { online_live: 0, on_demand: 1, in_person: 2, hybrid: 3 },
     default: :online_live, validate: true
 
+  # A course is a series of lessons. A workshop is one recorded talk or
+  # workshop: a single video, sold and gated exactly like a course. Its video
+  # lives in a lesson of its own -- the recording -- which the workshop keeps in
+  # step with itself, so the protected player, the duration read from the
+  # upload and the access check all work for it unchanged.
+  enum :kind, { course: 0, workshop: 1 }, default: :course, validate: true
+
   has_rich_text :description
   has_one_attached :cover_image
 
-  has_many :lessons, -> { order(:position) }, dependent: :destroy, inverse_of: :course
+  # autosave so a workshop's recording is saved, and its errors reported, along
+  # with the workshop's own form.
+  has_many :lessons, -> { order(:position) }, dependent: :destroy, inverse_of: :course, autosave: true
   has_many :enrollments, dependent: :destroy
   has_many :students, through: :enrollments, source: :user
   has_many :inquiries, dependent: :nullify
@@ -24,6 +33,8 @@ class Course < ApplicationRecord
   validates :price_cents, numericality: { greater_than_or_equal_to: 0 }, allow_nil: true
 
   scope :ordered, -> { order(:position, :starts_on, :title) }
+
+  before_validation :keep_recording_in_step, if: :workshop?
 
   def free?
     price_cents.nil? || price_cents.zero?
@@ -62,4 +73,25 @@ class Course < ApplicationRecord
 
     lessons.published.ordered
   end
+
+  # The workshop's one video. Built on first use, so the form always has
+  # somewhere to put it. Read from the loaded association, never a fresh query:
+  # autosave only saves the lessons it holds, so edits to a copy fetched apart
+  # would be silently dropped.
+  def recording
+    lessons.to_a.first || lessons.build(position: 1)
+  end
+
+  def recording_attributes=(attributes)
+    recording.assign_attributes(attributes)
+  end
+
+  private
+    # She never manages the recording as a lesson, so it takes the workshop's
+    # title and is always published: whether anyone sees it is decided by the
+    # workshop's own status and the reader's enrollment.
+    def keep_recording_in_step
+      recording.title = title
+      recording.published_at ||= Time.current
+    end
 end

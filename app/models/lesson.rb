@@ -18,6 +18,11 @@ class Lesson < ApplicationRecord
   has_rich_text :notes
   has_one_attached :video
 
+  # The "remove" tick on the video. Choosing a new file in the same save means
+  # the new file wins: dropping the old one then would throw away the upload.
+  attribute :remove_video, :boolean, default: false
+  before_save :drop_video, if: -> { remove_video && !attachment_changes.key?("video") }
+
   validates :title, presence: true, length: { maximum: 160 }
   validates :position, numericality: { greater_than_or_equal_to: 0 }
   validates :duration_seconds, numericality: { greater_than: 0 }, allow_nil: true
@@ -57,4 +62,9 @@ class Lesson < ApplicationRecord
 
     Time.at(duration_seconds).utc.strftime(duration_seconds >= 3600 ? "%-H:%M:%S" : "%-M:%S")
   end
+
+  private
+    def drop_video
+      video.purge_later if video.attached?
+    end
 end

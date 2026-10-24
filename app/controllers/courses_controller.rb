@@ -1,6 +1,7 @@
 class CoursesController < ApplicationController
   def index
-    @courses = visible_courses.ordered
+    @courses = visible_courses.course.ordered
+    @workshops = visible_courses.workshop.ordered
   end
 
   def show

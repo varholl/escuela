@@ -7,7 +7,7 @@
   <% end %>
 
   <div class="flex flex-wrap items-center gap-x-3 gap-y-1">
-    <span class="eyebrow"><%= course_modality(course) %></span>
+    <span class="eyebrow"><%= course.workshop? ? t("courses.kind.workshop") : course_modality(course) %></span>
     <% if course.starts_on.present? %>
       <span class="text-xs text-ink-mute"><%= t("courses.starts_on", date: localized_date(course.starts_on, format: :short_month)) %></span>
     <% end %>

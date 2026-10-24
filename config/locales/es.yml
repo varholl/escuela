@@ -150,14 +150,26 @@ es:
       title: "Cursos y encuentros"
       body: "Programas para recorrer por tu cuenta o en grupo, con la práctica en el centro."
       empty: "Todavía no hay cursos publicados en este idioma."
+      workshops:
+        eyebrow: "Talleres y conferencias"
+        title: "Un encuentro, un video"
+        body: "Talleres y charlas grabados para ver cuando quieras, a tu tiempo."
     show:
       back: "Volver a los cursos"
       about: "Sobre este curso"
+      about_workshop: "Sobre este taller"
+      watch: "Ver el taller"
+      video: "El taller"
+      video_locked: "El video se habilita al inscribirte en el taller."
+      video_pending: "El video de este taller se publica pronto."
       contents: "Contenidos"
       details: "Detalles"
       cta: "Quiero saber más"
       draft_notice: "Estás viendo un curso sin publicar."
       lessons_pending: "El programa detallado se publica al abrir la inscripción."
+    kind:
+      course: "Curso"
+      workshop: "Taller"
     modality:
       online_live: "En vivo online"
       on_demand: "A tu ritmo"
@@ -350,6 +362,14 @@ es:
       lessons: "Clases"
       enrollments: "Inscripciones"
       price_hint: "En centavos, sin puntos ni comas. 25000 pesos se carga como 2500000."
+      workshop:
+        new: "Nuevo taller"
+        create: "Crear taller"
+        created: "Taller creado."
+        updated: "Taller guardado."
+        destroyed: "Taller eliminado."
+        recording: "Video"
+        recording_hint: "El taller es un solo video. Para uno pago conviene subir el archivo: un link de YouTube, aunque sea «no listado», lo puede abrir cualquiera que lo tenga."
     lessons:
       title: "Clases de %{course}"
       new: "Nueva clase"

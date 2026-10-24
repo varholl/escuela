@@ -3,6 +3,10 @@ class LessonsController < ApplicationController
   before_action :set_lesson
 
   def show
+    # A workshop's recording plays on the workshop's own page; it has no page of
+    # its own to land on.
+    return redirect_to course_path(id: @course, anchor: "video") if @course.workshop?
+
     unless @lesson.viewable_by?(current_user)
       # Say plainly that the door is closed rather than pretending nothing is
       # there: the lesson's existence is already public on the course page.

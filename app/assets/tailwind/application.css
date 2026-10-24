@@ -142,6 +142,9 @@
     letter-spacing: 0.18em;
     text-transform: uppercase;
     color: var(--color-iris);
+    /* Some eyebrows are headings for the outline's sake; the titles' shadow is
+       not theirs to carry. */
+    text-shadow: none;
   }
 
   .eyebrow-on-ink { color: var(--color-gold); }

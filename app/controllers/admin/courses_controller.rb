@@ -11,17 +11,20 @@ module Admin
     end
 
     def new
-      @course = Course.new(locale: I18n.locale, currency: "ARS")
+      @course = Course.new(locale: I18n.locale, currency: "ARS", kind: requested_kind)
+      # Most workshops are recordings, watched whenever the student likes.
+      @course.modality = :on_demand if @course.workshop?
     end
 
     def edit
     end
 
     def create
-      @course = Course.new(course_params)
+      @course = Course.new(kind: requested_kind)
+      @course.assign_attributes(course_params)
 
       if @course.save
-        redirect_to edit_admin_course_path(@course), notice: t("admin.courses.created")
+        redirect_to edit_admin_course_path(@course), notice: message(:created)
       else
         render :new, status: :unprocessable_content
       end
@@ -29,7 +32,7 @@ module Admin
 
     def update
       if @course.update(course_params)
-        redirect_to edit_admin_course_path(@course), notice: t("admin.courses.updated")
+        redirect_to edit_admin_course_path(@course), notice: message(:updated)
       else
         render :edit, status: :unprocessable_content
       end
@@ -37,7 +40,7 @@ module Admin
 
     def destroy
       @course.destroy!
-      redirect_to admin_courses_path, notice: t("admin.courses.destroyed"), status: :see_other
+      redirect_to admin_courses_path, notice: message(:destroyed), status: :see_other
     end
 
     private
@@ -45,12 +48,27 @@ module Admin
         @course = Course.find_by!(slug: params[:id])
       end
 
+      # Chosen once, when it is created: a course with lessons of its own makes
+      # no sense as a single video, nor the other way round.
+      def requested_kind
+        params[:kind].presence_in(Course.kinds.keys) ||
+          params.dig(:course, :kind).presence_in(Course.kinds.keys) ||
+          "course"
+      end
+
       def course_params
-        params.expect(course: [
+        permitted = params.expect(course: [
           :title, :slug, :subtitle, :summary, :locale, :status, :modality,
           :price_cents, :currency, :duration_label, :starts_on, :position,
-          :published_at, :description, :cover_image
+          :published_at, :description, :cover_image,
+          recording_attributes: [ :video_provider, :video_reference, :video, :remove_video ]
         ])
+        # Only a workshop has a recording; a course's lessons have their own form.
+        @course.workshop? ? permitted : permitted.except(:recording_attributes)
+      end
+
+      def message(key)
+        t(@course.workshop? ? "admin.courses.workshop.#{key}" : "admin.courses.#{key}")
       end
   end
 end

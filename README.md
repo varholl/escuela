@@ -53,7 +53,7 @@ El acceso al panel está en `/session/new` y el panel en `/admin`.
 | Modelo       | Para qué                                                                 |
 |--------------|--------------------------------------------------------------------------|
 | `Article`    | Las notas. Texto rico con Action Text, imagen de portada, publicación con fecha. |
-| `Course`     | Cursos y encuentros: precio, modalidad, fecha de inicio, estado.          |
+| `Course`     | Cursos y talleres: precio, modalidad, fecha de inicio, estado. Un taller (`kind: workshop`) es un solo video, que vive en su única clase. |
 | `Lesson`     | Las clases de un curso: video, material y orden. Sólo visibles con inscripción. |
 | `Enrollment` | Quién puede ver qué curso. A los gratuitos cada quien se suma por su cuenta. |
 | `Page`       | Textos editables sin deploy: «Sobre mí», «Filosofía», y el video institucional del inicio. |

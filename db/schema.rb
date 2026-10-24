@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_21_224316) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_24_162346) do
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.text "body"
     t.datetime "created_at", null: false
@@ -67,6 +67,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_21_224316) do
     t.datetime "created_at", null: false
     t.string "currency", default: "ARS", null: false
     t.string "duration_label"
+    t.integer "kind", default: 0, null: false
     t.string "locale", default: "es", null: false
     t.integer "modality", default: 0, null: false
     t.integer "position", default: 0, null: false
@@ -79,6 +80,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_21_224316) do
     t.text "summary"
     t.string "title", null: false
     t.datetime "updated_at", null: false
+    t.index ["kind", "locale", "status"], name: "index_courses_on_kind_and_locale_and_status"
     t.index ["locale", "status", "position"], name: "index_courses_on_locale_and_status_and_position"
     t.index ["slug"], name: "index_courses_on_slug", unique: true
   end

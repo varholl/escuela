@@ -1,5 +1,8 @@
 <% content_for :title, page_title(@course.title) %>
 <% content_for :description, meta_description(@course.summary.presence || @course.subtitle) %>
+<%# A workshop is one video, its recording, shown on this page itself. %>
+<% recording = @lessons.first if @course.workshop? %>
+<% duration = @course.duration_label.presence || recording&.duration %>
 
 <article>
   <header class="mx-auto max-w-6xl px-6 pt-16 md:pt-24">
@@ -13,7 +16,7 @@
 
     <div class="mt-8 grid grid-cols-1 items-start gap-14 lg:grid-cols-[1.1fr_0.9fr]">
       <div>
-        <p class="eyebrow"><%= course_modality(@course) %></p>
+        <p class="eyebrow"><%= @course.workshop? ? t("courses.kind.workshop") : course_modality(@course) %></p>
         <h1 class="mt-5 text-[clamp(2.2rem,5vw,3.5rem)]"><%= @course.title %></h1>
 
         <% if @course.subtitle.present? %>
@@ -31,7 +34,11 @@
             <span class="inline-flex rounded-full bg-iris/10 px-4 py-2 text-sm font-semibold text-iris">
               <%= t("enrollments.enrolled_badge") %>
             </span>
-            <% if (first = @lessons.first) %>
+            <% if @course.workshop? %>
+              <% if recording && lesson_has_player?(recording) %>
+                <%= link_to t("courses.show.watch"), "#video", class: "btn btn-primary" %>
+              <% end %>
+            <% elsif (first = @lessons.first) %>
               <%= link_to t("library.continue"), course_lesson_path(course_id: @course, id: first),
                     class: "btn btn-primary" %>
             <% end %>
@@ -69,10 +76,10 @@
             </div>
           <% end %>
 
-          <% if @course.duration_label.present? %>
+          <% if duration.present? %>
             <div class="flex items-baseline justify-between gap-4 py-3.5">
               <dt class="text-sm text-ink-mute"><%= t("courses.duration") %></dt>
-              <dd class="text-right text-[1rem]"><%= @course.duration_label %></dd>
+              <dd class="text-right text-[1rem]"><%= duration %></dd>
             </div>
           <% end %>
 
@@ -89,43 +96,71 @@
 
   <% if @course.description.present? %>
     <section class="mx-auto max-w-2xl px-6 pt-12">
-      <h2 class="eyebrow"><%= t("courses.show.about") %></h2>
+      <h2 class="eyebrow"><%= @course.workshop? ? t("courses.show.about_workshop") : t("courses.show.about") %></h2>
       <div class="prose-note mt-6"><%= @course.description %></div>
     </section>
   <% end %>
 
-  <section class="mx-auto max-w-2xl px-6 pt-16">
-    <h2 class="eyebrow"><%= t("courses.show.contents") %></h2>
+  <% if @course.workshop? %>
+    <%# Wider than the text column: a video earns the room. The anchor is what
+        "Ver el taller" in the header jumps to. %>
+    <section id="video" class="mx-auto max-w-4xl scroll-mt-28 px-6 pt-16">
+      <h2 class="eyebrow"><%= t("courses.show.video") %></h2>
 
-    <% if @lessons.any? %>
-      <ol class="mt-6 divide-y divide-line border-y border-line">
-        <% @lessons.each_with_index do |lesson, index| %>
-          <li class="flex items-baseline gap-5 py-4">
-            <span class="w-6 shrink-0 font-display text-lg text-ink-mute"><%= index + 1 %></span>
-            <div class="flex-1">
-              <% if lesson.viewable_by?(current_user) %>
-                <%= link_to lesson.title, course_lesson_path(course_id: @course, id: lesson),
-                      class: "link-quiet text-[1rem] text-ink" %>
-              <% else %>
-                <p class="text-[1rem] text-ink-mute" title="<%= t("lessons.locked_hint") %>"><%= lesson.title %></p>
-              <% end %>
-              <% if lesson.summary.present? %>
-                <p class="mt-1 text-sm text-ink-mute"><%= lesson.summary %></p>
-              <% end %>
-            </div>
-            <div class="shrink-0 text-right text-sm text-ink-mute">
-              <%= lesson.duration %>
-            </div>
-          </li>
-        <% end %>
-      </ol>
-    <% else %>
-      <p class="mt-6 text-ink-mute"><%= t("courses.show.lessons_pending") %></p>
-    <% end %>
-  </section>
+      <% if recording.nil? || !lesson_has_player?(recording) %>
+        <p class="mt-6 text-ink-mute"><%= t("courses.show.video_pending") %></p>
+      <% elsif recording.viewable_by?(current_user) %>
+        <div class="mt-6"><%= render "lessons/player", lesson: recording %></div>
+      <% else %>
+        <%# The shape of the player, closed: it says there is a video here and
+            what opens it, without giving away where it lives. A pale sky rather
+            than a black screen, so a closed door still reads as an invitation. %>
+        <div class="mt-6 grid aspect-video w-full place-items-center rounded-xl bg-gradient-to-br from-sky-pale via-paper to-iris-pale px-6 text-center ring-1 ring-line">
+          <div>
+            <span class="mx-auto grid size-16 place-items-center rounded-full bg-white/80 text-iris shadow-sm" aria-hidden="true">
+              <svg viewBox="0 0 24 24" class="ml-1 size-7" fill="currentColor"><path d="M8 5.5v13l11-6.5z"/></svg>
+            </span>
+            <p class="mx-auto mt-5 max-w-sm text-lg text-ink-soft"><%= t("courses.show.video_locked") %></p>
+          </div>
+        </div>
+      <% end %>
+    </section>
+  <% else %>
+    <section class="mx-auto max-w-2xl px-6 pt-16">
+      <h2 class="eyebrow"><%= t("courses.show.contents") %></h2>
+
+      <% if @lessons.any? %>
+        <ol class="mt-6 divide-y divide-line border-y border-line">
+          <% @lessons.each_with_index do |lesson, index| %>
+            <li class="flex items-baseline gap-5 py-4">
+              <span class="w-6 shrink-0 font-display text-lg text-ink-mute"><%= index + 1 %></span>
+              <div class="flex-1">
+                <% if lesson.viewable_by?(current_user) %>
+                  <%= link_to lesson.title, course_lesson_path(course_id: @course, id: lesson),
+                        class: "link-quiet text-[1rem] text-ink" %>
+                <% else %>
+                  <p class="text-[1rem] text-ink-mute" title="<%= t("lessons.locked_hint") %>"><%= lesson.title %></p>
+                <% end %>
+                <% if lesson.summary.present? %>
+                  <p class="mt-1 text-sm text-ink-mute"><%= lesson.summary %></p>
+                <% end %>
+              </div>
+              <div class="shrink-0 text-right text-sm text-ink-mute">
+                <%= lesson.duration %>
+              </div>
+            </li>
+          <% end %>
+        </ol>
+      <% else %>
+        <p class="mt-6 text-ink-mute"><%= t("courses.show.lessons_pending") %></p>
+      <% end %>
+    </section>
+  <% end %>
 
   <% unless @course.enrolled?(current_user) %>
-    <section class="mx-auto max-w-2xl px-6 pt-16">
+    <%# Lined up with whatever is above it: the video on a workshop, the list of
+        lessons on a course. %>
+    <section class="mx-auto <%= @course.workshop? ? "max-w-4xl" : "max-w-2xl" %> px-6 pt-16">
       <hr class="rule-gradient">
       <p class="mt-10">
         <% if @course.free? && current_user.nil? %>

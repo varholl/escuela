@@ -1,7 +1,10 @@
 <% content_for :title, page_title(t("admin.courses.title")) %>
 
 <%= render "admin/shared/header", title: t("admin.courses.title"), actions: capture {
-      link_to t("admin.courses.new"), new_admin_course_path, class: "btn btn-primary py-2.5 px-5 text-sm"
+      safe_join([
+        link_to(t("admin.courses.workshop.new"), new_admin_course_path(kind: "workshop"), class: "btn btn-ghost py-2.5 px-5 text-sm"),
+        link_to(t("admin.courses.new"), new_admin_course_path, class: "btn btn-primary py-2.5 px-5 text-sm")
+      ], " ")
     } %>
 
 <% if @courses.any? %>
@@ -12,14 +15,16 @@
           <div class="min-w-0 flex-1">
             <%= link_to course.title, edit_admin_course_path(course), class: "link-quiet font-medium" %>
             <p class="mt-1 text-sm text-ink-mute">
-              <%= course_modality(course) %> · <%= formatted_price(course) %>
+              <%= t("courses.kind.workshop") + " · " if course.workshop? %><%= course_modality(course) %> · <%= formatted_price(course) %>
             </p>
           </div>
 
           <%= render "admin/shared/state_badge", record: course %>
 
           <div class="flex items-center gap-3 text-sm">
-            <%= link_to t("admin.courses.lessons"), admin_course_lessons_path(course), class: "link-quiet text-ink-soft" %>
+            <% unless course.workshop? %>
+              <%= link_to t("admin.courses.lessons"), admin_course_lessons_path(course), class: "link-quiet text-ink-soft" %>
+            <% end %>
             <%= link_to t("admin.courses.enrollments"), admin_course_enrollments_path(course), class: "link-quiet text-ink-soft" %>
             <%= link_to t("admin.shared.preview"), course_path(id: course), class: "link-quiet text-ink-soft" %>
             <%= button_to t("admin.shared.delete"), admin_course_path(course), method: :delete,

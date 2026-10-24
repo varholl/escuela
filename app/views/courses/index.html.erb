@@ -11,8 +11,24 @@
     <div class="grid gap-12 md:grid-cols-2 lg:grid-cols-3">
       <%= render partial: "courses/course_card", collection: @courses, as: :course %>
     </div>
-  <% else %>
+  <% elsif @workshops.none? %>
     <p class="text-lg text-ink-mute"><%= t("courses.index.empty") %></p>
     <p class="mt-8"><%= link_to t("home.contact.cta"), new_contact_path, class: "btn btn-primary" %></p>
   <% end %>
 </div>
+
+<%# Workshops are sold and joined like courses, so they share the page; they
+    get their own heading because what you buy is different: one video, not a
+    programme. %>
+<% if @workshops.any? %>
+  <section class="mx-auto max-w-6xl px-6 pt-20 pb-8" aria-labelledby="workshops-title">
+    <p class="eyebrow"><%= t("courses.index.workshops.eyebrow") %></p>
+    <h2 id="workshops-title" class="mt-4 text-[clamp(1.9rem,4vw,2.9rem)]"><%= t("courses.index.workshops.title") %></h2>
+    <p class="mt-5 max-w-xl text-lg leading-relaxed text-ink-soft"><%= t("courses.index.workshops.body") %></p>
+    <hr class="rule-gradient mt-10">
+
+    <div class="mt-12 grid gap-12 md:grid-cols-2 lg:grid-cols-3">
+      <%= render partial: "courses/course_card", collection: @workshops, as: :course %>
+    </div>
+  </section>
+<% end %>

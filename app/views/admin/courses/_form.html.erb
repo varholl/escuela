@@ -1,5 +1,20 @@
-<%= form_with model: [ :admin, course ], class: "space-y-6" do |form| %>
+<%#
+  A workshop is a course with one video, so it is edited here too: the same
+  fields, plus its recording, uploaded or linked as a lesson's would be.
+%>
+<% upload_data = {
+     controller: "upload-progress video-source",
+     action: "direct-upload:start->upload-progress#start " \
+             "direct-upload:progress->upload-progress#progress " \
+             "direct-upload:error->upload-progress#error " \
+             "direct-upload:end->upload-progress#end",
+     upload_progress_uploading_text_value: t("admin.lessons.uploading"),
+     upload_progress_done_text_value: t("admin.lessons.upload_done"),
+     upload_progress_error_text_value: t("admin.lessons.upload_error")
+   } %>
+<%= form_with model: [ :admin, course ], class: "space-y-6", data: (upload_data if course.workshop?) do |form| %>
   <%= render "shared/form_errors", record: course %>
+  <%= form.hidden_field :kind if course.new_record? %>
 
   <div class="rounded-xl border border-line bg-white p-6 space-y-6">
     <div>
@@ -81,6 +96,16 @@
     </div>
   </div>
 
+  <% if course.workshop? %>
+    <div class="rounded-xl border border-line bg-white p-6">
+      <h2 class="field-label"><%= t("admin.courses.workshop.recording") %></h2>
+      <p class="field-hint mt-0 mb-6"><%= t("admin.courses.workshop.recording_hint") %></p>
+      <%= form.fields_for :recording, course.recording do |recording_form| %>
+        <%= render "admin/lessons/video_fields", form: recording_form, lesson: course.recording %>
+      <% end %>
+    </div>
+  <% end %>
+
   <div class="rounded-xl border border-line bg-white p-6">
     <%= form.label :description, class: "field-label" %>
     <%= form.rich_textarea :description %>
@@ -88,7 +113,13 @@
   </div>
 
   <div class="flex flex-wrap items-center gap-4">
-    <%= form.submit class: "btn btn-primary cursor-pointer" %>
+    <% if course.workshop? %>
+      <%= form.submit course.new_record? ? t("admin.courses.workshop.create") : t("admin.shared.save"),
+            class: "btn btn-primary cursor-pointer disabled:opacity-50",
+            data: { upload_progress_target: "submit" } %>
+    <% else %>
+      <%= form.submit class: "btn btn-primary cursor-pointer" %>
+    <% end %>
     <%= link_to t("admin.shared.cancel"), admin_courses_path, class: "link-quiet text-sm text-ink-mute" %>
   </div>
 <% end %>
