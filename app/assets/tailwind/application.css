@@ -66,6 +66,12 @@
    Base
 --------------------------------------------------------------------------- */
 @layer base {
+  /* A soft drop under the titles and the site's name, after her reference. It
+     reads as lift, not as an effect, and on the dark bands it simply vanishes. */
+  :root {
+    --title-shadow: 0 2px 5px rgb(27 16 35 / 0.16);
+  }
+
   /* Every size on the site is in rem, so this one value scales the whole page
      -- type, spacing and measure together -- the way browser zoom would. A
      percentage rather than px keeps the reader's own browser setting in play. */
@@ -94,6 +100,7 @@
     line-height: 1.1;
     color: var(--color-heading);
     letter-spacing: -0.01em;
+    text-shadow: var(--title-shadow);
     text-wrap: balance;
   }
 
