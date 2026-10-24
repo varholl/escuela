@@ -6,8 +6,10 @@
 <span class="inline-flex items-center gap-3">
   <%= image_tag mark, alt: "", aria: { hidden: true }, class: "#{size} shrink-0 object-contain" %>
   <%# Gold on paper is a pale pairing; the titles' shadow gives the letters an
-      edge without darkening the colour. On ink it would be invisible. %>
-  <span class="font-wordmark text-xl font-semibold tracking-[0.04em] text-gold-leaf <%= "[text-shadow:var(--title-shadow)]" unless on_ink %>">
+      edge without darkening the colour. On ink it would be invisible.
+      Cinzel keeps room for descenders its capitals never use, so its letters
+      ride high in the line; the nudge puts them level with the menu. %>
+  <span class="font-wordmark translate-y-[0.22em] text-xl font-semibold tracking-[0.04em] text-gold-leaf <%= "[text-shadow:var(--title-shadow)]" unless on_ink %>">
     <%= t("site.name") %>
   </span>
 </span>
