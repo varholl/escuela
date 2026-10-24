@@ -230,6 +230,45 @@
     50%      { transform: scale(1.06); opacity: 0.95; }
   }
 
+  /* The home hero over her photograph. Three layers, top to bottom: a veil
+     that pales the sky behind the words, a fade that melts the hills into the
+     page, and the photo itself, held high enough that the sun stays in frame. */
+  .hero-sky {
+    --hero-veil: linear-gradient(100deg,
+      rgb(251 249 252 / 0.88) 0%,
+      rgb(251 249 252 / 0.66) 36%,
+      rgb(251 249 252 / 0.12) 60%,
+      rgb(251 249 252 / 0) 75%);
+    --hero-fade: linear-gradient(to bottom,
+      rgb(251 249 252 / 0) 72%,
+      var(--color-paper) 100%);
+
+    background-color: var(--color-paper);
+    background-image: var(--hero-veil), var(--hero-fade), var(--hero-image-small);
+    background-size: cover;
+    background-position: center 18%;
+    background-repeat: no-repeat;
+  }
+
+  /* On a phone the words fill the width, so the veil runs top to bottom and
+     lifts off as soon as the buttons are past. The crop leans right to keep
+     the sun. */
+  @media (max-width: 639px) {
+    .hero-sky {
+      --hero-veil: linear-gradient(to bottom,
+        rgb(251 249 252 / 0.7) 0%,
+        rgb(251 249 252 / 0.6) 48%,
+        rgb(251 249 252 / 0) 62%);
+      background-position: 72% top;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .hero-sky {
+      background-image: var(--hero-veil), var(--hero-fade), var(--hero-image);
+    }
+  }
+
   /* Admin surfaces: same tokens, none of the drama. */
   .field-label {
     display: block;

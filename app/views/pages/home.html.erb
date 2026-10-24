@@ -2,9 +2,15 @@
 <%# The page ends on the dark invitation, so the footer continues it. %>
 <% content_for :flush_footer, true %>
 
-<%# ---- Hero ------------------------------------------------------------- %>
-<section class="relative">
-  <div class="mx-auto grid max-w-6xl grid-cols-1 items-center gap-14 px-6 pt-16 pb-20 lg:grid-cols-[1.05fr_0.95fr] lg:gap-20 lg:pt-24 lg:pb-28">
+<%# ---- Hero -------------------------------------------------------------
+  Her own photograph of the sierras: a wide clear sky for the words to sit in,
+  the hills underneath. A paper-coloured veil from the left keeps the text on
+  a calm, pale sky instead of a saturated one, and the foot of the photo melts
+  into the page so the hills hand over to the content below.
+%>
+<section class="hero-sky relative isolate overflow-hidden"
+         style="--hero-image: url('<%= image_path("hero-sierras.jpg") %>'); --hero-image-small: url('<%= image_path("hero-sierras-small.jpg") %>')">
+  <div class="mx-auto grid min-h-[min(88vh,56rem)] max-w-6xl grid-cols-1 items-start gap-14 px-6 pt-16 pb-48 sm:pb-56 lg:grid-cols-[1.05fr_0.95fr] lg:gap-20 lg:pt-24">
     <div>
       <p class="eyebrow"><%= t("home.hero.eyebrow") %></p>
 
@@ -12,26 +18,29 @@
         <%= t("home.hero.title") %>
       </h1>
 
-      <p class="mt-7 max-w-lg text-lg leading-relaxed text-ink-soft">
+      <p class="mt-7 max-w-lg text-lg leading-relaxed text-ink">
         <%= t("home.hero.body") %>
       </p>
 
       <div class="mt-10 flex flex-wrap items-center gap-4">
         <%= link_to t("home.hero.primary_cta"), courses_path, class: "btn btn-primary" %>
-        <%= link_to t("home.hero.secondary_cta"), reflections_path, class: "btn btn-ghost" %>
+        <%= link_to t("home.hero.secondary_cta"), reflections_path, class: "btn btn-ghost bg-paper/80 backdrop-blur-sm" %>
       </div>
     </div>
 
-    <div class="mx-auto w-full max-w-md lg:max-w-none">
-      <%= render "shared/aperture", image: @portrait, alt: "" %>
-    </div>
-  </div>
-
-  <div class="mx-auto max-w-6xl px-6">
-    <hr class="rule-gradient">
-    <p class="eyebrow py-6 text-center"><%= t("site.coherence") %></p>
+    <%# The sky is the image now; only her portrait earns a place over it. %>
+    <% if @portrait&.attached? %>
+      <div class="mx-auto w-full max-w-md lg:max-w-none">
+        <%= render "shared/aperture", image: @portrait, alt: "" %>
+      </div>
+    <% end %>
   </div>
 </section>
+
+<div class="mx-auto max-w-6xl px-6">
+  <hr class="rule-gradient">
+  <p class="eyebrow py-6 text-center"><%= t("site.coherence") %></p>
+</div>
 
 <%# ---- The three pillars ------------------------------------------------ %>
 <section class="mx-auto max-w-6xl px-6 py-20 md:py-28">
