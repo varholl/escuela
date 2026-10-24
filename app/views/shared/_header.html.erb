@@ -19,9 +19,9 @@
       <% links.each do |label, path| %>
         <%= link_to label, path,
               class: class_names(
-                "link-quiet text-[1rem]",
+                "link-quiet font-display text-[1.0625rem]",
                 "text-iris" => current_page?(path),
-                "text-ink-soft hover:text-iris" => !current_page?(path)
+                "text-heading hover:text-iris" => !current_page?(path)
               ),
               aria: { current: ("page" if current_page?(path)) } %>
       <% end %>
@@ -46,7 +46,7 @@
            aria-label="<%= t("nav.menu") %>">
         <% links.each do |label, path| %>
           <%= link_to label, path,
-                class: "block rounded-xl px-4 py-2.5 text-[1rem] text-ink-soft hover:bg-haze hover:text-iris" %>
+                class: "block rounded-xl px-4 py-2.5 font-display text-[1.0625rem] text-heading hover:bg-haze hover:text-iris" %>
         <% end %>
         <%= link_to t("nav.contact"), new_contact_path,
               class: "block rounded-xl px-4 py-2.5 text-[1rem] font-semibold text-iris hover:bg-haze" %>

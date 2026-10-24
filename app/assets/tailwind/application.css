@@ -22,6 +22,9 @@
   --color-rose: #b0636a;
   --color-gold: #dba51b;
   --color-gold-bright: #f9c609;
+  /* The wordmark's gold, sampled from her reference: softer and less orange
+     than the mark's own --color-gold. */
+  --color-gold-leaf: #d0a934;
 
   /* Headings only: a dusky blue with a little violet in it, so it sits beside
      the lilac instead of competing with it. */
@@ -45,6 +48,8 @@
      so the italic ledes and quotes keep the serif as --font-quote. */
   --font-display: "Questrial", "Century Gothic", "Avenir Next", ui-sans-serif, system-ui, sans-serif;
   --font-quote: "Newsreader", ui-serif, Georgia, "Times New Roman", serif;
+  /* The site's name only: inscriptional capitals with a calligraphic flare. */
+  --font-wordmark: "Cinzel", "Trajan Pro", ui-serif, Georgia, serif;
   --font-sans: "Karla", ui-sans-serif, system-ui, -apple-system, sans-serif;
 
   /* One step above Tailwind's defaults: Karla sets small for its size, and the

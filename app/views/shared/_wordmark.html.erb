@@ -5,7 +5,9 @@
 %>
 <span class="inline-flex items-center gap-3">
   <%= image_tag mark, alt: "", aria: { hidden: true }, class: "#{size} shrink-0 object-contain" %>
-  <span class="font-display text-xl font-normal tracking-[0.05em] <%= on_ink ? "text-white" : "text-ink" %>">
+  <%# Gold on paper is a pale pairing; the faint shadow from her reference gives
+      the letters an edge without darkening the colour. %>
+  <span class="font-wordmark text-xl font-semibold tracking-[0.04em] text-gold-leaf <%= "[text-shadow:0_1px_2px_rgb(27_16_35/0.18)]" unless on_ink %>">
     <%= t("site.name") %>
   </span>
 </span>
