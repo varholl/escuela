@@ -58,7 +58,7 @@ module Admin
 
       def course_params
         permitted = params.expect(course: [
-          :title, :slug, :subtitle, :summary, :locale, :status, :modality,
+          :title, :subtitle, :summary, :locale, :status, :modality,
           :price_cents, :currency, :duration_label, :starts_on, :position,
           :published_at, :description, :cover_image,
           recording_attributes: [ :video_provider, :video_reference, :video, :remove_video ]

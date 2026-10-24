@@ -328,7 +328,6 @@ es:
       published: "Publicada"
       scheduled: "Programada"
       published_at_hint: "Vacío = borrador. Una fecha futura la deja programada."
-      slug_hint: "Se genera solo a partir del título. Cambiarlo rompe los enlaces ya compartidos."
       public_link: "Enlace"
       public_link_draft_hint: "Mientras sea borrador, sólo vos podés abrirlo."
       optional: "opcional"

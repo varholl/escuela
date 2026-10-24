@@ -22,6 +22,10 @@
       <%= form.text_field :title, required: true, autofocus: course.new_record?, class: "field-input" %>
     </div>
 
+    <% if course.persisted? %>
+      <%= render "admin/shared/public_link", url: course_url(id: course), record: course %>
+    <% end %>
+
     <div>
       <%= form.label :subtitle, class: "field-label" %>
       <%= form.text_field :subtitle, class: "field-input" %>
@@ -30,14 +34,6 @@
     <div>
       <%= form.label :summary, class: "field-label" %>
       <%= form.text_area :summary, rows: 3, class: "field-input resize-y" %>
-    </div>
-
-    <div class="grid gap-6 sm:grid-cols-2">
-      <div>
-        <%= form.label :slug, class: "field-label" %>
-        <%= form.text_field :slug, class: "field-input" %>
-        <p class="field-hint"><%= t("admin.shared.slug_hint") %></p>
-      </div>
     </div>
 
     <div class="grid gap-6 sm:grid-cols-2">
