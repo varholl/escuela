@@ -69,7 +69,7 @@
   /* A soft drop under the titles and the site's name, after her reference. It
      reads as lift, not as an effect, and on the dark bands it simply vanishes. */
   :root {
-    --title-shadow: 0 2px 5px rgb(27 16 35 / 0.16);
+    --title-shadow: 0 3px 6px rgb(27 16 35 / 0.32);
   }
 
   /* Every size on the site is in rem, so this one value scales the whole page
