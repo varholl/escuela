@@ -19,6 +19,9 @@ class User < ApplicationRecord
   validates :name, length: { maximum: 120 }
   validates :password, length: { minimum: 8 }, allow_nil: true
 
+  scope :active, -> { where(deactivated_at: nil) }
+  scope :deactivated, -> { where.not(deactivated_at: nil) }
+
   # Finding or making the account behind a Google sign-in.
   #
   # Linking by email is what stops someone who signed up with a password from
@@ -78,5 +81,30 @@ class User < ApplicationRecord
 
   def display_name
     name.presence || email_address.split("@").first
+  end
+
+  # Turning someone away shuts every way in -- password, Google, a session
+  # already open, a reset link -- but keeps their record, so they can be let
+  # back in with their courses intact. An administrator cannot be turned away
+  # from the panel: with one owner, that would lock the school.
+  def deactivated?
+    deactivated_at.present?
+  end
+
+  def deactivatable?
+    student? && !deactivated?
+  end
+
+  def deactivate!
+    raise ArgumentError, "an administrator cannot be deactivated" if admin?
+
+    transaction do
+      update!(deactivated_at: Time.current)
+      sessions.destroy_all
+    end
+  end
+
+  def reactivate!
+    update!(deactivated_at: nil)
   end
 end

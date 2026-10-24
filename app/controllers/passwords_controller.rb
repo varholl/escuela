@@ -12,7 +12,9 @@ class PasswordsController < ApplicationController
   end
 
   def create
-    if user = User.find_by(email_address: params[:email_address])
+    # The same answer either way, so the form cannot be used to learn which
+    # addresses have accounts, or which of them are shut.
+    if user = User.active.find_by(email_address: params[:email_address])
       PasswordsMailer.reset(user).deliver_later
     end
 
@@ -40,6 +42,8 @@ class PasswordsController < ApplicationController
 
     def set_user_by_token
       @user = User.find_by_password_reset_token!(params[:token])
+      # A link sent before the account was shut must not open it again.
+      raise ActiveSupport::MessageVerifier::InvalidSignature if @user.deactivated?
     rescue ActiveSupport::MessageVerifier::InvalidSignature
       redirect_to new_password_path, alert: t("passwords.invalid_token")
     end

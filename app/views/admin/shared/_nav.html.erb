@@ -11,7 +11,8 @@
     [ t("admin.nav.notes"),       admin_articles_path(kind: "note"), writing == "note" ],
     [ t("admin.nav.courses"),     admin_courses_path,                in_section.(admin_courses_path) ],
     [ t("admin.nav.pages"),       admin_pages_path,                  in_section.(admin_pages_path) ],
-    [ t("admin.nav.inquiries"),   admin_inquiries_path,              in_section.(admin_inquiries_path) ]
+    [ t("admin.nav.inquiries"),   admin_inquiries_path,              in_section.(admin_inquiries_path) ],
+    [ t("admin.nav.users"),       admin_users_path,                  in_section.(admin_users_path) ]
   ]
   pending = Inquiry.unhandled.count
 %>

@@ -25,8 +25,12 @@ module Authentication
       Current.session ||= find_session_by_cookie
     end
 
+    # Deactivating someone deletes their sessions; refusing one that belongs to
+    # a deactivated account as well means a session can never outlive that.
     def find_session_by_cookie
-      Session.find_by(id: cookies.signed[:session_id]) if cookies.signed[:session_id]
+      return unless cookies.signed[:session_id]
+
+      Session.joins(:user).merge(User.active).find_by(id: cookies.signed[:session_id])
     end
 
     def request_authentication
@@ -61,7 +65,10 @@ module Authentication
       false
     end
 
+    # Sessions go when someone signs out, so the account itself remembers when
+    # they last came in: the last time through the door, not the last page read.
     def start_new_session_for(user)
+      user.touch(:last_signed_in_at)
       user.sessions.create!(user_agent: request.user_agent, ip_address: request.remote_ip).tap do |session|
         Current.session = session
         cookies.signed.permanent[:session_id] = { value: session.id, httponly: true, same_site: :lax }

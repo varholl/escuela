@@ -1,0 +1,11 @@
+<%# What kind of account this is, at a glance: whose, how they sign in, and
+    whether the door is open. %>
+<% if user.admin? %>
+  <span class="inline-flex shrink-0 rounded-full bg-iris/10 px-2.5 py-1 text-xs font-semibold text-iris"><%= t("admin.users.roles.admin") %></span>
+<% end %>
+<% if user.google? %>
+  <span class="inline-flex shrink-0 rounded-full bg-sky-pale px-2.5 py-1 text-xs font-semibold text-ink-soft"><%= t("admin.users.google") %></span>
+<% end %>
+<% if user.deactivated? %>
+  <span class="inline-flex shrink-0 rounded-full bg-rose/15 px-2.5 py-1 text-xs font-semibold text-rose"><%= t("admin.users.deactivated_badge") %></span>
+<% end %>

@@ -33,6 +33,10 @@ Rails.application.routes.draw do
     resources :inquiries, only: %i[ index show destroy ] do
       resource :handling, only: %i[ create destroy ], module: :inquiries
     end
+    resources :users, only: %i[ index show ] do
+      resource :deactivation, only: %i[ create destroy ], module: :users
+      resources :enrollments, only: :create, module: :users
+    end
   end
 
   # The public site. Spanish is served from the bare path (/cursos) and English

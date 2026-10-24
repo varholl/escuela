@@ -303,8 +303,12 @@
   }
 
   /* Admin surfaces: same tokens, none of the drama. */
+  /* Some labels head a card and are set as headings for the outline's sake;
+     they keep the label's face, not the titles'. */
   .field-label {
     display: block;
+    font-family: var(--font-sans);
+    text-shadow: none;
     margin-bottom: 0.35rem;
     font-size: 0.875rem;
     font-weight: 600;

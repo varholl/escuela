@@ -15,7 +15,13 @@ class SessionsController < ApplicationController
   end
 
   def create
-    if user = User.authenticate_by(params.permit(:email_address, :password))
+    user = User.authenticate_by(params.permit(:email_address, :password))
+
+    # Only someone who knows the password learns the account was shut, so this
+    # tells a stranger nothing the wrong-password message would not.
+    if user&.deactivated?
+      redirect_to new_session_path, alert: t("sessions.deactivated")
+    elsif user
       start_new_session_for user
       redirect_to after_authentication_url
     else

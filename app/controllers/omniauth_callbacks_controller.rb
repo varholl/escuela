@@ -13,7 +13,9 @@ class OmniauthCallbacksController < ApplicationController
   def google_oauth2
     user = User.from_google(request.env["omniauth.auth"])
 
-    if user
+    if user&.deactivated?
+      redirect_to new_session_path, alert: t("sessions.deactivated")
+    elsif user
       start_new_session_for user
       join_pending_course(user)
       # Only an account Google just created; someone linking Google to the one

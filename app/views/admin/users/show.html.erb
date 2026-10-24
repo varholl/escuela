@@ -1,0 +1,112 @@
+<% content_for :title, page_title(@user.display_name) %>
+
+<%= render "admin/shared/header",
+      title: @user.display_name,
+      eyebrow: t("admin.users.title"),
+      actions: capture {
+        safe_join([
+          render("admin/users/badges", user: @user),
+          link_to(t("admin.shared.back"), admin_users_path, class: "link-quiet text-sm text-ink-mute")
+        ], " ")
+      } %>
+
+<div class="max-w-3xl space-y-6">
+  <% if @user.deactivated? %>
+    <p class="rounded-xl border-l-2 border-rose bg-rose/10 px-5 py-3.5 text-[1rem]">
+      <%= t("admin.users.deactivated_notice", date: l(@user.deactivated_at, format: :long)) %>
+    </p>
+  <% end %>
+
+  <div class="rounded-xl border border-line bg-white p-6">
+    <dl class="divide-y divide-line">
+      <div class="flex flex-wrap items-baseline justify-between gap-3 pb-3">
+        <dt class="text-sm text-ink-mute"><%= User.human_attribute_name(:email_address) %></dt>
+        <dd><%= mail_to @user.email_address, class: "link-quiet text-iris" %></dd>
+      </div>
+
+      <div class="flex flex-wrap items-baseline justify-between gap-3 py-3">
+        <dt class="text-sm text-ink-mute"><%= t("admin.users.sign_in_with") %></dt>
+        <dd><%= @user.google? ? t("admin.users.sign_in_google") : t("admin.users.sign_in_password") %></dd>
+      </div>
+
+      <div class="flex flex-wrap items-baseline justify-between gap-3 py-3">
+        <dt class="text-sm text-ink-mute"><%= t("admin.users.created_at") %></dt>
+        <dd><%= l(@user.created_at, format: :long) %></dd>
+      </div>
+
+      <div class="flex flex-wrap items-baseline justify-between gap-3 pt-3">
+        <dt class="text-sm text-ink-mute"><%= t("admin.users.last_signed_in") %></dt>
+        <dd><%= (at = @user.last_signed_in_at) ? l(at, format: :long) : t("admin.users.never_signed_in") %></dd>
+      </div>
+    </dl>
+  </div>
+
+  <section class="rounded-xl border border-line bg-white p-6">
+    <h2 class="field-label"><%= t("admin.users.courses") %></h2>
+
+    <% if @enrollments.any? %>
+      <ul class="mt-3 divide-y divide-line">
+        <% @enrollments.each do |enrollment| %>
+          <li class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 py-3">
+            <%= link_to enrollment.course.title, edit_admin_course_path(enrollment.course), class: "link-quiet" %>
+            <span class="text-sm text-ink-mute">
+              <%= t("courses.kind.workshop") + " · " if enrollment.course.workshop? %>
+              <%= t("admin.enrollments.granted_at") %>
+              <%= localized_date(enrollment.granted_at || enrollment.created_at, format: :short_month) %>
+              <%= "· " + t("admin.users.enrollment_inactive") unless enrollment.grants_access? %>
+            </span>
+          </li>
+        <% end %>
+      </ul>
+    <% else %>
+      <p class="mt-2 text-ink-mute"><%= t("admin.users.no_courses") %></p>
+    <% end %>
+
+    <% if @joinable_courses.any? %>
+      <%= form_with url: admin_user_enrollments_path(@user), class: "mt-6 flex flex-wrap items-end gap-3 border-t border-line pt-6" do |form| %>
+        <div class="min-w-0 flex-1 sm:max-w-sm">
+          <%= form.label :course_id, t("admin.users.enroll_label"), class: "field-label" %>
+          <%= form.select :course_id, @joinable_courses.map { |course| [ course.title, course.id ] }, {}, class: "field-input" %>
+        </div>
+        <%= form.submit t("admin.users.enroll"), class: "btn btn-ghost cursor-pointer py-2.5 px-5 text-sm" %>
+      <% end %>
+    <% end %>
+  </section>
+
+  <section class="rounded-xl border border-line bg-white p-6">
+    <h2 class="field-label"><%= t("admin.users.inquiries") %></h2>
+
+    <% if @inquiries.any? %>
+      <ul class="mt-3 divide-y divide-line">
+        <% @inquiries.each do |inquiry| %>
+          <li class="py-3">
+            <%= link_to truncate(inquiry.message, length: 90), admin_inquiry_path(inquiry), class: "link-quiet" %>
+            <p class="mt-1 text-sm text-ink-mute">
+              <%= l(inquiry.created_at, format: :short) %> ·
+              <%= inquiry.course ? t("admin.inquiries.about_course", course: inquiry.course.title) : t("admin.inquiries.general") %>
+            </p>
+          </li>
+        <% end %>
+      </ul>
+    <% else %>
+      <p class="mt-2 text-ink-mute"><%= t("admin.users.no_inquiries") %></p>
+    <% end %>
+  </section>
+
+  <%# The one irreversible-feeling action sits last and asks first. An
+      administrator has no button: with one owner, it would lock the school. %>
+  <% if @user.deactivated? %>
+    <div class="flex flex-wrap items-center gap-4 rounded-xl border border-line bg-white p-6">
+      <p class="min-w-0 flex-1 text-ink-soft"><%= t("admin.users.reactivate_hint") %></p>
+      <%= button_to t("admin.users.reactivate"), admin_user_deactivation_path(@user), method: :delete,
+            class: "btn btn-primary cursor-pointer py-2.5 px-5 text-sm" %>
+    </div>
+  <% elsif @user.deactivatable? %>
+    <div class="flex flex-wrap items-center gap-4 rounded-xl border border-rose/30 bg-white p-6">
+      <p class="min-w-0 flex-1 text-ink-soft"><%= t("admin.users.deactivate_hint") %></p>
+      <%= button_to t("admin.users.deactivate"), admin_user_deactivation_path(@user), method: :post,
+            form: { data: { turbo_confirm: t("admin.users.deactivate_confirm", name: @user.display_name) } },
+            class: "btn cursor-pointer border border-rose py-2.5 px-5 text-sm text-rose hover:bg-rose hover:text-white" %>
+    </div>
+  <% end %>
+</div>
