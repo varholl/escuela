@@ -4,13 +4,17 @@
   title            = page&.title.presence || default_title
   subtitle         = page&.subtitle.presence || default_subtitle
   portrait         = page&.cover_image
+  # A piece of her own work, shown whole beside the title. It takes the place
+  # a portrait would, since a painting cropped to a circle is no longer hers.
+  artwork          = local_assigns[:artwork]
+  beside           = artwork.present? || portrait&.attached?
 %>
 <% content_for :title, page_title(title) %>
 <% content_for :description, meta_description(subtitle) %>
 
 <article>
   <header class="mx-auto max-w-6xl px-6 pt-16 pb-14 md:pt-24">
-    <div class="grid grid-cols-1 items-center gap-14 <%= "lg:grid-cols-[1.15fr_0.85fr]" if portrait&.attached? %>">
+    <div class="grid grid-cols-1 items-center gap-14 <%= "lg:grid-cols-[1.15fr_0.85fr]" if beside %>">
       <div>
         <p class="eyebrow"><%= t("nav.#{key}") %></p>
         <h1 class="mt-5 text-[clamp(2.4rem,5.5vw,4rem)]"><%= title %></h1>
@@ -21,7 +25,14 @@
         <% end %>
       </div>
 
-      <% if portrait&.attached? %>
+      <% if artwork.present? %>
+        <%# Shown as a print would hang: a white mat, a soft shadow, never cut. %>
+        <figure class="mx-auto w-full max-w-xs sm:max-w-sm lg:mr-0">
+          <div class="rounded-sm bg-white p-3 shadow-xl shadow-ink/10 ring-1 ring-line/60 sm:p-4">
+            <%= image_tag artwork[:image], alt: artwork[:alt], class: "block h-auto w-full" %>
+          </div>
+        </figure>
+      <% elsif portrait&.attached? %>
         <div class="mx-auto w-full max-w-sm lg:max-w-none">
           <%= render "shared/aperture", image: portrait, id: key, alt: title %>
         </div>
