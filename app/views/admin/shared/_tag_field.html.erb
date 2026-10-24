@@ -3,19 +3,30 @@
   how a course is matched with the people who have read about its subject, so
   the same idea should always carry the same word.
 %>
-<% existing = Tag.alphabetical.pluck(:name) %>
-<div data-controller="tag-list">
+<%#
+  Every tag is in the page, but only a handful are ever on screen: the most
+  used, or the ones matching what she is typing, so the field stays the same
+  size with ten tags or three hundred. Without JavaScript the first few show
+  and typing still works.
+%>
+<% limit = 10 %>
+<% existing = Tag.by_use.pluck(:name) %>
+<div data-controller="tag-list" data-tag-list-limit-value="<%= limit %>"
+     data-tag-list-more-text-value="<%= t("admin.shared.tags_more") %>">
   <%= form.label :tag_list, t("admin.shared.tags"), class: "field-label" %>
   <%= form.text_field :tag_list, class: "field-input", autocomplete: "off",
-        placeholder: t("admin.shared.tags_placeholder"), data: { tag_list_target: "input" } %>
+        placeholder: t("admin.shared.tags_placeholder"),
+        data: { tag_list_target: "input", action: "input->tag-list#refresh" } %>
   <p class="field-hint"><%= t("admin.shared.tags_hint") %></p>
 
   <% if existing.any? %>
-    <div class="mt-3 flex flex-wrap gap-2">
-      <% existing.each do |name| %>
-        <button type="button" class="cursor-pointer rounded-full border border-line bg-white px-3 py-1 text-sm text-ink-soft hover:border-iris hover:text-iris"
-                data-action="tag-list#add" data-tag-list-name-param="<%= name %>"><%= name %></button>
+    <div class="mt-3 flex flex-wrap items-center gap-2">
+      <% existing.each_with_index do |name, index| %>
+        <button type="button" <%= "hidden" if index >= limit %>
+                class="cursor-pointer rounded-full border border-line bg-white px-3 py-1 text-sm text-ink-soft hover:border-iris hover:text-iris"
+                data-tag-list-target="option" data-action="tag-list#add" data-tag-list-name-param="<%= name %>"><%= name %></button>
       <% end %>
+      <span class="text-sm text-ink-mute" data-tag-list-target="more" hidden></span>
     </div>
   <% end %>
 </div>

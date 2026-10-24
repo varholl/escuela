@@ -130,5 +130,14 @@ module Admin
 
       assert_equal %w[ duelo insomnio ], @article.reload.tags.map(&:name)
     end
+
+    test "however many tags there are, only ten are on screen at first" do
+      15.times { |i| Tag.create!(name: "tema-#{i}") }
+
+      get edit_admin_article_path(@article)
+
+      assert_select "button[data-tag-list-target=option]", 15
+      assert_select "button[data-tag-list-target=option]:not([hidden])", 10
+    end
   end
 end

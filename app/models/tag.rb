@@ -10,4 +10,6 @@ class Tag < ApplicationRecord
   validates :name, presence: true, uniqueness: true, length: { maximum: 40 }
 
   scope :alphabetical, -> { order(:name) }
+  # The ones she reaches for most, first: what the tag field offers.
+  scope :by_use, -> { left_joins(:taggings).group(:id).order(Arel.sql("COUNT(taggings.id) DESC"), :name) }
 end

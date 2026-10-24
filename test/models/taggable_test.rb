@@ -33,4 +33,12 @@ class TaggableTest < ActiveSupport::TestCase
 
     assert_equal %w[ ansiedad ], article.reload.tags.map(&:name)
   end
+
+  test "tags come most used first, for the field to offer" do
+    Article.create!(title: "Uno", tag_list: "insomnio, duelo")
+    Article.create!(title: "Dos", tag_list: "insomnio")
+    Tag.create!(name: "ansiedad")
+
+    assert_equal %w[ insomnio duelo ansiedad ], Tag.by_use.pluck(:name)
+  end
 end

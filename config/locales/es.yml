@@ -338,6 +338,7 @@ es:
       tags: "Temas"
       tags_placeholder: "ansiedad, insomnio, respiración"
       tags_hint: "Separados por coma. No se muestran en el sitio: sirven para saber a quién le puede interesar un curso."
+      tags_more: "y %{count} más: seguí escribiendo para buscar"
       video_hint: "Para mostrar un video de YouTube o Vimeo, pegá su link solo en un renglón (o el código de \"Insertar\" que da YouTube). En el sitio se ve como reproductor."
       new: "Nueva"
       edit: "Editar"
