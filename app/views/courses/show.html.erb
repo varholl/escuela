@@ -110,6 +110,13 @@
       <% if recording.nil? || !lesson_has_player?(recording) %>
         <p class="mt-6 text-ink-mute"><%= t("courses.show.video_pending") %></p>
       <% elsif recording.viewable_by?(current_user) %>
+        <%# She sees every video so she can check her own material; say so, or
+            the page looks open to everyone. %>
+        <% if admin? && !@course.enrolled?(current_user) %>
+          <p class="mt-6 rounded-xl border-l-2 border-gold bg-gold/10 px-5 py-3.5 text-[1rem]">
+            <%= t("courses.show.admin_preview") %>
+          </p>
+        <% end %>
         <div class="mt-6"><%= render "lessons/player", lesson: recording %></div>
       <% else %>
         <%# The shape of the player, closed: it says there is a video here and

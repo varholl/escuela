@@ -35,6 +35,34 @@ class WorkshopsTest < ActionDispatch::IntegrationTest
     assert_no_match "ihmc2fKshLA", response.body
   end
 
+  test "an account alone does not open the video" do
+    sign_in_as @student
+
+    get course_path(id: @workshop)
+
+    assert_select "#video", text: /inscribirte/
+    assert_select "iframe", count: 0
+    assert_no_match "ihmc2fKshLA", response.body
+  end
+
+  test "she sees her own video without enrolling, and is told why" do
+    sign_in_as users(:owner)
+
+    get course_path(id: @workshop)
+
+    assert_select "#video iframe"
+    assert_select "#video", text: /sos administradora/
+  end
+
+  test "an enrolled student is not shown the administrator's notice" do
+    @workshop.join!(@student)
+    sign_in_as @student
+
+    get course_path(id: @workshop)
+
+    assert_select "#video", text: /sos administradora/, count: 0
+  end
+
   test "a paid workshop sends the reader to the contact form, like a paid course" do
     get course_path(id: @workshop)
 

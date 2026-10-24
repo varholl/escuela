@@ -161,6 +161,7 @@ es:
       watch: "Ver el taller"
       video: "El taller"
       video_locked: "El video se habilita al inscribirte en el taller."
+      admin_preview: "Lo ves porque sos administradora. Tus alumnos lo ven recién al inscribirse."
       video_pending: "El video de este taller se publica pronto."
       contents: "Contenidos"
       details: "Detalles"
