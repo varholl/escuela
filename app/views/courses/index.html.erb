@@ -18,17 +18,18 @@
 </div>
 
 <%# Workshops are sold and joined like courses, so they share the page; they
-    get their own heading because what you buy is different: one video, not a
-    programme. %>
+    get a band of their own, edge to edge in sage and sky, because what you buy
+    is different: one video, not a programme. %>
 <% if @workshops.any? %>
-  <section class="mx-auto max-w-6xl px-6 pt-20 pb-8" aria-labelledby="workshops-title">
-    <p class="eyebrow"><%= t("courses.index.workshops.eyebrow") %></p>
-    <h2 id="workshops-title" class="mt-4 text-[clamp(1.9rem,4vw,2.9rem)]"><%= t("courses.index.workshops.title") %></h2>
-    <p class="mt-5 max-w-xl text-lg leading-relaxed text-ink-soft"><%= t("courses.index.workshops.body") %></p>
-    <hr class="rule-gradient mt-10">
+  <section class="mt-20 border-y border-line/70 bg-gradient-to-b from-sage-pale to-sky-pale/60" aria-labelledby="workshops-title">
+    <div class="mx-auto max-w-6xl px-6 py-20 md:py-24">
+      <p class="eyebrow"><%= t("courses.index.workshops.eyebrow") %></p>
+      <h2 id="workshops-title" class="mt-4 text-[clamp(1.9rem,4vw,2.9rem)]"><%= t("courses.index.workshops.title") %></h2>
+      <p class="mt-5 max-w-xl text-lg leading-relaxed text-ink-soft"><%= t("courses.index.workshops.body") %></p>
 
-    <div class="mt-12 grid gap-12 md:grid-cols-2 lg:grid-cols-3">
-      <%= render partial: "courses/course_card", collection: @workshops, as: :course %>
+      <div class="mt-14 grid gap-12 md:grid-cols-2 lg:grid-cols-3">
+        <%= render partial: "courses/course_card", collection: @workshops, as: :course %>
+      </div>
     </div>
   </section>
 <% end %>
