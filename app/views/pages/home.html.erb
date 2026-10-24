@@ -11,15 +11,20 @@
 <section class="hero-sky relative isolate overflow-hidden"
          style="--hero-image: url('<%= image_path("hero-sierras.jpg") %>'); --hero-image-small: url('<%= image_path("hero-sierras-small.jpg") %>')">
   <div class="mx-auto min-h-[min(88vh,56rem)] max-w-6xl px-6 pt-16 pb-48 sm:pb-56 lg:pt-24">
-    <%# Kept to the veiled half, so the sun has the other to itself. %>
-    <div class="max-w-xl">
+    <div>
       <p class="eyebrow"><%= t("home.hero.eyebrow") %></p>
 
-      <h1 class="mt-6 text-[clamp(2.6rem,6.5vw,4.75rem)]">
+      <%# Wide enough for two balanced lines on any desktop, not so wide it
+          crosses the sun. %>
+      <h1 class="mt-6 max-w-4xl text-[clamp(2.6rem,6.5vw,4.75rem)]">
         <%= t("home.hero.title") %>
       </h1>
 
-      <p class="mt-7 max-w-lg text-lg leading-relaxed text-ink">
+      <%# Below the title the veil has faded into the hills, so the paragraph
+          carries its own: frosted paper, the photo still felt through it. On a
+          phone the veil already covers this, and the pane would only crowd it.
+          No hyphenation: a word broken inside a small pane reads as a stumble. %>
+      <p class="mt-7 max-w-xl text-lg leading-relaxed text-ink hyphens-manual sm:rounded-2xl sm:bg-paper/75 sm:px-6 sm:py-5 sm:shadow-sm sm:shadow-ink/5 sm:backdrop-blur-md">
         <%= t("home.hero.body") %>
       </p>
 

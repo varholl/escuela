@@ -257,8 +257,8 @@
     .hero-sky {
       --hero-veil: linear-gradient(to bottom,
         rgb(251 249 252 / 0.7) 0%,
-        rgb(251 249 252 / 0.6) 48%,
-        rgb(251 249 252 / 0) 62%);
+        rgb(251 249 252 / 0.66) 56%,
+        rgb(251 249 252 / 0) 70%);
       background-position: 72% top;
     }
   }
