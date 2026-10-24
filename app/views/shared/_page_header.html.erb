@@ -1,4 +1,8 @@
 <header class="mx-auto max-w-6xl px-6 pt-16 pb-12 md:pt-24">
+  <%# A way back, for a page that is a part of another. %>
+  <% if (back = local_assigns[:back]) %>
+    <%= link_to back[:label], back[:path], class: "link-quiet mb-8 inline-block text-sm text-ink-mute" %>
+  <% end %>
   <p class="eyebrow"><%= eyebrow %></p>
   <h1 class="mt-5 max-w-3xl text-[clamp(2.4rem,5.5vw,4rem)]"><%= title %></h1>
   <% if local_assigns[:body].present? %>

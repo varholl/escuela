@@ -150,10 +150,16 @@ es:
       title: "Cursos y encuentros"
       body: "Programas para recorrer por tu cuenta o en grupo, con la práctica en el centro."
       empty: "Todavía no hay cursos publicados en este idioma."
+      all_courses: "Ver todos los cursos"
+      all_workshops: "Ver todos los talleres"
+      all_courses_title: "Todos los cursos"
+      all_workshops_title: "Todos los talleres"
+      back_to_overview: "Volver a cursos y talleres"
       workshops:
         eyebrow: "Talleres y conferencias"
         title: "Un encuentro, un video"
         body: "Talleres y charlas grabados para ver cuando quieras, a tu tiempo."
+        empty: "Todavía no hay talleres publicados."
     show:
       back: "Volver a los cursos"
       about: "Sobre este curso"

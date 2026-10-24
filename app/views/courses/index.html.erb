@@ -1,26 +1,53 @@
-<% content_for :title, page_title(t("courses.index.title")) %>
+<%
+  heading = case @showing
+            when "cursos"   then t("courses.index.all_courses_title")
+            when "talleres" then t("courses.index.all_workshops_title")
+            else t("courses.index.title")
+            end
+%>
+<% content_for :title, page_title(heading) %>
 <% content_for :description, meta_description(t("courses.index.body")) %>
 
 <%= render "shared/page_header",
       eyebrow: t("courses.index.eyebrow"),
-      title: t("courses.index.title"),
-      body: t("courses.index.body") %>
+      title: heading,
+      body: (t("courses.index.body") unless @showing),
+      back: ({ label: t("courses.index.back_to_overview"), path: courses_path } if @showing) %>
 
-<div class="mx-auto max-w-6xl px-6 pb-8">
-  <% if @courses.any? %>
-    <div class="grid gap-12 md:grid-cols-2 lg:grid-cols-3">
-      <%= render partial: "courses/course_card", collection: @courses, as: :course %>
-    </div>
-  <% elsif @workshops.none? %>
-    <p class="text-lg text-ink-mute"><%= t("courses.index.empty") %></p>
-    <p class="mt-8"><%= link_to t("home.contact.cta"), new_contact_path, class: "btn btn-primary" %></p>
-  <% end %>
-</div>
+<% unless @showing == "talleres" %>
+  <div class="mx-auto max-w-6xl px-6 pb-8">
+    <% if @courses.any? %>
+      <div class="grid gap-12 md:grid-cols-2 lg:grid-cols-3">
+        <%= render partial: "courses/course_card", collection: @courses, as: :course %>
+      </div>
+
+      <% if @more_courses %>
+        <p class="mt-14">
+          <%= link_to t("courses.index.all_courses"), courses_path(ver: "cursos"), class: "btn btn-ghost" %>
+        </p>
+      <% end %>
+    <% elsif @workshops.none? %>
+      <p class="text-lg text-ink-mute"><%= t("courses.index.empty") %></p>
+      <p class="mt-8"><%= link_to t("home.contact.cta"), new_contact_path, class: "btn btn-primary" %></p>
+    <% end %>
+  </div>
+<% end %>
 
 <%# Workshops are sold and joined like courses, so they share the page; they
     get a band of their own, edge to edge in sage and sky, because what you buy
-    is different: one video, not a programme. %>
-<% if @workshops.any? %>
+    is different: one video, not a programme. On their full list the page is
+    theirs, so the band and its introduction would only repeat the header. %>
+<% if @showing == "talleres" %>
+  <div class="mx-auto max-w-6xl px-6 pb-8">
+    <% if @workshops.any? %>
+      <div class="grid gap-12 md:grid-cols-2 lg:grid-cols-3">
+        <%= render partial: "courses/course_card", collection: @workshops, as: :course %>
+      </div>
+    <% else %>
+      <p class="text-lg text-ink-mute"><%= t("courses.index.workshops.empty") %></p>
+    <% end %>
+  </div>
+<% elsif @workshops.any? %>
   <section class="mt-20 border-y border-line/70 bg-gradient-to-b from-sage-pale to-sky-pale/60" aria-labelledby="workshops-title">
     <div class="mx-auto max-w-6xl px-6 py-20 md:py-24">
       <p class="eyebrow"><%= t("courses.index.workshops.eyebrow") %></p>
@@ -30,6 +57,12 @@
       <div class="mt-14 grid gap-12 md:grid-cols-2 lg:grid-cols-3">
         <%= render partial: "courses/course_card", collection: @workshops, as: :course %>
       </div>
+
+      <% if @more_workshops %>
+        <p class="mt-14">
+          <%= link_to t("courses.index.all_workshops"), courses_path(ver: "talleres"), class: "btn btn-ghost bg-paper/70" %>
+        </p>
+      <% end %>
     </div>
   </section>
 <% end %>
