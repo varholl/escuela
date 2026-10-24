@@ -269,6 +269,28 @@
     }
   }
 
+  /* Every other page opens under a painted morning sky, the photograph's
+     palette without the photograph: a clear blue overhead, a sun glowing off
+     to the right as it does in hers, and a warm haze where a horizon would be,
+     all settling into paper before the reading starts. */
+  .sky-wash {
+    background-color: var(--color-paper);
+    background-image:
+      radial-gradient(circle at 84% 0%,
+        rgb(255 255 252 / 1) 0,
+        rgb(255 252 242 / 0.85) 5rem,
+        rgb(255 247 228 / 0.4) 12rem,
+        rgb(255 247 228 / 0) 22rem),
+      linear-gradient(to bottom,
+        #c9dcf0 0,
+        #dde9f5 11rem,
+        #eef2f6 21rem,
+        #f8f1e6 28rem,
+        var(--color-paper) 36rem);
+    background-size: 100% 36rem;
+    background-repeat: no-repeat;
+  }
+
   /* Admin surfaces: same tokens, none of the drama. */
   .field-label {
     display: block;
