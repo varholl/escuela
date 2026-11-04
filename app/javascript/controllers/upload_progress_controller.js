@@ -9,6 +9,7 @@ export default class extends Controller {
 
   connect() {
     this.uploads = new Map()
+    this.failed = new Set()
   }
 
   start(event) {
@@ -19,6 +20,9 @@ export default class extends Controller {
   }
 
   progress(event) {
+    // Rails keeps animating 90-99% for a moment after a failed request, which
+    // would paint "uploading 90%" over the error and leave the bar looking stuck.
+    if (this.failed.has(event.detail.id)) return
     this.uploads.set(event.detail.id, event.detail.progress)
     this.render()
   }
@@ -26,11 +30,13 @@ export default class extends Controller {
   error(event) {
     // The browser would otherwise report this only in the console.
     event.preventDefault()
+    this.failed.add(event.detail.id)
     this.setStatus(`${this.errorTextValue} ${event.detail.error}`)
     this.disableSubmit(false)
   }
 
-  end() {
+  end(event) {
+    if (this.failed.has(event.detail.id)) return
     this.setStatus(this.doneTextValue)
     this.disableSubmit(false)
   }
