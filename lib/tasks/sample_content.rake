@@ -2,15 +2,13 @@
 # page while the real copy is being written. They read as the owner's own
 # words, so there has to be a one-command way to take them back out.
 namespace :sample_content do
-  SAMPLE_ARTICLE_SLUGS = %w[
-    respirar-no-es-relajarse
-    el-insomnio-como-mensajero
-    meditar-cuando-no-podes-meditar
-  ].freeze
+  # She rewrote the three sample notes and turned fundamentos-de-atencion-plena
+  # into her own course (Mindfulness para la Promoción de la Salud) under the
+  # same slugs, so they are hers now and must never be swept up by `remove`.
+  SAMPLE_ARTICLE_SLUGS = %w[].freeze
 
   SAMPLE_COURSE_SLUGS = %w[
     introduccion-a-la-respiracion
-    fundamentos-de-atencion-plena
     habitar-el-cuerpo
   ].freeze
 
