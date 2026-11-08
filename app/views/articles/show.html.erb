@@ -1,5 +1,6 @@
 <% content_for :title, page_title(@article.title) %>
 <% content_for :description, meta_description(@article.summary) %>
+<% content_for :head, structured_data(article_structured_data(@article)) if @article.published? %>
 
 <%# The picture WhatsApp draws when the link is pasted. Its own cover if it has
     one, the school's card if it does not; see ArticleCoversController for why

@@ -11,7 +11,7 @@ LEGAL_CONTENT = {
     title: "Privacidad",
     subtitle: "Qué datos guardamos, por qué, y qué podés pedirnos.",
     body: <<~HTML
-      <p>Esta es una escuela chica. No vendemos datos, no hacemos publicidad y no usamos herramientas de analítica ni de seguimiento de terceros. Lo único que el sitio puede anotar sobre lo que leés es opcional, viene apagado, y está explicado abajo. Lo que sigue es la lista completa de lo que el sitio guarda.</p>
+      <p>Esta es una escuela chica. No vendemos datos, no mostramos publicidad y no te seguimos de un sitio a otro. Contamos las visitas de forma anónima, como se explica abajo. Lo único que el sitio puede anotar sobre lo que leés es opcional, viene apagado, y está explicado abajo. Lo que sigue es la lista completa de lo que el sitio guarda.</p>
 
       <h2>Qué guardamos</h2>
       <p><strong>Si escribís por el formulario de contacto:</strong> tu nombre, tu correo, tu teléfono si lo dejás, el mensaje, el curso por el que consultás y el idioma en que estabas leyendo. Lo guardamos para poder responderte.</p>
@@ -19,6 +19,7 @@ LEGAL_CONTENT = {
       <p><strong>Cada vez que iniciás sesión:</strong> tu dirección IP, qué navegador usaste y la fecha. La IP y el navegador sirven para ver dónde hay sesiones abiertas y detectar accesos que no reconozcas; la fecha del último ingreso queda en tu cuenta.</p>
       <p><strong>Si te inscribís a un curso o un taller:</strong> a cuál y desde cuándo.</p>
       <p><strong>Sólo si elegís «Recordar qué temas leo»</strong>, al registrarte o en tus preferencias: qué reflexiones y apuntes abriste con la sesión iniciada, y la última vez que abriste cada uno. Nada más: ni cuánto tiempo te quedaste, ni qué hiciste después. Lo usamos para saber qué temas te interesan y poder sugerirte cursos sobre ellos. Como acá se escribe sobre salud mental, sabemos que eso puede decir algo personal de vos: no se comparte con nadie, sólo lo ve quien administra la escuela, y si destildás la opción se borra en el momento todo lo anotado.</p>
+      <p><strong>Al visitar cualquier página:</strong> un conteo anónimo de visitas, para saber qué se lee y desde dónde llega la gente (por ejemplo, desde Instagram o un buscador). Se registra la página, el sitio desde el que llegaste, el país, el tipo de dispositivo y el navegador. No usa cookies, no guarda tu dirección IP ni nada que te identifique, y no se cruza con tu cuenta.</p>
       <p><strong>Sólo si elegís recibir novedades:</strong> la fecha en que lo elegiste. Te escribimos únicamente cuando abre un curso o un taller nuevo, y lo podés destildar cuando quieras en tus preferencias.</p>
 
       <h2>Cookies</h2>
@@ -31,6 +32,7 @@ LEGAL_CONTENT = {
         <li><strong>Cloudflare</strong> — guarda los archivos (videos, imágenes, documentos) y resuelve el dominio.</li>
         <li><strong>Resend</strong> — entrega los correos que te enviamos.</li>
         <li><strong>Google</strong> — si elegís entrar con Google. Además, las tipografías del sitio se cargan desde sus servidores, lo que significa que Google recibe tu dirección IP al abrir cualquier página.</li>
+        <li><strong>GoatCounter</strong> — cuenta las visitas de forma anónima, sin cookies.</li>
         <li><strong>YouTube o Vimeo</strong> — sólo en las clases cuyo video esté alojado ahí. Los videos de YouTube se insertan en modo sin cookies.</li>
       </ul>
 

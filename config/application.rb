@@ -49,6 +49,15 @@ module VolverAlAlma
     # and a single one for search engines to index.
     config.x.canonical_host = ENV["APP_HOST"].presence
 
+    # Visit counting, through GoatCounter: no cookies and nothing personal kept,
+    # so it needs no consent banner. Off until GOATCOUNTER_CODE names the
+    # account (the "code" in https://<code>.goatcounter.com).
+    config.x.goatcounter_code = ENV["GOATCOUNTER_CODE"].presence
+
+    # The token Google Search Console hands out to prove the site is ours, for
+    # when the domain is verified by meta tag rather than by DNS.
+    config.x.google_site_verification = ENV["GOOGLE_SITE_VERIFICATION"].presence
+
     # Declared here, not only in the initializer that turns it on: an unset
     # config.x key returns an empty OrderedOptions, which is truthy, so a plain
     # `if config.x.google_sign_in` would show the button with no Google behind

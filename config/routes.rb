@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   get "up" => "rails/health#show", as: :rails_health_check
 
   get "robots.txt" => "robots#show", format: :text, as: :robots
+  get "sitemap.xml" => "sitemaps#show", format: :xml, as: :sitemap
 
   # Error pages, reached through config.exceptions_app rather than by linking.
   match "/404", to: "errors#not_found",      via: :all

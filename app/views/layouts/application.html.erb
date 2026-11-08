@@ -11,6 +11,12 @@
     <% unless Rails.configuration.x.allow_indexing %>
       <meta name="robots" content="noindex, nofollow">
     <% end %>
+    <% if Rails.configuration.x.google_site_verification %>
+      <meta name="google-site-verification" content="<%= Rails.configuration.x.google_site_verification %>">
+    <% end %>
+    <%# The query string is dropped on purpose: a link shared with ?utm_source=...
+        is still the same page, and search engines should count it as one. %>
+    <link rel="canonical" href="<%= request.base_url + request.path %>">
 
     <meta property="og:site_name" content="<%= t("site.name") %>">
     <meta property="og:type" content="website">
@@ -41,6 +47,11 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&family=Questrial&family=Newsreader:ital,opsz,wght@0,6..72,200..600;1,6..72,200..500&family=Karla:ital,wght@0,300..700;1,300..600&display=swap">
 
     <%= yield :head %>
+
+    <%# Her own visits are not readers; leaving them out keeps the numbers honest. %>
+    <% if Rails.configuration.x.goatcounter_code && !admin? %>
+      <script data-goatcounter="https://<%= Rails.configuration.x.goatcounter_code %>.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+    <% end %>
 
     <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>

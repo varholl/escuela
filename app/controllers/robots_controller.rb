@@ -5,16 +5,18 @@ class RobotsController < ApplicationController
   allow_gated_access
 
   def show
-    render plain: indexable? ? welcoming : closed, content_type: "text/plain"
+    render plain: self.class.indexable? ? welcoming : closed, content_type: "text/plain"
+  end
+
+  # Both switches have to be open. There is nothing to index behind a site
+  # that answers every visitor with a holding page, so a stray
+  # ALLOW_INDEXING=true before the doors open changes nothing here. The
+  # sitemap asks the same question.
+  def self.indexable?
+    Rails.configuration.x.allow_indexing && !Rails.configuration.x.gated
   end
 
   private
-    # Both switches have to be open. There is nothing to index behind a site
-    # that answers every visitor with a holding page, so a stray
-    # ALLOW_INDEXING=true before the doors open changes nothing here.
-    def indexable?
-      Rails.configuration.x.allow_indexing && !Rails.configuration.x.gated
-    end
 
     def welcoming
       <<~TXT
@@ -22,6 +24,8 @@ class RobotsController < ApplicationController
         Disallow: /admin
         Disallow: /session
         Disallow: /passwords
+
+        Sitemap: #{sitemap_url}
       TXT
     end
 

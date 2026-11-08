@@ -1,5 +1,6 @@
 <% content_for :title, page_title(@course.title) %>
 <% content_for :description, meta_description(@course.summary.presence || @course.subtitle) %>
+<% content_for :head, structured_data(course_structured_data(@course)) if @course.published? %>
 <%# A workshop is one video, its recording, shown on this page itself. %>
 <% recording = @lessons.first if @course.workshop? %>
 <% duration = @course.duration_label.presence || recording&.duration %>

@@ -210,7 +210,12 @@ Lo que hoy declara, y conviene tener presente al tocar el sistema:
   las tipografías se cargan desde sus servidores. Se puede evitar alojándolas.
 - Los datos viven **en Brasil** (Fly, región `gru`): es una transferencia
   internacional.
-- No hay analítica ni rastreo de ningún tipo.
+- **Visitas contadas con GoatCounter** (<https://volveralalma.goatcounter.com>):
+  sin cookies ni IP guardada, y sin contar a quien administra. Se prende con
+  `GOATCOUNTER_CODE` en Fly. No hay otra analítica ni rastreo; sumar una
+  obliga a cambiar el texto.
+- `/sitemap.xml` lista lo publicado y está dado de alta en Google Search
+  Console, con la cuenta de ella.
 
 Los términos incluyen que **los cursos no son tratamiento médico** y los
 teléfonos de crisis. Con una psiquiatra dictando cursos de bienestar, esa

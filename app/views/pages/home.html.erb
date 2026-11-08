@@ -1,4 +1,5 @@
 <% content_for :title, page_title(t("site.tagline")) %>
+<% content_for :head, structured_data(school_structured_data) %>
 <%# The page ends on the dark invitation, so the footer continues it. %>
 <% content_for :flush_footer, true %>
 
